@@ -17,8 +17,8 @@ const PasswordResetForm = () => {
   };
 
   return (
-    <div className="pb-2 self-center">
-      <h2 className="pb-[2rem] text-center text-4xl">Create Account</h2>
+    <div className="pb-4 self-center">
+      <h2 className="text-center text-4xl">Reset password</h2>
 
       <form className="w-[350px]" onSubmit={(e) => onFormSubmit(e)}>
         <InputFieldComponent
@@ -35,11 +35,10 @@ const PasswordResetForm = () => {
 
         <InputFieldComponent
           labelTitle=""
+          inputClassName="hover:drop-shadow-2xl hover:bg-black hover:text-white indent-[0]"
           props={{
             type: "submit",
             value: "Reset password",
-            className:
-              "hover:drop-shadow-black hover:bg-black hover:text-white border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-md bg-transparent  w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
       </form>

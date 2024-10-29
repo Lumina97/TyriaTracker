@@ -19,36 +19,23 @@ const APIKEYSignUpError = `API Key has to be ${APIKeyLength} characters long`;
 
 const CreateAccountForm = () => {
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [apiKey, setApiKey] = useState<string>("");
+  const [secondPassword, setSecondPassword] = useState<string>("");
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
-    if (isUsernameValid(userName) && isPasswordValid(password)) {
+    if (isEmailValid(email) && isPasswordValid(password)) {
       console.log("do something");
     }
   };
 
   return (
-    <div className="pb-2 self-center">
-      <h2 className="pb-[2rem] text-center text-4xl">Create Account</h2>
+    <div className="pb-4 self-center">
+      <h2 className=" text-center text-4xl">Create Account</h2>
 
       <form className="w-[350px]" onSubmit={(e) => onFormSubmit(e)}>
-        <InputFieldComponent
-          labelTitle="Username:"
-          props={{
-            onChange: (e) => setUserName(e.target.value),
-            type: "text",
-            value: userName,
-          }}
-        />
-        {wasSubmitted && !isUsernameValid(userName) && (
-          <div className="text-[red]">{userNameSignUpError}</div>
-        )}
-
         <InputFieldComponent
           labelTitle="Email: "
           props={{
@@ -73,24 +60,23 @@ const CreateAccountForm = () => {
         )}
 
         <InputFieldComponent
-          labelTitle="API Key:"
+          labelTitle="Confirm Password: "
           props={{
-            onChange: (e) => setApiKey(e.target.value),
-            type: "text",
-            value: apiKey,
+            onChange: (e) => setPassword(e.target.value),
+            type: "password",
+            value: password,
           }}
         ></InputFieldComponent>
-        {wasSubmitted && !isAPIKeyValid(apiKey) && (
-          <div className="text-[red]">{APIKEYSignUpError}</div>
+        {wasSubmitted && !isPasswordValid(password) && (
+          <div className="text-[red]">{passwordSignUpError}</div>
         )}
 
         <InputFieldComponent
           labelTitle=""
+          inputClassName="hover:drop-shadow-2xl hover:bg-black hover:text-white indent-[0]"
           props={{
             type: "submit",
             value: "Create account",
-            className:
-              "hover:drop-shadow-black hover:bg-black hover:text-white border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-md bg-transparent  w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
       </form>
