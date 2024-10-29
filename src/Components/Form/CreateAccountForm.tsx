@@ -1,27 +1,34 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import InputFieldComponent from "./InputFieldComponent";
 import {
+  isAPIKeyValid,
   isEmailValid,
   isPasswordValid,
   isUsernameValid,
 } from "../../Utils/InputValidation";
-import { minPasswordLength, minUsernameLength } from "../../Utils/settings";
+import {
+  minPasswordLength,
+  minUsernameLength,
+  APIKeyLength,
+} from "../../Utils/settings";
 
 const userNameSignUpError = `Username has to be at least ${minUsernameLength} characters long`;
+const emailSignUpError = `Email is not valid`;
 const passwordSignUpError = `Password has to be at least ${minPasswordLength} characters long`;
+const APIKEYSignUpError = `API Key has to be ${APIKeyLength} characters long`;
 
 const CreateAccountForm = () => {
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [ShowSignInError, setShowSignInError] = useState<boolean>(false);
+  const [apiKey, setApiKey] = useState<string>("");
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
     if (isUsernameValid(userName) && isPasswordValid(password)) {
-      console.log("do smth");
+      console.log("do something");
     }
   };
 
@@ -45,7 +52,7 @@ const CreateAccountForm = () => {
               "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
           }}
         />
-        {wasSubmitted && !isUsernameValid(userName) && ShowSignInError && (
+        {wasSubmitted && !isUsernameValid(userName) && (
           <div className="text-[red]">{userNameSignUpError}</div>
         )}
 
@@ -64,8 +71,8 @@ const CreateAccountForm = () => {
               "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
-        {wasSubmitted && !isEmailValid(email) && ShowSignInError && (
-          <div className="text-[red]">{passwordSignUpError}</div>
+        {wasSubmitted && !isEmailValid(email) && (
+          <div className="text-[red]">{emailSignUpError}</div>
         )}
         <InputFieldComponent
           labelTitle="Password: "
@@ -82,8 +89,27 @@ const CreateAccountForm = () => {
               "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
-        {wasSubmitted && !isPasswordValid(email) && ShowSignInError && (
+        {wasSubmitted && !isPasswordValid(password) && (
           <div className="text-[red]">{passwordSignUpError}</div>
+        )}
+
+        <InputFieldComponent
+          labelTitle="API Key:"
+          wrapperProps={{
+            className:
+              " w-full inline-flex flex-col my-2 align-middle justify-center max-h-[2.5rem]  h-[2.5rem] relative pl-2 grow",
+          }}
+          labelProps={{ className: "text-xl" }}
+          props={{
+            onChange: (e) => setApiKey(e.target.value),
+            type: "text",
+            value: apiKey,
+            className:
+              "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
+          }}
+        ></InputFieldComponent>
+        {wasSubmitted && !isAPIKeyValid(apiKey) && (
+          <div className="text-[red]">{APIKEYSignUpError}</div>
         )}
 
         <InputFieldComponent
