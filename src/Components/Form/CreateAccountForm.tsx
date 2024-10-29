@@ -39,17 +39,10 @@ const CreateAccountForm = () => {
       <form className="w-[350px]" onSubmit={(e) => onFormSubmit(e)}>
         <InputFieldComponent
           labelTitle="Username:"
-          wrapperProps={{
-            className:
-              "w-full inline-flex flex-col my-2 align-middle justify-center max-h-[2.5rem]  h-[2.5rem] relative pl-2 grow",
-          }}
-          labelProps={{ className: "text-xl" }}
           props={{
             onChange: (e) => setUserName(e.target.value),
             type: "text",
             value: userName,
-            className:
-              "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
           }}
         />
         {wasSubmitted && !isUsernameValid(userName) && (
@@ -58,17 +51,10 @@ const CreateAccountForm = () => {
 
         <InputFieldComponent
           labelTitle="Email: "
-          wrapperProps={{
-            className:
-              " w-full inline-flex flex-col my-2 align-middle justify-center max-h-[2.5rem]  h-[2.5rem] relative pl-2 grow",
-          }}
-          labelProps={{ className: "text-xl" }}
           props={{
             onChange: (e) => setEmail(e.target.value),
             type: "email",
             value: email,
-            className:
-              "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
         {wasSubmitted && !isEmailValid(email) && (
@@ -76,17 +62,10 @@ const CreateAccountForm = () => {
         )}
         <InputFieldComponent
           labelTitle="Password: "
-          wrapperProps={{
-            className:
-              " w-full inline-flex flex-col my-2 align-middle justify-center max-h-[2.5rem]  h-[2.5rem] relative pl-2 grow",
-          }}
-          labelProps={{ className: "text-xl" }}
           props={{
             onChange: (e) => setPassword(e.target.value),
             type: "password",
             value: password,
-            className:
-              "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
         {wasSubmitted && !isPasswordValid(password) && (
@@ -95,17 +74,10 @@ const CreateAccountForm = () => {
 
         <InputFieldComponent
           labelTitle="API Key:"
-          wrapperProps={{
-            className:
-              " w-full inline-flex flex-col my-2 align-middle justify-center max-h-[2.5rem]  h-[2.5rem] relative pl-2 grow",
-          }}
-          labelProps={{ className: "text-xl" }}
           props={{
             onChange: (e) => setApiKey(e.target.value),
             type: "text",
             value: apiKey,
-            className:
-              "hover:shadow-3xl border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent indent-[6.5rem] w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
         {wasSubmitted && !isAPIKeyValid(apiKey) && (
@@ -114,15 +86,11 @@ const CreateAccountForm = () => {
 
         <InputFieldComponent
           labelTitle=""
-          wrapperProps={{
-            className:
-              " flex mt-12 flex-col align-middle justify-center max-h-[2.5rem]  h-[2.5rem] relative pl-2 grow",
-          }}
           props={{
             type: "submit",
             value: "Create account",
             className:
-              "hover:drop-shadow-black hover:bg-black hover:text-white border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-2xl bg-transparent  w-[98%] m-auto absolute left-[1%]",
+              "hover:drop-shadow-black hover:bg-black hover:text-white border-solid text-xl h-full pb-[0.05rem] border-black border-2 rounded-md bg-transparent  w-[98%] m-auto absolute left-[1%]",
           }}
         ></InputFieldComponent>
       </form>

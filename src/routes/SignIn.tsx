@@ -28,7 +28,7 @@ function SignInComponent() {
                 setCreateAccount(false);
                 setShowPasswordReset(false);
               }}
-              className="text-[grey] hover:text-[black]"
+              className="text-[grey]  hover:text-[black]"
             >
               Sign in
             </button>
@@ -44,7 +44,7 @@ function SignInComponent() {
                     setCreateAccount(false);
                     setShowPasswordReset(false);
                   }}
-                  className="text-[grey] hover:text-[black]"
+                  className="text-[grey]  hover:text-[black]"
                 >
                   Sign in
                 </button>
@@ -59,7 +59,7 @@ function SignInComponent() {
                       setCreateAccount(true);
                       setShowPasswordReset(false);
                     }}
-                    className="text-[grey] hover:text-[black]"
+                    className="text-[grey] text-left hover:text-[black]"
                   >
                     Create Account
                   </button>
@@ -68,7 +68,7 @@ function SignInComponent() {
                       setCreateAccount(false);
                       setShowPasswordReset(true);
                     }}
-                    className="text-[grey] hover:text-[black]"
+                    className="text-[grey] text-left hover:text-[black]"
                   >
                     Forgot password...
                   </button>
