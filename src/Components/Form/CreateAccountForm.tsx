@@ -1,23 +1,15 @@
 import { useState } from "react";
 import InputFieldComponent from "./InputFieldComponent";
-import {
-  isAPIKeyValid,
-  isEmailValid,
-  isPasswordValid,
-  isUsernameValid,
-} from "../../Utils/InputValidation";
-import {
-  minPasswordLength,
-  minUsernameLength,
-  APIKeyLength,
-} from "../../Utils/settings";
+import { isEmailValid, isPasswordValid } from "../../Utils/InputValidation";
+import { minPasswordLength } from "../../Utils/settings";
+import { useAPI } from "../../Providers/APIProvider";
 
-const userNameSignUpError = `Username has to be at least ${minUsernameLength} characters long`;
 const emailSignUpError = `Email is not valid`;
 const passwordSignUpError = `Password has to be at least ${minPasswordLength} characters long`;
-const APIKEYSignUpError = `API Key has to be ${APIKeyLength} characters long`;
 
 const CreateAccountForm = () => {
+  const { createAccount } = useAPI();
+
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -27,7 +19,11 @@ const CreateAccountForm = () => {
     e.preventDefault();
     setWasSubmitted(true);
     if (isEmailValid(email) && isPasswordValid(password)) {
-      console.log("do something");
+      if (password !== secondPassword) {
+        console.log("passwords do not match!");
+        return;
+      }
+      createAccount(email, password);
     }
   };
 
@@ -62,12 +58,12 @@ const CreateAccountForm = () => {
         <InputFieldComponent
           labelTitle="Confirm Password: "
           props={{
-            onChange: (e) => setPassword(e.target.value),
+            onChange: (e) => setSecondPassword(e.target.value),
             type: "password",
-            value: password,
+            value: secondPassword,
           }}
         ></InputFieldComponent>
-        {wasSubmitted && !isPasswordValid(password) && (
+        {wasSubmitted && !isPasswordValid(secondPassword) && (
           <div className="text-[red]">{passwordSignUpError}</div>
         )}
 

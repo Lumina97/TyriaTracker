@@ -1,19 +1,23 @@
 import { useState } from "react";
 import InputFieldComponent from "./InputFieldComponent";
-import { isPasswordValid, isUsernameValid } from "../../Utils/InputValidation";
+import { isEmailValid, isPasswordValid } from "../../Utils/InputValidation";
+import { useAPI } from "../../Providers/APIProvider";
 
-const loginError = `Username or password are wrong!`;
+const loginError = `Email or password are wrong!`;
 const SignInFormComponent = () => {
+  const { login } = useAPI();
+
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showLogInError, setShowLogInError] = useState<boolean>(false);
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
-    if (isUsernameValid(userName) && isPasswordValid(password)) {
-      console.log("do smth");
+    if (isEmailValid(email) && isPasswordValid(password)) {
+      console.log(`Logging in with email: ${email} and password: ${password} `);
+      login(email, password);
     } else setShowLogInError(true);
   };
 
@@ -22,11 +26,11 @@ const SignInFormComponent = () => {
       <h2 className="text-center text-4xl">Sign In</h2>
       <form className="w-[350px]" onSubmit={(e) => onFormSubmit(e)}>
         <InputFieldComponent
-          labelTitle="Username:"
+          labelTitle="Email:"
           props={{
-            onChange: (e) => setUserName(e.target.value),
+            onChange: (e) => setEmail(e.target.value),
             type: "text",
-            value: userName,
+            value: email,
           }}
         />
         <InputFieldComponent
@@ -43,8 +47,9 @@ const SignInFormComponent = () => {
 
         <InputFieldComponent
           labelTitle=""
-          inputClassName="hover:drop-shadow-2xl hover:bg-black hover:text-white indent-[0]"
+          inputClassName="hover:drop-shadow-2xl hover:bg-black hover:text-white indent-[0rem]"
           props={{
+            value: "SIGN IN",
             type: "submit",
           }}
         ></InputFieldComponent>

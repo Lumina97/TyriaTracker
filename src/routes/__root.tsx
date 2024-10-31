@@ -1,6 +1,7 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import Navbar from "../Components/NavBar/Navbar";
+import { APIProvider } from "../Providers/APIProvider";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -9,8 +10,10 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <>
-      <Outlet />
-      <TanStackRouterDevtools position="bottom-right" />
+      <APIProvider>
+        <Outlet />
+        <TanStackRouterDevtools position="bottom-right" />
+      </APIProvider>
     </>
   );
 }
