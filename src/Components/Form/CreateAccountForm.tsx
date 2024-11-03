@@ -23,7 +23,13 @@ const CreateAccountForm = () => {
         console.log("passwords do not match!");
         return;
       }
-      createAccount(email, password);
+      createAccount(email, password).then((result) => {
+        if (result) {
+          setPassword("");
+          setSecondPassword("");
+          setEmail("");
+        }
+      });
     }
   };
 

@@ -4,9 +4,17 @@ export default {
   presets: [],
   darkMode: "media", // or 'class'
   theme: {
+    extend: {
+      colors: {
+        sunset: "linear-gradient(135deg, #FF5F6D, #FF5F6D, #FFFAF0)",
+        sun: "#FF5F6D",
+      },
+    },
     accentColor: ({ theme }) => ({
       ...theme("colors"),
       auto: "auto",
+       sunset: "linear-gradient(135deg, #FF5F6D, #FFC371, #FFFAF0)",
+       sun: "#FFFAF0",
     }),
     animation: {
       none: "none",

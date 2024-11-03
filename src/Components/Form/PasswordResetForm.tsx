@@ -1,18 +1,24 @@
 import React, { useState } from "react";
 import InputFieldComponent from "./InputFieldComponent";
 import { isEmailValid } from "../../Utils/InputValidation";
+import { useAPI } from "../../Providers/APIProvider";
 
 const emailError = `Email is not valid`;
+const resetSubmitText = `If there is an account with that email we will send a password reset link to that email!`;
 
 const PasswordResetForm = () => {
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
+  const [wasSent, setWasSent] = useState<boolean>(false);
   const [email, setEmail] = useState<string>("");
+  const { resetPassword } = useAPI();
 
   const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setWasSubmitted(true);
     if (isEmailValid(email)) {
-      console.log("do something");
+      resetPassword(email);
+      setWasSent(true);
+      setEmail("");
     }
   };
 
@@ -23,15 +29,18 @@ const PasswordResetForm = () => {
       <form className="w-[350px]" onSubmit={(e) => onFormSubmit(e)}>
         <InputFieldComponent
           labelTitle="Email:"
+          wrapperClassName="mb-12"
           props={{
             onChange: (e) => setEmail(e.target.value),
             type: "email",
             value: email,
           }}
         />
-        {wasSubmitted && !isEmailValid(email) && (
-          <div className="text-[red]">{emailError}</div>
+
+        {wasSubmitted && !isEmailValid(email) && !wasSent && (
+          <div className="pl-4 text-[red]">{emailError}</div>
         )}
+        {wasSent && <div className="pl-4 text-[black]">{resetSubmitText}</div>}
 
         <InputFieldComponent
           labelTitle=""
