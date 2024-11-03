@@ -11,7 +11,7 @@ function AccountComponent() {
     <div className="bg-sunset">
       <div className="flex flex-row">
         <Navbar />
-        <div className="w-full">
+        <div className=" relative w-full">
           <AccountDataComponent />
         </div>
       </div>

@@ -1,6 +1,6 @@
 import { ReactNode, useNavigate } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { APIBaseURL } from "../Utils/settings";
 
 type TAPIProvider = {
@@ -9,13 +9,15 @@ type TAPIProvider = {
   isSignedIn: () => Promise<boolean>;
   resetPassword: (email: string) => Promise<boolean>;
   createAccount: (email: string, password: string) => Promise<boolean>;
-  GetUser: () => TUser | false;
+  updateUserInformation: (updatedUser: TUser) => Promise<boolean>;
+  GetUser: () => TUser;
 };
 
 export type TUser = {
   email: string;
   jwt: string;
-  apiKey: string;
+  APIKey: string;
+  password?: string;
 };
 
 const loadUserFromLocalStorage = () => {
@@ -43,17 +45,20 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<TUser>({} as TUser);
 
   const GetUser = () => {
-    if (!user.email) {
+    if (!user || !user.email) {
       const load = loadUserFromLocalStorage();
       if (load !== false) {
-        console.log(`Loadede user: ${JSON.stringify(load)}`);
         setUser(load);
       } else {
         console.log(`No user!`);
+        return {
+          email: "",
+          jwt: "",
+          APIKey: "",
+        };
       }
       return load;
     }
-    console.log(`returning user: ${JSON.stringify(user)}`);
 
     return user;
   };
@@ -73,7 +78,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       const result = await axios(config);
       if (result.data.status === true) {
         const user: TUser = result.data.newUser;
-        console.log(`User: ${user}`);
+        console.log(`User: ${JSON.stringify(user)}`);
         if (user) {
           setUser(user);
           localStorage.setItem("user", JSON.stringify(user));
@@ -100,6 +105,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       console.log("no jwt");
       const user = loadUserFromLocalStorage();
       if (user !== false && user !== null && user) {
+        console.log(`user from local storage`);
         setUser(user);
         jwttoken = user.jwt;
       }
@@ -119,12 +125,14 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
 
       try {
         const result = await axios(config);
-        //we are not logged in
-        //clear jwt and local storage and return to sign in screen
         if (result.status === 200) {
+          console.log(JSON.stringify(result.data));
+          setUser(result.data.user);
           loggedIn = true;
         }
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     }
 
     if (loggedIn === false) {
@@ -156,7 +164,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
         return true;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
     return false;
   };
@@ -181,8 +189,39 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     return false;
   };
 
+  const updateUserInformation = async (newUser: TUser) => {
+    if (!user.email || !user.jwt) {
+      console.log("No current user!");
+      return false;
+    }
+
+    const url = `${APIBaseURL}auth/users/${encodeURI(user.email)}`;
+    const config: AxiosRequestConfig = {
+      url,
+      method: "patch",
+      data: { newUser: newUser },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    try {
+      const result = await axios(config);
+      if (result.status === 200) {
+        const newUser = result.data.updatedUser;
+        setUser(newUser);
+        return true;
+      }
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+    return false;
+  };
+
   useEffect(() => {
-    // isSignedIn().then();
+    // GetUser();
+    // isSignedIn();
   }, []);
 
   return (
@@ -193,6 +232,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
         GetUser,
         isSignedIn,
         logout,
+        updateUserInformation,
         createAccount,
       }}
     >

@@ -10,7 +10,9 @@ const AccountAPIKeyEntry = ({
   return (
     <div className="flex w-full justify-between">
       <span>{apiKey}</span>
-      <button onClick={onClick}>Edit</button>
+      <button className="hover:scale-110 origin-left" onClick={onClick}>
+        Edit
+      </button>
     </div>
   );
 };

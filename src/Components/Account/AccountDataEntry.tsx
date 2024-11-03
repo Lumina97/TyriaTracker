@@ -15,7 +15,9 @@ const AccountDataEntry = ({
         <span>{title}</span>
         <div className="flex gap-4">
           <span>{value}</span>
-          <button onClick={onClick}>Edit</button>
+          <button className="hover:scale-110 origin-left" onClick={onClick}>
+            Edit
+          </button>
         </div>
       </div>
     </>
