@@ -3,6 +3,11 @@
 //types
 
 //raids
+export type TRaidAPIData = {
+  userData: TRaidWing[];
+  worldData: TRaidWing[];
+};
+
 export type TRaidWing = {
   id: number;
   name: string;
@@ -17,6 +22,12 @@ export type TRaidEvent = {
 };
 
 //wizard vault
+export type TWizardVaultAPIData = {
+  daily: TWizardVault;
+  weekly: TWizardVault;
+  special: TWizardVault;
+};
+
 export type TWizardVault = {
   meta_progress_current: number;
   meta_progress_complete: number;
@@ -37,18 +48,32 @@ export type TWizardVaultObjective = {
 };
 
 //worldbosses
-export type TWorldBosses = {
+export type TWorldBossesAPIData = {
+  userData: TWorldBoss[];
+  worldData: TWorldBoss[];
+};
+
+export type TWorldBoss = {
   id: number;
-  names: string[];
+  name: string;
 };
 
 //dailyCrafts
-export type TDailyCrafts = {
+export type TDailyCraftsAPIData = {
+  userData: TDailyCraft[];
+  worldData: TDailyCraft[];
+};
+export type TDailyCraft = {
   id: number;
-  names: string[];
+  name: string;
 };
 
 //dungeons
+export type TDungeonAPIData = {
+  userData: TDungeon[];
+  worldData: TDungeon[];
+};
+
 export type TDungeon = {
   id: number;
   name: string;

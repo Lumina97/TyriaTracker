@@ -5,12 +5,20 @@ export type TTaskItem = {
 };
 
 const TaskItem = ({ item }: { item: TTaskItem }) => {
-  const isComplete = item.currentProgress === item.finishedProgress;
+  const isComplete = item.currentProgress >= item.finishedProgress;
   return (
     <div className="flex flex-row justify-between w-full">
       <p>{item.name}</p>
       {/* has multilple steps to completion */}
-      {item.finishedProgress > 1 && <div></div>}
+      {item.finishedProgress > 1 && (
+        <div>
+          <p>
+            {isComplete
+              ? "Completed"
+              : item.currentProgress + " / " + item.finishedProgress}
+          </p>{" "}
+        </div>
+      )}
       {/* is a one step completion */}
       {item.finishedProgress === 1 && (
         <div>

@@ -11,7 +11,8 @@ const TaskComponent = ({ tasks }: { tasks: TTaskComponent }) => {
     <div className="w-[500px] border-black border-2 rounded-sm p-4">
       {tasks.name}
       {tasks.taskItems.map((task) => {
-        return <TaskItem item={task} />;
+        //@ts-ignore
+        return <TaskItem key={task.name} item={task} />;
       })}
     </div>
   );

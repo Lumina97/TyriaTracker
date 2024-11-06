@@ -1,7 +1,21 @@
 import { ReactNode, useNavigate } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 import { APIBaseURL } from "../Utils/settings";
+import {
+  TDailyCraftsAPIData,
+  TDungeonAPIData,
+  TRaidAPIData,
+  TWizardVaultAPIData,
+  TWorldBossesAPIData,
+} from "../Utils/types";
+import {
+  getUserDailyCrafting,
+  getUserDungeons,
+  getUserRaids,
+  getUserWizardVault,
+  getUserWorldBosses,
+} from "../Utils/API";
 
 type TAPIProvider = {
   login: (email: string, password: string) => Promise<boolean>;
@@ -11,6 +25,11 @@ type TAPIProvider = {
   createAccount: (email: string, password: string) => Promise<boolean>;
   updateUserInformation: (updatedUser: TUser) => Promise<boolean>;
   GetUser: () => TUser;
+  userRaids: TRaidAPIData | undefined;
+  userDungeons: TDungeonAPIData | undefined;
+  userWorldBosses: TWorldBossesAPIData | undefined;
+  userDailyCrafts: TDailyCraftsAPIData | undefined;
+  userWizardVault: TWizardVaultAPIData | undefined;
 };
 
 export type TUser = {
@@ -43,6 +62,11 @@ const APIContext = createContext<TAPIProvider>({} as TAPIProvider);
 export const APIProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate({ from: "/SignIn" });
   const [user, setUser] = useState<TUser>({} as TUser);
+  const [userRaids, setUserRaids] = useState<TRaidAPIData>();
+  const [userDungeons, setUserDungeons] = useState<TDungeonAPIData>();
+  const [userWorldBosses, setUserWorldBosses] = useState<TWorldBossesAPIData>();
+  const [userDailyCrafts, setUserDailyCrafts] = useState<TDailyCraftsAPIData>();
+  const [userWizardVault, setUserWizardVault] = useState<TWizardVaultAPIData>();
 
   const GetUser = () => {
     if (!user || !user.email) {
@@ -64,7 +88,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const login = async (email: string, password: string) => {
-    const url = APIBaseURL + "auth/login";
+    const url = `${APIBaseURL}auth/login`;
     const config: AxiosRequestConfig = {
       method: "post",
       url: url,
@@ -114,7 +138,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     if (jwttoken) {
       //we have a token
       // check if token is valid
-      const url = APIBaseURL + "auth/isLoggedIn";
+      const url = `${APIBaseURL}auth/isLoggedIn`;
       const config: AxiosRequestConfig = {
         method: "post",
         url: url,
@@ -145,7 +169,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const createAccount = async (email: string, password: string) => {
-    const url = APIBaseURL + "auth/users";
+    const url = `${APIBaseURL}auth/users`;
     const config: AxiosRequestConfig = {
       method: "post",
       url,
@@ -175,7 +199,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       return false;
     }
 
-    const url = APIBaseURL + "auth/passwordReset";
+    const url = `${APIBaseURL}auth/passwordReset`;
     const config: AxiosRequestConfig = {
       url,
       method: "post",
@@ -220,8 +244,37 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    // GetUser();
-    // isSignedIn();
+    const setup = async () => {
+      await GetUser();
+      await isSignedIn();
+      if (!user.email) {
+        const usr = GetUser();
+        if (!usr.email) {
+          console.error("User not available!");
+          return;
+        }
+      }
+      getUserRaids(user, GetUser).then((result) => {
+        if (result) setUserRaids(result);
+      });
+
+      getUserDungeons(user, GetUser).then((result) => {
+        if (result) setUserDungeons(result);
+      });
+
+      getUserWorldBosses(user, GetUser).then((result) => {
+        if (result) setUserWorldBosses(result);
+      });
+
+      getUserDailyCrafting(user, GetUser).then((result) => {
+        if (result) setUserDailyCrafts(result);
+      });
+
+      getUserWizardVault(user, GetUser).then((result) => {
+        if (result) setUserWizardVault(result);
+      });
+    };
+    setup();
   }, []);
 
   return (
@@ -234,6 +287,11 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
         logout,
         updateUserInformation,
         createAccount,
+        userRaids,
+        userDungeons,
+        userWorldBosses,
+        userDailyCrafts,
+        userWizardVault,
       }}
     >
       {children}
