@@ -4,11 +4,19 @@ export type TTaskItem = {
   finishedProgress: number;
 };
 
-const TaskItem = ({ item }: { item: TTaskItem }) => {
+const TaskItem = ({
+  item,
+  wrapperClass,
+}: {
+  item: TTaskItem;
+  wrapperClass?: string;
+}) => {
   const isComplete = item.currentProgress >= item.finishedProgress;
   return (
-    <div className="flex flex-row justify-between w-full">
-      <p>{item.name}</p>
+    <div
+      className={`flex flex-row justify-between gap-2 w-full ${wrapperClass}`}
+    >
+      <p>{item.name.replaceAll("_", " ").toUpperCase()}</p>
       {/* has multilple steps to completion */}
       {item.finishedProgress > 1 && (
         <div>

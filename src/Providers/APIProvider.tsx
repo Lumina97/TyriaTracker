@@ -1,4 +1,4 @@
-import { ReactNode, useNavigate } from "@tanstack/react-router";
+import { ReactNode, useNavigate, useLocation } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios, { AxiosRequestConfig } from "axios";
 import { APIBaseURL } from "../Utils/settings";
@@ -245,6 +245,8 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const setup = async () => {
+      if (window.location.pathname === "/SignIn") return;
+
       await GetUser();
       await isSignedIn();
       if (!user.email) {
@@ -254,25 +256,45 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
       }
-      getUserRaids(user, GetUser).then((result) => {
-        if (result) setUserRaids(result);
-      });
+      getUserRaids(user, GetUser)
+        .then((result) => {
+          if (result) setUserRaids(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      getUserDungeons(user, GetUser).then((result) => {
-        if (result) setUserDungeons(result);
-      });
+      getUserDungeons(user, GetUser)
+        .then((result) => {
+          if (result) setUserDungeons(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      getUserWorldBosses(user, GetUser).then((result) => {
-        if (result) setUserWorldBosses(result);
-      });
+      getUserWorldBosses(user, GetUser)
+        .then((result) => {
+          if (result) setUserWorldBosses(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      getUserDailyCrafting(user, GetUser).then((result) => {
-        if (result) setUserDailyCrafts(result);
-      });
+      getUserDailyCrafting(user, GetUser)
+        .then((result) => {
+          if (result) setUserDailyCrafts(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-      getUserWizardVault(user, GetUser).then((result) => {
-        if (result) setUserWizardVault(result);
-      });
+      getUserWizardVault(user, GetUser)
+        .then((result) => {
+          if (result) setUserWizardVault(result);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     };
     setup();
   }, []);

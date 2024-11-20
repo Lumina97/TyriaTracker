@@ -64,8 +64,8 @@ export const getUserDungeons = async (user: TUser, GetUser: () => TUser) => {
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: user.email,
-      jwt: user.jwt,
+      email: usr.email,
+      jwt: usr.jwt,
     },
     url,
   };
@@ -160,9 +160,9 @@ export const getUserWizardVault = async (user: TUser, GetUser: () => TUser) => {
     const result = await axios(config);
     if (result.status === 200) {
       const wizardVault: TWizardVaultAPIData = {
-        daily: result.data.userData.daily,
-        weekly: result.data.userData.weekly,
-        special: result.data.userData.special,
+        daily: result.data.userData?.daily,
+        weekly: result.data.userData?.weekly,
+        special: result.data.userData?.special,
       };
       return wizardVault;
     }
