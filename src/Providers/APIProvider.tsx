@@ -53,7 +53,6 @@ const loadUserFromLocalStorage = () => {
 };
 
 const clearUserFromLocalStorage = () => {
-  console.log("Clearing data");
   localStorage.removeItem("user");
 };
 
@@ -74,7 +73,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       if (load !== false) {
         setUser(load);
       } else {
-        console.log(`No user!`);
         return {
           email: "",
           jwt: "",
@@ -102,7 +100,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       const result = await axios(config);
       if (result.data.status === true) {
         const user: TUser = result.data.newUser;
-        console.log(`User: ${JSON.stringify(user)}`);
         if (user) {
           setUser(user);
           localStorage.setItem("user", JSON.stringify(user));
@@ -126,10 +123,8 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     //check if we have a token
     if (!user.jwt) {
       //load from localstorage
-      console.log("no jwt");
       const user = loadUserFromLocalStorage();
       if (user !== false && user !== null && user) {
-        console.log(`user from local storage`);
         setUser(user);
         jwttoken = user.jwt;
       }
@@ -150,7 +145,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       try {
         const result = await axios(config);
         if (result.status === 200) {
-          console.log(JSON.stringify(result.data));
           setUser(result.data.user);
           loggedIn = true;
         }
@@ -160,7 +154,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (loggedIn === false) {
-      console.log("Not logged in");
       navigate({ to: "/SignIn" });
       return false;
     }
@@ -215,7 +208,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
 
   const updateUserInformation = async (newUser: TUser) => {
     if (!user.email || !user.jwt) {
-      console.log("No current user!");
       return false;
     }
 

@@ -10,18 +10,12 @@ import {
 } from "./types";
 
 const validateUser = async (user: TUser, GetUser: () => TUser) => {
-  console.log("Validating user!");
-
   if (!user.email) {
-    console.log("Has no user - getting from local!");
     user = GetUser();
     if (!user.email) {
-      console.log("User was empty!");
       return false;
     }
-    console.log(`Got from local!:${JSON.stringify(user)} `);
   }
-
   return user;
 };
 

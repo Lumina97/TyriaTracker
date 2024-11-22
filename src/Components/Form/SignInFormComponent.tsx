@@ -16,7 +16,6 @@ const SignInFormComponent = () => {
     e.preventDefault();
     setWasSubmitted(true);
     if (isEmailValid(email) && isPasswordValid(password)) {
-      console.log(`Logging in with email: ${email} and password: ${password} `);
       login(email, password).then((result) => {
         if (result) {
           setPassword("");

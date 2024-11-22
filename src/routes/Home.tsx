@@ -70,8 +70,8 @@ function HomeComponent() {
   return (
     <div className=" sm:flex-row lg:flex-row md:flex-row bg-sunset flex flex-col">
       <Navbar />
-      <div className=" grid grid-cols-1 md:grid-cols-2 grid-flow-row w-full m-6 gap-8">
-        <div className="p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
+      <div className=" grid grid-cols-1 lg:grid-cols-2 sm:grid-cols-1 grid-flow-row  sm:m-6 md:m-6 lg:m-6 gap-8">
+        <div className="sm:p-2 md:p-2 lg:p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">Raids</h3>
           {userRaids?.worldData.map((raid) => {
             const taskItems: TTaskItem[] = [];
@@ -94,7 +94,7 @@ function HomeComponent() {
           })}
         </div>
         {/*dungeons */}
-        <div className="p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
+        <div className="sm:p-2 md:p-2 lg:p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">Dungeons</h3>
           {userDungeons?.worldData.map((dungeon, index) => {
             const taskItems: TTaskItem[] = [];
@@ -120,7 +120,7 @@ function HomeComponent() {
         </div>
 
         {/*WorldBosses */}
-        <div className="p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
+        <div className="sm:p-2 md:p-2 lg:p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">World Bosses</h3>
           {userWorldBosses?.worldData.map((boss, index) => {
             const taskItem = {
@@ -141,7 +141,7 @@ function HomeComponent() {
         </div>
 
         {/*Daily Crafts */}
-        <div className="p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
+        <div className="sm:p-2 md:p-2 lg:p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">Daily Crafting</h3>
           {userDailyCrafts?.worldData.map((craft, index) => {
             const taskItem = {
@@ -162,7 +162,7 @@ function HomeComponent() {
         </div>
 
         {/*wizard Vault*/}
-        <div className="p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
+        <div className="sm:p-2 md:p-2 lg:p-2 flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">Wizard Vault</h3>
           {wizardDailyTasks && (
             <TaskComponent
