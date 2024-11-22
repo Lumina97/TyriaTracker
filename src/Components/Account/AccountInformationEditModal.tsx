@@ -29,8 +29,8 @@ const AccountInformationEditModal = ({
   };
 
   return (
-    <div className="rounded-sm absolute top-1/2 -translate-y-1/2 translate-x-1/4 w-2/3 h-1/2 bg-sun">
-      <div className="flex flex-col pt-16 items-center gap-6 w-2/3 m-auto h-full">
+    <div className="rounded-md absolute px-4    top-1/2 -translate-y-1/2 sm:translate-x-1/4 w-full sm:w-2/3 h-1/2 text-white bg-slate-800 border-white border-[1px]">
+      <div className="flex flex-col pb-4 pt-16 items-center gap-6 w-2/3 m-auto h-full">
         <div className="w-full justify-between whitespace-pre flex flex-row gap-4">
           <p>Current {dataFieldName()}</p>
           <p className="text-wrap">{currentFieldData}</p>

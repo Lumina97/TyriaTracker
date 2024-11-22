@@ -4,19 +4,17 @@ import { useAPI } from "../../Providers/APIProvider";
 const Navbar = () => {
   const { logout } = useAPI();
   return (
-    <aside>
-      <div className=" p-2 min-h-screen h-full border-r-2 border-sun align-center flex flex-col gap-2 text-lg  w-[200px]">
-        <div className="sticky top-4">
-          <div>
-            <div className="w-full">
-              <img
-                className="w-full"
-                src="src/assets/Gw2_taskmaster.png"
-                alt="TaskMaster Logo"
-              />
-            </div>
+    <aside className="w-full">
+      <div className="p-2 w-[50%] items-center  sm:min-h-screen sm:h-full border-r-2 pb-8 sm:pb-0  border-sun align-center flex flex-col gap-2 text-lg  sm:w-[200px]">
+        <div className="sticky top-4 flex flex-col">
+          <div className="w-full max-w-[190px] self-center ">
+            <img
+              className="w-full"
+              src="src/assets/Gw2_taskmaster.png"
+              alt="TaskMaster Logo"
+            />
           </div>
-          <div className="flex flex-col   gap-4 items-center">
+          <div className="flex  flex-row sm:flex-col   gap-4 items-center">
             <Link to="/Home" className="hover:scale-[1.1] font-semibold">
               Tasks
             </Link>

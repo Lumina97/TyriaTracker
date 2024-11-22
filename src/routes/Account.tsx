@@ -8,10 +8,10 @@ export const Route = createFileRoute("/Account")({
 
 function AccountComponent() {
   return (
-    <div className="bg-sunset">
-      <div className="flex flex-row">
+    <div className="bg-sunset min-h-screen">
+      <div className="flex flex-col sm:flex-row">
         <Navbar />
-        <div className=" relative w-full">
+        <div className=" relative w-full h-full min-h-screen ">
           <AccountDataComponent />
         </div>
       </div>

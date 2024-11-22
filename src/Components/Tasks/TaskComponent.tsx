@@ -22,7 +22,7 @@ const TaskComponent = ({ tasks }: { tasks: TTaskComponent }) => {
         </span>
       </div>
       <div
-        className={`flex pointer-events-none p-2   relative h-[${2 * tasks.taskItems.length}rem] bg-zinc-800 text-[] flex-col w-[95%] right-0 border-2 border-sunset left-[5%] z-10`}
+        className={`flex pointer-events-none p-2   relative h-[${2 * tasks.taskItems.length}rem] bg-zinc-800 text-[] flex-col w-[90%] right-0 border-2 border-sunset left-[5%] z-10`}
       >
         {tasks.taskItems.map((task) => {
           return (
