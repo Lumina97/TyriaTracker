@@ -54,7 +54,7 @@ const AccountDataComponent = () => {
 
   return (
     <>
-      <div className="w-3/4 m-auto mt-16 text-white p-12 rounded-md h-full   bg-gradient-to-br from-gray-700 to-gray-950">
+      <div className=" w-[98%] sm:w-3/4 m-auto mt-4 text-white p-12 rounded-md h-full   bg-gradient-to-br from-gray-700 to-gray-950">
         <h3 className="text-2xl font-bold pb-4 flex flex-col">
           Account Information
         </h3>
@@ -77,7 +77,7 @@ const AccountDataComponent = () => {
           }}
         />
       </div>
-      <div className="w-3/4 m-auto mt-16 text-white p-12 rounded-md  bg-gradient-to-br from-gray-700 to-gray-950">
+      <div className="w-[98%]  sm:w-3/4 m-auto mt-8 text-white p-12 rounded-md  bg-gradient-to-br from-gray-700 to-gray-950">
         <h3 className="text-2xl pb-4 font-bold">API Key</h3>
         {GetUser().APIKey && (
           <AccountAPIKeyEntry

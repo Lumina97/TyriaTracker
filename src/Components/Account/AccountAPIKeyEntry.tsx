@@ -8,7 +8,7 @@ const AccountAPIKeyEntry = ({
   onClick: ReactEventHandler;
 }) => {
   return (
-    <div className="flex w-full justify-between">
+    <div className="flex w-full flex-col sm:flex-row gap-4 justify-between">
       <span>{apiKey}</span>
       <button className="hover:scale-110 origin-left" onClick={onClick}>
         Edit

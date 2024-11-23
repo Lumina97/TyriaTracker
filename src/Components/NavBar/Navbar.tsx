@@ -4,8 +4,8 @@ import { useAPI } from "../../Providers/APIProvider";
 const Navbar = () => {
   const { logout } = useAPI();
   return (
-    <aside className="w-full">
-      <div className="p-2 w-[50%] items-center  sm:min-h-screen sm:h-full border-r-2 pb-8 sm:pb-0  border-sun align-center flex flex-col gap-2 text-lg  sm:w-[200px]">
+    <aside>
+      <div className="p-2 w-full items-center  sm:min-h-screen sm:h-full sm:border-r-2 pb-8 sm:pb-0  border-sun align-center flex flex-col gap-2 text-lg  sm:w-[200px]">
         <div className="sticky top-4 flex flex-col">
           <div className="w-full max-w-[190px] self-center ">
             <img
