@@ -10,7 +10,7 @@ function baseComponent() {
   const navigate = useNavigate({ from: "/" });
 
   useEffect(() => {
-    navigate({ to: "/Home" });
+    navigate({ to: "/SignIn" });
   }, []);
 
   return <></>;

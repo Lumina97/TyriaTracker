@@ -1,6 +1,6 @@
 import { ReactNode, useNavigate, useLocation } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { APIBaseURL } from "../Utils/settings";
 import {
   TDailyCraftsAPIData,
@@ -21,7 +21,14 @@ type TAPIProvider = {
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   isSignedIn: () => Promise<boolean>;
-  resetPassword: (email: string) => Promise<boolean>;
+  initializePasswordReset: (
+    email: string
+  ) => Promise<false | AxiosResponse<any, any>>;
+  performPasswordReset: (
+    email: string,
+    resetCode: string,
+    newPassword: string
+  ) => Promise<boolean>;
   createAccount: (email: string, password: string) => Promise<boolean>;
   updateUserInformation: (updatedUser: TUser) => Promise<boolean>;
   GetUser: () => TUser;
@@ -59,7 +66,7 @@ const clearUserFromLocalStorage = () => {
 const APIContext = createContext<TAPIProvider>({} as TAPIProvider);
 
 export const APIProvider = ({ children }: { children: ReactNode }) => {
-  const navigate = useNavigate({ from: "/SignIn" });
+  const navigate = useNavigate();
   const [user, setUser] = useState<TUser>({} as TUser);
   const [userRaids, setUserRaids] = useState<TRaidAPIData>();
   const [userDungeons, setUserDungeons] = useState<TDungeonAPIData>();
@@ -186,13 +193,13 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     return false;
   };
 
-  const resetPassword = async (email: string) => {
+  const initializePasswordReset = async (email: string) => {
     if (!email) {
       console.log("no email provided to reset password - cancelling");
       return false;
     }
 
-    const url = `${APIBaseURL}auth/passwordReset`;
+    const url = `${APIBaseURL}auth/passwordReset/initialize`;
     const config: AxiosRequestConfig = {
       url,
       method: "post",
@@ -201,7 +208,36 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       },
     };
     const response = await axios(config);
-    if (response.status === 200) return true;
+    if (response.status === 200) return response;
+
+    return false;
+  };
+
+  const performPasswordReset = async (
+    email: string,
+    resetCode: string,
+    newPassword: string
+  ) => {
+    if (!resetCode) {
+      console.log("no reset code provided to reset password - cancelling");
+      return false;
+    }
+
+    const url = `${APIBaseURL}auth/passwordReset/confirm`;
+    const config: AxiosRequestConfig = {
+      url,
+      method: "post",
+      data: {
+        email,
+        resetCode,
+        newPassword,
+      },
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      navigate({ to: "/" });
+      return true;
+    }
 
     return false;
   };
@@ -294,7 +330,8 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   return (
     <APIContext.Provider
       value={{
-        resetPassword,
+        initializePasswordReset,
+        performPasswordReset,
         login,
         GetUser,
         isSignedIn,

@@ -20,7 +20,7 @@ const SignInFormComponent = () => {
         if (result) {
           setPassword("");
           setEmail("");
-        }
+        } else setShowLogInError(true);
       });
     } else setShowLogInError(true);
   };

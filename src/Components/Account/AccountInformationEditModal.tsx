@@ -29,7 +29,7 @@ const AccountInformationEditModal = ({
   };
 
   return (
-    <div className="rounded-md absolute   sm:left-1/2 sm:-translate-x-1/2   m-auto px-4 top-1/4 sm:top-1/2 sm:-translate-y-1/2  w-full sm:w-3/4 md:max-w-[650px]  h-1/2 text-white bg-slate-800 border-white border-[2px]">
+    <div className="rounded-md absolute drop-shadow-black   sm:left-1/2 sm:-translate-x-1/2   m-auto px-4 top-1/4 sm:top-1/2 sm:-translate-y-1/2  w-[98%] ml-[01%] sm:w-3/4 md:max-w-[650px]  h-1/2 text-white bg-slate-800 border-white border-[1px]">
       <div className="flex flex-col pb-4 pt-16 items-center gap-6 w-3/4 m-auto h-full sm:w-full sm:m-0 ">
         <div className="w-full flex-col justify-between whitespace-pre flex sm:flex-col md:flex-row gap-4 ">
           <p>Current {dataFieldName()}</p>

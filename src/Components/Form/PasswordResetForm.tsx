@@ -1,24 +1,35 @@
 import React, { useState } from "react";
 import InputFieldComponent from "./InputFieldComponent";
-import { isEmailValid } from "../../Utils/InputValidation";
+import { isEmailValid, isPasswordValid } from "../../Utils/InputValidation";
 import { useAPI } from "../../Providers/APIProvider";
 
 const emailError = `Email is not valid`;
-const resetSubmitText = `If there is an account with that email we will send a password reset link to that email!`;
 
 const PasswordResetForm = () => {
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
   const [wasSent, setWasSent] = useState<boolean>(false);
+  const [resetResponse, setResetResponse] = useState<string>("");
   const [email, setEmail] = useState<string>("");
-  const { resetPassword } = useAPI();
+  const [resetCode, setResetCode] = useState<string>("");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const { initializePasswordReset, performPasswordReset } = useAPI();
 
-  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setWasSubmitted(true);
-    if (isEmailValid(email)) {
-      resetPassword(email);
-      setWasSent(true);
-      setEmail("");
+
+    if (wasSent === false) {
+      setWasSubmitted(true);
+      if (isEmailValid(email)) {
+        const result = await initializePasswordReset(email);
+        if (result !== false) {
+          setResetResponse(result.data.message);
+          setWasSent(true);
+        } else setEmail("");
+      }
+    } else {
+      if (resetCode === "" || newPassword === "") return;
+      if (isPasswordValid(newPassword))
+        performPasswordReset(email, resetCode, newPassword);
     }
   };
 
@@ -28,19 +39,34 @@ const PasswordResetForm = () => {
 
       <form className="w-[350px]" onSubmit={(e) => onFormSubmit(e)}>
         <InputFieldComponent
-          labelTitle="Email:"
+          labelTitle={`${wasSent ? "Reset Code:" : "Email:"}`}
           wrapperClassName="mb-12"
           props={{
-            onChange: (e) => setEmail(e.target.value),
-            type: "email",
-            value: email,
+            onChange: (e) => {
+              wasSent ? setResetCode(e.target.value) : setEmail(e.target.value);
+            },
+            type: wasSent ? "text" : "email",
+            value: wasSent ? resetCode : email,
           }}
         />
+        {wasSent && (
+          <InputFieldComponent
+            labelTitle="New password"
+            wrapperClassName="mb-12"
+            props={{
+              onChange: (e) => {
+                setNewPassword(e.target.value);
+              },
+              type: "password",
+              value: newPassword,
+            }}
+          />
+        )}
 
         {wasSubmitted && !isEmailValid(email) && !wasSent && (
           <div className="pl-4 text-[red]">{emailError}</div>
         )}
-        {wasSent && <div className="pl-4 text-[black]">{resetSubmitText}</div>}
+        {wasSent && <div className="pl-4 text-[black]">{resetResponse}</div>}
 
         <InputFieldComponent
           labelTitle=""
@@ -49,7 +75,7 @@ const PasswordResetForm = () => {
             type: "submit",
             value: "Reset password",
           }}
-        ></InputFieldComponent>
+        />
       </form>
     </div>
   );

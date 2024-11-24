@@ -17,7 +17,7 @@ const TaskItem = ({
       className={`py-2 flex flex-row justify-between gap-2 w-full ${wrapperClass}`}
     >
       <p>{item.name.replaceAll("_", " ").toUpperCase()}</p>
-      {/* has multilple steps to completion */}
+      {/* has multiple steps to completion */}
       {item.finishedProgress > 1 && (
         <div
           className={`${isComplete ? "text-green-600" : "text-red-600"} min-w-[80px] `}
