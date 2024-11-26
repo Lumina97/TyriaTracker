@@ -23,16 +23,18 @@ export const forgotPassword = () => {
   console.log("Send password reset email");
 };
 
-export const getUserRaids = async (user: TUser, GetUser: () => TUser) => {
-  const usr = await validateUser(user, GetUser);
-  if (usr === false) return;
+export const getUserRaids = async (user: TUser) => {
+  if (user.email === "") {
+    console.log("user email was empty");
+    return undefined;
+  }
 
   const url = `${APIBaseURL}api/raids`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: usr.email,
-      jwt: usr.jwt,
+      email: user.email,
+      jwt: user.jwt,
     },
     url,
   };
@@ -43,6 +45,7 @@ export const getUserRaids = async (user: TUser, GetUser: () => TUser) => {
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
+      console.log("returning raid data");
       return raidsData;
     }
   } catch (error) {
@@ -51,15 +54,18 @@ export const getUserRaids = async (user: TUser, GetUser: () => TUser) => {
   return undefined;
 };
 
-export const getUserDungeons = async (user: TUser, GetUser: () => TUser) => {
-  const usr = await validateUser(user, GetUser);
-  if (usr === false) return;
+export const getUserDungeons = async (user: TUser) => {
+  if (user.email === "") {
+    console.log("user email was empty");
+    return undefined;
+  }
+
   const url = `${APIBaseURL}api/dungeons`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: usr.email,
-      jwt: usr.jwt,
+      email: user.email,
+      jwt: user.jwt,
     },
     url,
   };
@@ -70,6 +76,7 @@ export const getUserDungeons = async (user: TUser, GetUser: () => TUser) => {
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
+      console.log("returning dungeon data");
       return dungeonsData;
     }
   } catch (error) {
@@ -78,16 +85,18 @@ export const getUserDungeons = async (user: TUser, GetUser: () => TUser) => {
   return undefined;
 };
 
-export const getUserWorldBosses = async (user: TUser, GetUser: () => TUser) => {
-  const usr = await validateUser(user, GetUser);
-  if (usr === false) return;
+export const getUserWorldBosses = async (user: TUser) => {
+  if (user.email === "") {
+    console.log("user email was empty");
+    return undefined;
+  }
 
   const url = `${APIBaseURL}api/worldBosses`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: usr.email,
-      jwt: usr.jwt,
+      email: user.email,
+      jwt: user.jwt,
     },
     url,
   };
@@ -98,6 +107,7 @@ export const getUserWorldBosses = async (user: TUser, GetUser: () => TUser) => {
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
+      console.log("returning worldboss data");
       return worldBossesData;
     }
   } catch (error) {
@@ -106,19 +116,18 @@ export const getUserWorldBosses = async (user: TUser, GetUser: () => TUser) => {
   return undefined;
 };
 
-export const getUserDailyCrafting = async (
-  user: TUser,
-  GetUser: () => TUser
-) => {
-  const usr = await validateUser(user, GetUser);
-  if (usr === false) return;
+export const getUserDailyCrafting = async (user: TUser) => {
+  if (user.email === "") {
+    console.log("user email was empty");
+    return undefined;
+  }
 
   const url = `${APIBaseURL}api/dailyCrafting`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: usr.email,
-      jwt: usr.jwt,
+      email: user.email,
+      jwt: user.jwt,
     },
     url,
   };
@@ -129,6 +138,7 @@ export const getUserDailyCrafting = async (
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
+      console.log("returning dailyCraft data");
       return dailyCraftData;
     }
   } catch (error) {
@@ -137,16 +147,18 @@ export const getUserDailyCrafting = async (
   return undefined;
 };
 
-export const getUserWizardVault = async (user: TUser, GetUser: () => TUser) => {
-  const usr = await validateUser(user, GetUser);
-  if (usr === false) return;
+export const getUserWizardVault = async (user: TUser) => {
+  if (user.email === "") {
+    console.log("user email was empty");
+    return undefined;
+  }
 
   const url = `${APIBaseURL}api/wizardVault`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: usr.email,
-      jwt: usr.jwt,
+      email: user.email,
+      jwt: user.jwt,
     },
     url,
   };
@@ -158,6 +170,7 @@ export const getUserWizardVault = async (user: TUser, GetUser: () => TUser) => {
         weekly: result.data.userData?.weekly,
         special: result.data.userData?.special,
       };
+      console.log("returning wizardVault data");
       return wizardVault;
     }
   } catch (error) {

@@ -233,12 +233,15 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
         newPassword,
       },
     };
-    const response = await axios(config);
-    if (response.status === 200) {
-      navigate({ to: "/" });
-      return true;
+    try {
+      const response = await axios(config);
+      if (response.status === 200) {
+        navigate({ to: "/" });
+        return true;
+      }
+    } catch (error) {
+      return false;
     }
-
     return false;
   };
 
@@ -284,45 +287,45 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
           return;
         }
       }
-      getUserRaids(user, GetUser)
-        .then((result) => {
-          if (result) setUserRaids(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // getUserRaids(user, GetUser)
+      //   .then((result) => {
+      //     if (result) setUserRaids(result);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
 
-      getUserDungeons(user, GetUser)
-        .then((result) => {
-          if (result) setUserDungeons(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // getUserDungeons(user, GetUser)
+      //   .then((result) => {
+      //     if (result) setUserDungeons(result);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
 
-      getUserWorldBosses(user, GetUser)
-        .then((result) => {
-          if (result) setUserWorldBosses(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // getUserWorldBosses(user, GetUser)
+      //   .then((result) => {
+      //     if (result) setUserWorldBosses(result);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
 
-      getUserDailyCrafting(user, GetUser)
-        .then((result) => {
-          if (result) setUserDailyCrafts(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // getUserDailyCrafting(user, GetUser)
+      //   .then((result) => {
+      //     if (result) setUserDailyCrafts(result);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
 
-      getUserWizardVault(user, GetUser)
-        .then((result) => {
-          if (result) setUserWizardVault(result);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      // getUserWizardVault(user, GetUser)
+      //   .then((result) => {
+      //     if (result) setUserWizardVault(result);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //   });
     };
     setup();
   }, []);

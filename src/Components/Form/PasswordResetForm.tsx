@@ -4,9 +4,14 @@ import { isEmailValid, isPasswordValid } from "../../Utils/InputValidation";
 import { useAPI } from "../../Providers/APIProvider";
 
 const emailError = `Email is not valid`;
+const passwordError = `password is not long enough`;
 
 const PasswordResetForm = () => {
   const [wasSubmitted, setWasSubmitted] = useState<boolean>(false);
+  const [showPasswordResetError, setShowPasswordResetError] =
+    useState<boolean>(false);
+  const [showPasswordError, setShowPasswordError] = useState<boolean>(false);
+
   const [wasSent, setWasSent] = useState<boolean>(false);
   const [resetResponse, setResetResponse] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -29,7 +34,17 @@ const PasswordResetForm = () => {
     } else {
       if (resetCode === "" || newPassword === "") return;
       if (isPasswordValid(newPassword))
-        performPasswordReset(email, resetCode, newPassword);
+        performPasswordReset(email, resetCode, newPassword).then((result) => {
+          if (result === false) {
+            setResetResponse("Failed to reset password!");
+            setShowPasswordResetError(true);
+            setNewPassword("");
+            setEmail("");
+            setWasSent(false);
+            setWasSubmitted(false);
+          }
+        });
+      else setShowPasswordError(true);
     }
   };
 
@@ -57,6 +72,7 @@ const PasswordResetForm = () => {
               onChange: (e) => {
                 setNewPassword(e.target.value);
               },
+              autoComplete: "new-password",
               type: "password",
               value: newPassword,
             }}
@@ -65,6 +81,14 @@ const PasswordResetForm = () => {
 
         {wasSubmitted && !isEmailValid(email) && !wasSent && (
           <div className="pl-4 text-[red]">{emailError}</div>
+        )}
+
+        {wasSubmitted && !isPasswordValid(newPassword) && showPasswordError && (
+          <div className="pl-4 text-[red]">{passwordError}</div>
+        )}
+
+        {showPasswordResetError && (
+          <div className="pl-4 text-[red]">{resetResponse}</div>
         )}
         {wasSent && <div className="pl-4 text-[black]">{resetResponse}</div>}
 
