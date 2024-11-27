@@ -38,6 +38,7 @@ const AccountInformationEditModal = ({
         <div className="w-full justify-between sm:flex-col flex flex-col pt-4 md:flex-row gap-4">
           <p>Enter new {dataFieldName()}</p>
           <input
+            className="text-black indent-2"
             disabled={submitted}
             type={
               options === EAccountEditOptions.password ? "password" : "text"
@@ -45,6 +46,7 @@ const AccountInformationEditModal = ({
             onChange={(e) => {
               setNewFieldData(e.target.value);
             }}
+            value={newFieldData}
           />
         </div>
         <div className="w-full pt-4 justify-end flex sm:flex-col   flex-col md:flex-row gap-4">

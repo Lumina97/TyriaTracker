@@ -1,21 +1,7 @@
-import { ReactNode, useNavigate, useLocation } from "@tanstack/react-router";
+import { ReactNode, useNavigate } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { APIBaseURL } from "../Utils/settings";
-import {
-  TDailyCraftsAPIData,
-  TDungeonAPIData,
-  TRaidAPIData,
-  TWizardVaultAPIData,
-  TWorldBossesAPIData,
-} from "../Utils/types";
-import {
-  getUserDailyCrafting,
-  getUserDungeons,
-  getUserRaids,
-  getUserWizardVault,
-  getUserWorldBosses,
-} from "../Utils/API";
 
 type TAPIProvider = {
   login: (email: string, password: string) => Promise<boolean>;
@@ -32,11 +18,6 @@ type TAPIProvider = {
   createAccount: (email: string, password: string) => Promise<boolean>;
   updateUserInformation: (updatedUser: TUser) => Promise<boolean>;
   GetUser: () => TUser;
-  userRaids: TRaidAPIData | undefined;
-  userDungeons: TDungeonAPIData | undefined;
-  userWorldBosses: TWorldBossesAPIData | undefined;
-  userDailyCrafts: TDailyCraftsAPIData | undefined;
-  userWizardVault: TWizardVaultAPIData | undefined;
 };
 
 export type TUser = {
@@ -68,12 +49,6 @@ const APIContext = createContext<TAPIProvider>({} as TAPIProvider);
 export const APIProvider = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState<TUser>({} as TUser);
-  const [userRaids, setUserRaids] = useState<TRaidAPIData>();
-  const [userDungeons, setUserDungeons] = useState<TDungeonAPIData>();
-  const [userWorldBosses, setUserWorldBosses] = useState<TWorldBossesAPIData>();
-  const [userDailyCrafts, setUserDailyCrafts] = useState<TDailyCraftsAPIData>();
-  const [userWizardVault, setUserWizardVault] = useState<TWizardVaultAPIData>();
-
   const GetUser = () => {
     if (!user || !user.email) {
       const load = loadUserFromLocalStorage();
@@ -265,6 +240,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       if (result.status === 200) {
         const newUser = result.data.updatedUser;
         setUser(newUser);
+        localStorage.setItem("user", JSON.stringify(newUser));
         return true;
       }
     } catch (error) {
@@ -341,11 +317,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
         logout,
         updateUserInformation,
         createAccount,
-        userRaids,
-        userDungeons,
-        userWorldBosses,
-        userDailyCrafts,
-        userWizardVault,
       }}
     >
       {children}

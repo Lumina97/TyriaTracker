@@ -45,7 +45,6 @@ export const getUserRaids = async (user: TUser) => {
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
-      console.log("returning raid data");
       return raidsData;
     }
   } catch (error) {
@@ -76,7 +75,6 @@ export const getUserDungeons = async (user: TUser) => {
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
-      console.log("returning dungeon data");
       return dungeonsData;
     }
   } catch (error) {
@@ -107,7 +105,6 @@ export const getUserWorldBosses = async (user: TUser) => {
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
-      console.log("returning worldboss data");
       return worldBossesData;
     }
   } catch (error) {
@@ -138,7 +135,6 @@ export const getUserDailyCrafting = async (user: TUser) => {
         userData: result.data.userData,
         worldData: result.data.worldData,
       };
-      console.log("returning dailyCraft data");
       return dailyCraftData;
     }
   } catch (error) {
@@ -170,7 +166,6 @@ export const getUserWizardVault = async (user: TUser) => {
         weekly: result.data.userData?.weekly,
         special: result.data.userData?.special,
       };
-      console.log("returning wizardVault data");
       return wizardVault;
     }
   } catch (error) {
