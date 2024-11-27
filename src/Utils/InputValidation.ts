@@ -12,7 +12,7 @@ export const isEmailValid = (email: string) => {
 };
 
 export const isAPIKeyValid = (apiKey: string) => {
-  return apiKey.length === APIKeyLength;
+  return apiKey.length >= APIKeyLength;
 };
 
 export const isPasswordValid = (password: string) => {

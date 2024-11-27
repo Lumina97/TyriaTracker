@@ -1,6 +1,6 @@
 import { ReactNode, useNavigate } from "@tanstack/react-router";
 import { createContext, useContext, useEffect, useState } from "react";
-import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { APIBaseURL } from "../Utils/settings";
 
 type TAPIProvider = {
@@ -15,7 +15,11 @@ type TAPIProvider = {
     resetCode: string,
     newPassword: string
   ) => Promise<boolean>;
-  createAccount: (email: string, password: string) => Promise<boolean>;
+  createAccount: (
+    email: string,
+    password: string,
+    apiKey: string
+  ) => Promise<{ status: boolean; message: string }>;
   updateUserInformation: (updatedUser: TUser) => Promise<boolean>;
   GetUser: () => TUser;
 };
@@ -143,29 +147,32 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     return true;
   };
 
-  const createAccount = async (email: string, password: string) => {
+  const createAccount = async (
+    email: string,
+    password: string,
+    apiKey: string
+  ) => {
     const url = `${APIBaseURL}auth/users`;
     const config: AxiosRequestConfig = {
       method: "post",
       url,
       data: {
-        email,
-        password,
+        email: email,
+        password: password,
+        APIKey: apiKey,
       },
     };
 
-    try {
-      const result = await axios(config);
-      if (result.data.status === true) {
+    return axios(config)
+      .then((result) => {
+        localStorage.setItem("user", JSON.stringify(result.data.newUser));
         setUser(result.data.newUser);
-        localStorage.setItem("jwt", result.data.jwt);
         navigate({ to: "/Home" });
-        return true;
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    return false;
+        return result.data;
+      })
+      .catch((error) => {
+        return error.response.data as { status: boolean; message: string };
+      });
   };
 
   const initializePasswordReset = async (email: string) => {
