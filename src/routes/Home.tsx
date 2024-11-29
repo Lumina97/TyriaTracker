@@ -2,7 +2,13 @@ import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import Navbar from "../Components/NavBar/Navbar";
 import TaskComponent from "../Components/Tasks/TaskComponent";
 import { TUser } from "../Providers/APIProvider";
-import { TDungeon, TRaidWing, TWorldBoss } from "../Utils/types";
+import {
+  TDailyCraft,
+  TDungeon,
+  TDungeonPath,
+  TRaidEvent,
+  TWorldBoss,
+} from "../Utils/types";
 import TaskItem, { TTaskItem } from "../Components/Tasks/TaskItem";
 import {
   getUserDailyCrafting,
@@ -48,26 +54,26 @@ function HomeComponent() {
   const { raids, dungeons, worldBosses, dailyCrafting, wizardVault } =
     useLoaderData({ from: "/Home" });
 
-  const doesUserHaveRaid = (worldData: TRaidWing) => {
-    return raids?.userData?.find((userwing) => userwing.id === worldData.id);
+  const doesUserHaveRaidEvent = (raidEvent: TRaidEvent) => {
+    return raids?.userData?.find((userEvent) => userEvent === raidEvent.name);
   };
 
-  const doesUserHaveDungeon = (worldData: TDungeon) => {
+  const doesUserHaveDungeonPath = (dungeonPath: TDungeonPath) => {
     return dungeons?.userData?.find(
-      (userDungeon) => userDungeon.id === worldData.id
+      (userDungeon) => userDungeon === dungeonPath.name
     );
   };
 
   const doesUserHaveWorldBoss = (worldData: TWorldBoss) => {
-    return worldBosses?.userData?.find((boss) => boss.id === worldData.id);
+    return worldBosses?.userData?.find((boss) => boss === worldData.name);
   };
 
-  const doesUserHaveDailyCraft = (worldData: TWorldBoss) => {
-    return dailyCrafting?.userData?.find((craft) => craft.id === worldData.id);
+  const doesUserHaveDailyCraft = (worldData: TDailyCraft) => {
+    return dailyCrafting?.userData?.find((craft) => craft === worldData.name);
   };
 
   const wizardDailyTasks: TTaskItem[] | undefined =
-    wizardVault?.daily?.objectives.map((objective, index) => {
+    wizardVault?.daily?.objectives.map((objective) => {
       return {
         name: objective.title,
         currentProgress: objective.progress_current,
@@ -76,7 +82,7 @@ function HomeComponent() {
     });
 
   const wizardWeeklyTasks: TTaskItem[] | undefined =
-    wizardVault?.weekly?.objectives.map((objective, index) => {
+    wizardVault?.weekly?.objectives.map((objective) => {
       return {
         name: objective.title,
         currentProgress: objective.progress_current,
@@ -85,7 +91,7 @@ function HomeComponent() {
     });
 
   const wizardSpecialTasks: TTaskItem[] | undefined =
-    wizardVault?.special?.objectives.map((objective, index) => {
+    wizardVault?.special?.objectives.map((objective) => {
       return {
         name: objective.title,
         currentProgress: objective.progress_current,
@@ -101,12 +107,10 @@ function HomeComponent() {
           <h3 className="text-center text-3xl font">Raids</h3>
           {raids?.worldData.map((raid) => {
             const taskItems: TTaskItem[] = [];
-            const UserRaid = doesUserHaveRaid(raid);
             raid.events.map((event, index) => {
               taskItems.push({
                 name: event.name,
-                currentProgress:
-                  UserRaid?.events[index].name === event.name ? 1 : 0,
+                currentProgress: doesUserHaveRaidEvent(event) ? 1 : 0,
                 finishedProgress: 1,
               });
             });
@@ -124,13 +128,10 @@ function HomeComponent() {
           <h3 className="text-center text-3xl font">Dungeons</h3>
           {dungeons?.worldData.map((dungeon, index) => {
             const taskItems: TTaskItem[] = [];
-            const UserDungeon = doesUserHaveDungeon(dungeon);
-
             dungeon.paths.map((path, index) => {
               taskItems.push({
                 name: path.name,
-                currentProgress:
-                  UserDungeon?.paths[index].name === path.name ? 1 : 0,
+                currentProgress: doesUserHaveDungeonPath(path) ? 1 : 0,
                 finishedProgress: 1,
               });
             });
