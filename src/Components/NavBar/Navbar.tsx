@@ -10,7 +10,7 @@ const Navbar = () => {
           <div className="w-full max-w-[190px] self-center ">
             <img
               className="w-full"
-              src="src/assets/Gw2_taskmaster.png"
+              src="assets/Gw2_taskmaster.png"
               alt="TaskMaster Logo"
             />
           </div>
