@@ -4,7 +4,7 @@
 
 //raids
 export type TRaidAPIData = {
-  userData: TRaidWing[];
+  userData: string[];
   worldData: TRaidWing[];
 };
 
@@ -49,7 +49,7 @@ export type TWizardVaultObjective = {
 
 //worldbosses
 export type TWorldBossesAPIData = {
-  userData: TWorldBoss[];
+  userData: string[];
   worldData: TWorldBoss[];
 };
 
@@ -60,7 +60,7 @@ export type TWorldBoss = {
 
 //dailyCrafts
 export type TDailyCraftsAPIData = {
-  userData: TDailyCraft[];
+  userData: string[];
   worldData: TDailyCraft[];
 };
 export type TDailyCraft = {
@@ -70,7 +70,7 @@ export type TDailyCraft = {
 
 //dungeons
 export type TDungeonAPIData = {
-  userData: TDungeon[];
+  userData: string[];
   worldData: TDungeon[];
 };
 

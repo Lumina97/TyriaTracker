@@ -1,23 +1,23 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
-import CreateAccountForm from '../Components/Form/CreateAccountForm'
-import SignInFormComponent from '../Components/Form/SignInFormComponent'
+import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import CreateAccountForm from "../Components/Form/CreateAccountForm";
+import SignInFormComponent from "../Components/Form/SignInFormComponent";
 
-import '../CSS/global.css'
-import PasswordResetForm from '../Components/Form/PasswordResetForm'
+import "../CSS/global.css";
+import PasswordResetForm from "../Components/Form/PasswordResetForm";
 
-export const Route = createFileRoute('/SignIn')({
+export const Route = createFileRoute("/SignIn")({
   component: SignInComponent,
-})
+});
 
 function SignInComponent() {
-  const [showCreateAccount, setCreateAccount] = useState<boolean>(false)
-  const [showPasswordReset, setShowPasswordReset] = useState<boolean>(false)
+  const [showCreateAccount, setCreateAccount] = useState<boolean>(false);
+  const [showPasswordReset, setShowPasswordReset] = useState<boolean>(false);
 
   return (
     <section className="bg-sunset relative min-h-[100vh]">
       <div className="w-1/3 max-w-[15%] m-auto pt-4">
-        <img src="src\assets\Gw2_taskmaster.png" className="w-full" />
+        <img src="assets\Gw2_taskmaster.png" className="w-full" />
       </div>
       <div className="w-1/2 m-auto flex flex-col align-center justify-center">
         {showPasswordReset && (
@@ -25,8 +25,8 @@ function SignInComponent() {
             <PasswordResetForm />
             <button
               onClick={() => {
-                setCreateAccount(false)
-                setShowPasswordReset(false)
+                setCreateAccount(false);
+                setShowPasswordReset(false);
               }}
               className="text-[grey]  hover:text-[black]"
             >
@@ -41,8 +41,8 @@ function SignInComponent() {
                 <CreateAccountForm />
                 <button
                   onClick={() => {
-                    setCreateAccount(false)
-                    setShowPasswordReset(false)
+                    setCreateAccount(false);
+                    setShowPasswordReset(false);
                   }}
                   className="text-[grey]  hover:text-[black]"
                 >
@@ -56,8 +56,8 @@ function SignInComponent() {
                 <div className="flex flex-col self-center">
                   <button
                     onClick={() => {
-                      setCreateAccount(true)
-                      setShowPasswordReset(false)
+                      setCreateAccount(true);
+                      setShowPasswordReset(false);
                     }}
                     className="text-[grey] text-left hover:text-[black]"
                   >
@@ -65,8 +65,8 @@ function SignInComponent() {
                   </button>
                   <button
                     onClick={() => {
-                      setCreateAccount(false)
-                      setShowPasswordReset(true)
+                      setCreateAccount(false);
+                      setShowPasswordReset(true);
                     }}
                     className="text-[grey] text-left hover:text-[black]"
                   >
@@ -79,5 +79,5 @@ function SignInComponent() {
         )}
       </div>
     </section>
-  )
+  );
 }
