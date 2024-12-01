@@ -16,7 +16,7 @@ function SignInComponent() {
 
   return (
     <section className="bg-sunset relative min-h-[100vh]">
-      <div className="w-1/3 max-w-[400px] m-auto pt-4">
+      <div className="w-1/3 max-w-[15%] m-auto pt-4">
         <img src="src\assets\Gw2_taskmaster.png" className="w-full" />
       </div>
       <div className="w-1/2 m-auto flex flex-col align-center justify-center">
