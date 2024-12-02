@@ -4,10 +4,14 @@ import TaskComponent from "../Components/Tasks/TaskComponent";
 import { TUser } from "../Providers/APIProvider";
 import {
   TDailyCraft,
-  TDungeon,
+  TDailyCraftsAPIData,
+  TDungeonAPIData,
   TDungeonPath,
+  TRaidAPIData,
   TRaidEvent,
+  TWizardVaultAPIData,
   TWorldBoss,
+  TWorldBossesAPIData,
 } from "../Utils/types";
 import TaskItem, { TTaskItem } from "../Components/Tasks/TaskItem";
 import {
@@ -105,9 +109,9 @@ function HomeComponent() {
       <div className=" grid w-full grid-cols-1 lg:grid-cols-2 sm:grid-cols-1 grid-flow-row sm:w-full  sm:m-6 md:m-6 lg:m-6 gap-8">
         <div className="sm:p-2 md:p-2 lg:p-2 w-full flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">Raids</h3>
-          {raids?.worldData.map((raid) => {
+          {raids?.worldData?.map((raid) => {
             const taskItems: TTaskItem[] = [];
-            raid.events.map((event, index) => {
+            raid.events.map((event) => {
               taskItems.push({
                 name: event.name,
                 currentProgress: doesUserHaveRaidEvent(event) ? 1 : 0,
@@ -126,9 +130,9 @@ function HomeComponent() {
         {/*dungeons */}
         <div className="sm:p-2 md:p-2 lg:p-2 w-full flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">Dungeons</h3>
-          {dungeons?.worldData.map((dungeon, index) => {
+          {dungeons?.worldData?.map((dungeon, index) => {
             const taskItems: TTaskItem[] = [];
-            dungeon.paths.map((path, index) => {
+            dungeon.paths.map((path) => {
               taskItems.push({
                 name: path.name,
                 currentProgress: doesUserHaveDungeonPath(path) ? 1 : 0,
@@ -149,7 +153,7 @@ function HomeComponent() {
         {/*WorldBosses */}
         <div className="sm:p-2 md:p-2 lg:p-2 w-full flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">World Bosses</h3>
-          {worldBosses?.worldData.map((boss, index) => {
+          {worldBosses?.worldData?.map((boss, index) => {
             const taskItem = {
               name: boss.name,
               currentProgress: doesUserHaveWorldBoss(boss) ? 1 : 0,
@@ -170,7 +174,7 @@ function HomeComponent() {
         {/*Daily Crafts */}
         <div className="sm:p-2 md:p-2 lg:p-2 w-full flex flex-col border-2 text-white border-black bg-gradient-to-br from-gray-700 to-gray-950">
           <h3 className="text-center text-3xl font">Daily Crafting</h3>
-          {dailyCrafting?.worldData.map((craft, index) => {
+          {dailyCrafting?.worldData?.map((craft, index) => {
             const taskItem = {
               name: craft.name,
               currentProgress: doesUserHaveDailyCraft(craft) ? 1 : 0,

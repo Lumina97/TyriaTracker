@@ -1,5 +1,4 @@
 import TaskItem, { TTaskItem } from "./TaskItem";
-
 export type TTaskComponent = {
   name: string;
   taskItems: TTaskItem[];
