@@ -11,12 +11,18 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as TradingPostImport } from './routes/TradingPost'
 import { Route as SignInImport } from './routes/SignIn'
 import { Route as HomeImport } from './routes/Home'
 import { Route as AccountImport } from './routes/Account'
 import { Route as IndexImport } from './routes/index'
 
 // Create/Update Routes
+
+const TradingPostRoute = TradingPostImport.update({
+  path: '/TradingPost',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const SignInRoute = SignInImport.update({
   path: '/SignIn',
@@ -70,6 +76,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SignInImport
       parentRoute: typeof rootRoute
     }
+    '/TradingPost': {
+      id: '/TradingPost'
+      path: '/TradingPost'
+      fullPath: '/TradingPost'
+      preLoaderRoute: typeof TradingPostImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -80,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/Account': typeof AccountRoute
   '/Home': typeof HomeRoute
   '/SignIn': typeof SignInRoute
+  '/TradingPost': typeof TradingPostRoute
 }
 
 export interface FileRoutesByTo {
@@ -87,6 +101,7 @@ export interface FileRoutesByTo {
   '/Account': typeof AccountRoute
   '/Home': typeof HomeRoute
   '/SignIn': typeof SignInRoute
+  '/TradingPost': typeof TradingPostRoute
 }
 
 export interface FileRoutesById {
@@ -95,14 +110,15 @@ export interface FileRoutesById {
   '/Account': typeof AccountRoute
   '/Home': typeof HomeRoute
   '/SignIn': typeof SignInRoute
+  '/TradingPost': typeof TradingPostRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/Account' | '/Home' | '/SignIn'
+  fullPaths: '/' | '/Account' | '/Home' | '/SignIn' | '/TradingPost'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/Account' | '/Home' | '/SignIn'
-  id: '__root__' | '/' | '/Account' | '/Home' | '/SignIn'
+  to: '/' | '/Account' | '/Home' | '/SignIn' | '/TradingPost'
+  id: '__root__' | '/' | '/Account' | '/Home' | '/SignIn' | '/TradingPost'
   fileRoutesById: FileRoutesById
 }
 
@@ -111,6 +127,7 @@ export interface RootRouteChildren {
   AccountRoute: typeof AccountRoute
   HomeRoute: typeof HomeRoute
   SignInRoute: typeof SignInRoute
+  TradingPostRoute: typeof TradingPostRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -118,6 +135,7 @@ const rootRouteChildren: RootRouteChildren = {
   AccountRoute: AccountRoute,
   HomeRoute: HomeRoute,
   SignInRoute: SignInRoute,
+  TradingPostRoute: TradingPostRoute,
 }
 
 export const routeTree = rootRoute
@@ -135,7 +153,8 @@ export const routeTree = rootRoute
         "/",
         "/Account",
         "/Home",
-        "/SignIn"
+        "/SignIn",
+        "/TradingPost"
       ]
     },
     "/": {
@@ -149,6 +168,9 @@ export const routeTree = rootRoute
     },
     "/SignIn": {
       "filePath": "SignIn.tsx"
+    },
+    "/TradingPost": {
+      "filePath": "TradingPost.tsx"
     }
   }
 }
