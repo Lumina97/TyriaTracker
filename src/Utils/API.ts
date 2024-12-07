@@ -5,6 +5,7 @@ import {
   TDailyCraftsAPIData,
   TDungeonAPIData,
   TRaidAPIData,
+  TTPItem,
   TWizardVaultAPIData,
   TWorldBossesAPIData,
 } from "./types";
@@ -172,4 +173,23 @@ export const getUserWizardVault = async (user: TUser) => {
     console.log(error);
   }
   return undefined;
+};
+
+export const getAllTradingPostItems = async () => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
+    console.log(`url: ${url}`);
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as TTPItem[];
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
 };

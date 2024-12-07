@@ -86,3 +86,21 @@ export type TDungeonPath = {
   type: string;
   DungeonID: number;
 };
+
+export type TTPItem = {
+  id: number;
+  level: number;
+  name: string;
+  icon: string;
+  rarity: string;
+  vendorValue: string;
+  LatestPrice: TTPItemPriceHistory;
+};
+
+export type TTPItemPriceHistory = {
+  buyPrice: number;
+  sellPrice: number;
+  demand?: number;
+  supply?: number;
+  itemID: number;
+};

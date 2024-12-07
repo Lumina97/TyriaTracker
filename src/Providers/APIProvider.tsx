@@ -258,59 +258,54 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    const setup = async () => {
-      if (window.location.pathname === "/SignIn") return;
-
-      await GetUser();
-      await isSignedIn();
-      if (!user.email) {
-        const usr = GetUser();
-        if (!usr.email) {
-          console.error("User not available!");
-          return;
-        }
-      }
-      // getUserRaids(user, GetUser)
-      //   .then((result) => {
-      //     if (result) setUserRaids(result);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-
-      // getUserDungeons(user, GetUser)
-      //   .then((result) => {
-      //     if (result) setUserDungeons(result);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-
-      // getUserWorldBosses(user, GetUser)
-      //   .then((result) => {
-      //     if (result) setUserWorldBosses(result);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-
-      // getUserDailyCrafting(user, GetUser)
-      //   .then((result) => {
-      //     if (result) setUserDailyCrafts(result);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-
-      // getUserWizardVault(user, GetUser)
-      //   .then((result) => {
-      //     if (result) setUserWizardVault(result);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-    };
-    setup();
+    // const setup = async () => {
+    //   if (window.location.pathname === "/SignIn") return;
+    //   await GetUser();
+    //   await isSignedIn();
+    //   if (!user.email) {
+    //     const usr = GetUser();
+    //     if (!usr.email) {
+    //       console.error("User not available!");
+    //       return;
+    //     }
+    //   }
+    // getUserRaids(user, GetUser)
+    //   .then((result) => {
+    //     if (result) setUserRaids(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // getUserDungeons(user, GetUser)
+    //   .then((result) => {
+    //     if (result) setUserDungeons(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // getUserWorldBosses(user, GetUser)
+    //   .then((result) => {
+    //     if (result) setUserWorldBosses(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // getUserDailyCrafting(user, GetUser)
+    //   .then((result) => {
+    //     if (result) setUserDailyCrafts(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // getUserWizardVault(user, GetUser)
+    //   .then((result) => {
+    //     if (result) setUserWizardVault(result);
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    // };
+    // setup();
   }, []);
 
   return (
