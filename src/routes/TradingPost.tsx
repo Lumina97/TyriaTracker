@@ -1,8 +1,7 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import { getAllTradingPostItems } from "../Utils/API";
 import { TTPItem } from "../Utils/types";
-import { useEffect, useState } from "react";
-import { stringify } from "postcss";
+import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
 
 export const Route = createFileRoute("/TradingPost")({
   loader: async () => {
@@ -14,10 +13,38 @@ export const Route = createFileRoute("/TradingPost")({
   },
   component: TradingPostComponent,
 });
+
 const listingFeePercentage = 0.05;
 const exchangeFreePercentage = 0.1;
+
+const getItemColor = (item: TTPItem) => {
+  switch (item.rarity) {
+    case "Rare":
+      return "text-Rare";
+    case "Basic":
+      return "text-white";
+    case "Fine":
+      return "text-Fine";
+    case "Masterwork":
+      return "text-Master";
+    case "Exotic":
+      return "text-Exotic";
+    case "Ascended":
+      return "text-Ascended";
+    case "Legendary":
+      return "text-Legendary";
+    default:
+      return "text-white";
+  }
+};
+
 const calculateROIForItem = (item: TTPItem) => {
-  if (item === null) return "0";
+  if (
+    item === null ||
+    item.LatestPrice.buyPrice === 0 ||
+    item.LatestPrice.sellPrice === 0
+  )
+    return "0";
   const itemProfit = calculateProfit(item);
   const ROI = (itemProfit / item.LatestPrice.buyPrice) * 100;
   return ROI.toFixed(0);
@@ -26,26 +53,23 @@ const calculateROIForItem = (item: TTPItem) => {
 const calculateProfit = (item: TTPItem) => {
   if (item === null) return 0;
   const preFeeProfit = item.LatestPrice.sellPrice - item.LatestPrice.buyPrice;
-  const listFeeProfit = preFeeProfit * listingFeePercentage;
-  const exchangeFreeProfit = listFeeProfit * exchangeFreePercentage;
+  const listFeeProfit = preFeeProfit - preFeeProfit * listingFeePercentage;
+  const exchangeFreeProfit =
+    listFeeProfit - listFeeProfit * exchangeFreePercentage;
   return exchangeFreeProfit;
-};
-
-const convertPriceToCoins = (price: string) => {
-  if (price.length === 0) return "0";
 };
 
 function TradingPostComponent() {
   const { tpItems } = useLoaderData({ from: "/TradingPost" });
   const itemsPerPage = 50;
-  let currentPage = 40;
+  let currentPage = 500;
   return (
     <div className="overflow-x-auto">
-      <table className="table-auto w-full border-collapse border border-gray-700">
+      <table className="table-auto m-auto w-[90%] border-collapse border border-gray-700">
         <thead>
           <tr className="bg-gray-800 text-white text-sm">
             <th className="border border-gray-700 border-r-0 border-r-transparent px-4 py-2"></th>
-            <th className="border border-gray-700 border-l-0 px-4 py-2">
+            <th className="border border-gray-700 border-l-0 px-12 py-2">
               Name
             </th>
             <th className="border border-gray-700 px-4 py-2">Sell</th>
@@ -54,10 +78,10 @@ function TradingPostComponent() {
             <th className="border border-gray-700 px-4 py-2">ROI</th>
             <th className="border border-gray-700 px-4 py-2">Supply</th>
             <th className="border border-gray-700 px-4 py-2">Demand</th>
-            <th className="border border-gray-700 px-4 py-2">Sold</th>
+            {/* <th className="border border-gray-700 px-4 py-2">Sold</th>
             <th className="border border-gray-700 px-4 py-2">Offers</th>
             <th className="border border-gray-700 px-4 py-2">Bought</th>
-            <th className="border border-gray-700 px-4 py-2">Bids</th>
+            <th className="border border-gray-700 px-4 py-2">Bids</th> */}
           </tr>
         </thead>
         <tbody>
@@ -70,7 +94,7 @@ function TradingPostComponent() {
               .map((item, index) => (
                 <tr
                   key={index}
-                  className={`text-sm ${
+                  className={`text-xs ${
                     index % 2 === 0 ? "bg-gray-900" : "bg-gray-800"
                   } hover:bg-gray-700`}
                 >
@@ -81,17 +105,25 @@ function TradingPostComponent() {
                       alt={`${item.name} img`}
                     />
                   </td>
-                  <td className="border border-gray-700 border-l-0 px-4 py-2 text-white">
+                  <td
+                    className={`border border-gray-700 border-l-0 px-4 py-2 ${getItemColor(item)}`}
+                  >
                     {item.name}
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
-                    {item.LatestPrice.sellPrice}
+                    <TPPriceComponent
+                      price={item.LatestPrice.sellPrice.toString()}
+                    />
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
-                    {item.LatestPrice.buyPrice}
+                    <TPPriceComponent
+                      price={item.LatestPrice.buyPrice.toString()}
+                    />
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
-                    {calculateProfit(item).toFixed(0)}
+                    <TPPriceComponent
+                      price={calculateProfit(item).toFixed(0)}
+                    />
                   </td>
                   <td
                     className={`border border-gray-700 px-4 py-2 ${
@@ -100,7 +132,7 @@ function TradingPostComponent() {
                         : "text-green-500"
                     }`}
                   >
-                    {calculateROIForItem(item)}
+                    {calculateROIForItem(item)}%
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
                     {item.LatestPrice.supply}
