@@ -178,7 +178,6 @@ export const getUserWizardVault = async (user: TUser) => {
 export const getAllTradingPostItems = async () => {
   try {
     const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
-    console.log(`url: ${url}`);
     const config: AxiosRequestConfig = {
       method: "post",
       url,
@@ -191,5 +190,42 @@ export const getAllTradingPostItems = async () => {
   } catch (error) {
     console.error(error);
     return null;
+  }
+};
+
+export const getAllTradingPostItemIds = async () => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getTradableItemIDs`;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as number[];
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getTradingPostItemsFromIds = async (ids: number[]) => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+      data: { ids },
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as TTPItem[];
+    }
+    return [];
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 };

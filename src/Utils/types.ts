@@ -103,4 +103,6 @@ export type TTPItemPriceHistory = {
   demand?: number;
   supply?: number;
   itemID: number;
+  profit: number;
+  ROI: number;
 };

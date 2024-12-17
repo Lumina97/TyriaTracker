@@ -1,21 +1,25 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
-import { getAllTradingPostItems } from "../Utils/API";
+import {
+  getAllTradingPostItemIds,
+  getTradingPostItemsFromIds,
+} from "../Utils/API";
 import { TTPItem } from "../Utils/types";
 import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
+import { useState } from "react";
 
 export const Route = createFileRoute("/TradingPost")({
   loader: async () => {
-    const tpItems = await getAllTradingPostItems();
+    const ids = await getAllTradingPostItemIds();
+    if (!ids) return;
+    const items = await getTradingPostItemsFromIds(ids.slice(500, 550));
 
     return {
-      tpItems,
+      ids,
+      items,
     };
   },
   component: TradingPostComponent,
 });
-
-const listingFeePercentage = 0.05;
-const exchangeFreePercentage = 0.1;
 
 const getItemColor = (item: TTPItem) => {
   switch (item.rarity) {
@@ -38,60 +42,65 @@ const getItemColor = (item: TTPItem) => {
   }
 };
 
-const calculateROIForItem = (item: TTPItem) => {
-  if (
-    item === null ||
-    item.LatestPrice.buyPrice === 0 ||
-    item.LatestPrice.sellPrice === 0
-  )
-    return "0";
-  const itemProfit = calculateProfit(item);
-  const ROI = (itemProfit / item.LatestPrice.buyPrice) * 100;
-  return ROI.toFixed(0);
-};
-
-const calculateProfit = (item: TTPItem) => {
-  if (item === null) return 0;
-  const preFeeProfit = item.LatestPrice.sellPrice - item.LatestPrice.buyPrice;
-  const listFeeProfit = preFeeProfit - preFeeProfit * listingFeePercentage;
-  const exchangeFreeProfit =
-    listFeeProfit - listFeeProfit * exchangeFreePercentage;
-  return exchangeFreeProfit;
-};
-
 function TradingPostComponent() {
-  const { tpItems } = useLoaderData({ from: "/TradingPost" });
+  const { ids, items } = useLoaderData({ from: "/TradingPost" });
+  const [tpItems, setTpItems] = useState<TTPItem[]>(items!);
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 50;
-  let currentPage = 500;
+  const getNewItems = async (nextPage: boolean) => {
+    setCurrentPage(currentPage + (nextPage ? 1 : -1));
+    console.log(`Getting new items at page ${currentPage}`);
+    const newItems = await getTradingPostItemsFromIds(
+      ids.slice(
+        currentPage * itemsPerPage,
+        currentPage * itemsPerPage + itemsPerPage
+      )
+    );
+    setTpItems(newItems!);
+  };
   return (
-    <div className="overflow-x-auto">
-      <table className="table-auto m-auto w-[90%] border-collapse border border-gray-700">
-        <thead>
-          <tr className="bg-gray-800 text-white text-sm">
-            <th className="border border-gray-700 border-r-0 border-r-transparent px-4 py-2"></th>
-            <th className="border border-gray-700 border-l-0 px-12 py-2">
-              Name
-            </th>
-            <th className="border border-gray-700 px-4 py-2">Sell</th>
-            <th className="border border-gray-700 px-4 py-2">Buy</th>
-            <th className="border border-gray-700 px-4 py-2">Profit</th>
-            <th className="border border-gray-700 px-4 py-2">ROI</th>
-            <th className="border border-gray-700 px-4 py-2">Supply</th>
-            <th className="border border-gray-700 px-4 py-2">Demand</th>
-            {/* <th className="border border-gray-700 px-4 py-2">Sold</th>
+    <>
+      <div className="flex gap-4 flex-row">
+        <button
+          className=" w-[5rem] border-2 border-black"
+          onClick={() => {
+            getNewItems(false);
+          }}
+        >
+          Previous
+        </button>
+        <button
+          className="w-[5rem]  border-2 border-black"
+          onClick={() => {
+            getNewItems(true);
+          }}
+        >
+          Next
+        </button>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="table-auto m-auto w-[90%] border-collapse border border-gray-700">
+          <thead>
+            <tr className="bg-gray-800 text-white text-sm">
+              <th className="border border-gray-700 border-r-0 border-r-transparent px-4 py-2"></th>
+              <th className="border border-gray-700 border-l-0 px-12 py-2">
+                Name
+              </th>
+              <th className="border border-gray-700 px-4 py-2">Sell</th>
+              <th className="border border-gray-700 px-4 py-2">Buy</th>
+              <th className="border border-gray-700 px-4 py-2">Profit</th>
+              <th className="border border-gray-700 px-4 py-2">ROI</th>
+              <th className="border border-gray-700 px-4 py-2">Supply</th>
+              <th className="border border-gray-700 px-4 py-2">Demand</th>
+              {/* <th className="border border-gray-700 px-4 py-2">Sold</th>
             <th className="border border-gray-700 px-4 py-2">Offers</th>
             <th className="border border-gray-700 px-4 py-2">Bought</th>
             <th className="border border-gray-700 px-4 py-2">Bids</th> */}
-          </tr>
-        </thead>
-        <tbody>
-          {tpItems &&
-            tpItems
-              .slice(
-                itemsPerPage * currentPage,
-                itemsPerPage * currentPage + itemsPerPage
-              )
-              .map((item, index) => (
+            </tr>
+          </thead>
+          <tbody>
+            {tpItems &&
+              tpItems.map((item, index) => (
                 <tr
                   key={index}
                   className={`text-xs ${
@@ -112,33 +121,45 @@ function TradingPostComponent() {
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
                     <TPPriceComponent
-                      price={item.LatestPrice.sellPrice.toString()}
+                      price={
+                        item?.LatestPrice?.sellPrice
+                          ? item.LatestPrice.sellPrice.toString()
+                          : "0"
+                      }
                     />
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
                     <TPPriceComponent
-                      price={item.LatestPrice.buyPrice.toString()}
+                      price={
+                        item?.LatestPrice?.buyPrice
+                          ? item.LatestPrice.buyPrice.toString()
+                          : "0"
+                      }
                     />
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
                     <TPPriceComponent
-                      price={calculateProfit(item).toFixed(0)}
+                      price={
+                        item.LatestPrice?.profit
+                          ? item.LatestPrice.profit.toFixed(0)
+                          : "0"
+                      }
                     />
                   </td>
                   <td
                     className={`border border-gray-700 px-4 py-2 ${
-                      calculateROIForItem(item).startsWith("-")
+                      item.LatestPrice?.ROI?.toString().startsWith("-")
                         ? "text-red-500"
                         : "text-green-500"
                     }`}
                   >
-                    {calculateROIForItem(item)}%
+                    {item.LatestPrice?.ROI}%
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
-                    {item.LatestPrice.supply}
+                    {item.LatestPrice ? item.LatestPrice.supply : 0}
                   </td>
                   <td className="border border-gray-700 px-4 py-2 text-gray-300">
-                    {item.LatestPrice.demand}
+                    {item.LatestPrice ? item.LatestPrice.demand : 0}
                   </td>
                   {/* <td className="border border-gray-700 px-4 py-2 text-gray-300">
                 {item.sold}
@@ -154,8 +175,9 @@ function TradingPostComponent() {
               </td> */}
                 </tr>
               ))}
-        </tbody>
-      </table>
-    </div>
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
