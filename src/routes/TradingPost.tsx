@@ -1,21 +1,21 @@
 import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import {
   getAllTradingPostItemIds,
-  getTradingPostItemsFromIds,
+  getTradableItemsInRange,
 } from "../Utils/API";
 import { TTPItem } from "../Utils/types";
 import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/TradingPost")({
   loader: async () => {
     const ids = await getAllTradingPostItemIds();
-    if (!ids) return;
-    const items = await getTradingPostItemsFromIds(ids.slice(500, 550));
-
+    if (!ids) {
+      console.log("no items");
+      return;
+    }
     return {
       ids,
-      items,
     };
   },
   component: TradingPostComponent,
@@ -43,28 +43,44 @@ const getItemColor = (item: TTPItem) => {
 };
 
 function TradingPostComponent() {
-  const { ids, items } = useLoaderData({ from: "/TradingPost" });
-  const [tpItems, setTpItems] = useState<TTPItem[]>(items!);
+  const { ids } = useLoaderData({ from: "/TradingPost" });
+  const [tpItems, setTpItems] = useState<TTPItem[]>();
   const [currentPage, setCurrentPage] = useState<number>(0);
   const itemsPerPage = 50;
-  const getNewItems = async (nextPage: boolean) => {
-    setCurrentPage(currentPage + (nextPage ? 1 : -1));
-    console.log(`Getting new items at page ${currentPage}`);
-    const newItems = await getTradingPostItemsFromIds(
-      ids.slice(
-        currentPage * itemsPerPage,
-        currentPage * itemsPerPage + itemsPerPage
-      )
-    );
-    setTpItems(newItems!);
+  const maxPage = Math.floor(ids.length / itemsPerPage);
+
+  const changePage = (addPage: boolean) => {
+    let page = currentPage + (addPage ? 1 : -1);
+    if (page > maxPage) page = 0;
+    if (page < 0) page = maxPage;
+    console.log(`Getting new items at page ${page}`);
+    setCurrentPage(page);
+    return page;
   };
+
+  const getNewItems = async (page: number) => {
+    const newItems = await getTradableItemsInRange(
+      page * itemsPerPage,
+      itemsPerPage
+    );
+    if (newItems === null) {
+      console.log("new items was null");
+      return;
+    }
+    setTpItems(newItems);
+  };
+
+  useEffect(() => {
+    getNewItems(0);
+  }, []);
+
   return (
     <>
       <div className="flex gap-4 flex-row">
         <button
           className=" w-[5rem] border-2 border-black"
           onClick={() => {
-            getNewItems(false);
+            getNewItems(changePage(false));
           }}
         >
           Previous
@@ -72,14 +88,18 @@ function TradingPostComponent() {
         <button
           className="w-[5rem]  border-2 border-black"
           onClick={() => {
-            getNewItems(true);
+            getNewItems(changePage(true));
           }}
         >
           Next
         </button>
+        <div>
+          {" "}
+          Page: {currentPage} / {maxPage}
+        </div>
       </div>
-      <div className="overflow-x-auto">
-        <table className="table-auto m-auto w-[90%] border-collapse border border-gray-700">
+      <div className="overflow-x-auto mb-12 ">
+        <table className="table-auto m-auto w-[90%] border-collapse border border-gray-700 rounded-md">
           <thead>
             <tr className="bg-gray-800 text-white text-sm">
               <th className="border border-gray-700 border-r-0 border-r-transparent px-4 py-2"></th>
