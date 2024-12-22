@@ -4,14 +4,9 @@ import TaskComponent from "../Components/Tasks/TaskComponent";
 import { TUser } from "../Providers/APIProvider";
 import {
   TDailyCraft,
-  TDailyCraftsAPIData,
-  TDungeonAPIData,
   TDungeonPath,
-  TRaidAPIData,
   TRaidEvent,
-  TWizardVaultAPIData,
   TWorldBoss,
-  TWorldBossesAPIData,
 } from "../Utils/types";
 import TaskItem, { TTaskItem } from "../Components/Tasks/TaskItem";
 import {

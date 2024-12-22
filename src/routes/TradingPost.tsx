@@ -5,7 +5,23 @@ import {
 } from "../Utils/API";
 import { TTPItem } from "../Utils/types";
 import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import TPTableHead from "../Components/TradingPost/TPTableHead";
+
+export const enum ESortDirection {
+  up = "desc",
+  down = "asc",
+}
+export const enum ESortParam {
+  none,
+  name = "name",
+  sell = "sellPrice",
+  buy = "buyPrice",
+  profit = "profit",
+  ROI = "ROI",
+  supply = "supply",
+  demand = "demand",
+}
 
 export const Route = createFileRoute("/TradingPost")({
   loader: async () => {
@@ -14,8 +30,21 @@ export const Route = createFileRoute("/TradingPost")({
       console.log("no items");
       return;
     }
+
+    const items = await getTradableItemsInRange(
+      0 * 50,
+      50,
+      ESortParam.demand,
+      ESortDirection.down
+    );
+    if (items === null) {
+      console.log("items was null");
+      return;
+    }
+
     return {
       ids,
+      items,
     };
   },
   component: TradingPostComponent,
@@ -43,25 +72,35 @@ const getItemColor = (item: TTPItem) => {
 };
 
 function TradingPostComponent() {
-  const { ids } = useLoaderData({ from: "/TradingPost" });
-  const [tpItems, setTpItems] = useState<TTPItem[]>();
-  const [currentPage, setCurrentPage] = useState<number>(0);
+  const { ids, items } = useLoaderData({ from: "/TradingPost" });
+  const [tpItems, setTpItems] = useState<TTPItem[]>(items);
   const itemsPerPage = 50;
   const maxPage = Math.floor(ids.length / itemsPerPage);
 
+  let currentPage = 0;
+  let sortDirection = ESortDirection.down;
+  let sortParam = ESortParam.none;
+
+  const SortTable = async (direction: ESortDirection, sort: ESortParam) => {
+    sortDirection = direction;
+    sortParam = sort;
+    currentPage = 0;
+    await getNewItems(currentPage);
+  };
+
   const changePage = (addPage: boolean) => {
-    let page = currentPage + (addPage ? 1 : -1);
-    if (page > maxPage) page = 0;
-    if (page < 0) page = maxPage;
-    console.log(`Getting new items at page ${page}`);
-    setCurrentPage(page);
-    return page;
+    currentPage += addPage ? 1 : -1;
+    if (currentPage < 0) currentPage = maxPage;
+    if (currentPage > maxPage) currentPage = 0;
+    return currentPage;
   };
 
   const getNewItems = async (page: number) => {
     const newItems = await getTradableItemsInRange(
       page * itemsPerPage,
-      itemsPerPage
+      itemsPerPage,
+      sortParam,
+      sortDirection
     );
     if (newItems === null) {
       console.log("new items was null");
@@ -69,11 +108,7 @@ function TradingPostComponent() {
     }
     setTpItems(newItems);
   };
-
-  useEffect(() => {
-    getNewItems(0);
-  }, []);
-
+  console.log(currentPage);
   return (
     <>
       <div className="flex gap-4 flex-row">
@@ -103,15 +138,55 @@ function TradingPostComponent() {
           <thead>
             <tr className="bg-gray-800 text-white text-sm">
               <th className="border border-gray-700 border-r-0 border-r-transparent px-4 py-2"></th>
-              <th className="border border-gray-700 border-l-0 px-12 py-2">
-                Name
-              </th>
-              <th className="border border-gray-700 px-4 py-2">Sell</th>
-              <th className="border border-gray-700 px-4 py-2">Buy</th>
-              <th className="border border-gray-700 px-4 py-2">Profit</th>
-              <th className="border border-gray-700 px-4 py-2">ROI</th>
-              <th className="border border-gray-700 px-4 py-2">Supply</th>
-              <th className="border border-gray-700 px-4 py-2">Demand</th>
+              <TPTableHead
+                title="Name"
+                isActive={false}
+                sortDirection={sortDirection}
+                sortParam={ESortParam.none}
+                onClickSort={SortTable}
+              />
+              <TPTableHead
+                title="Sell"
+                isActive={sortParam === ESortParam.sell}
+                sortDirection={sortDirection}
+                sortParam={ESortParam.sell}
+                onClickSort={SortTable}
+              />
+              <TPTableHead
+                title="Buy"
+                isActive={sortParam === ESortParam.buy}
+                sortDirection={sortDirection}
+                sortParam={ESortParam.buy}
+                onClickSort={SortTable}
+              />
+              <TPTableHead
+                title="Profit"
+                isActive={sortParam === ESortParam.profit}
+                sortDirection={sortDirection}
+                sortParam={ESortParam.profit}
+                onClickSort={SortTable}
+              />
+              <TPTableHead
+                title="ROI"
+                isActive={sortParam === ESortParam.ROI}
+                sortDirection={sortDirection}
+                sortParam={ESortParam.ROI}
+                onClickSort={SortTable}
+              />
+              <TPTableHead
+                title="Supply"
+                isActive={sortParam === ESortParam.supply}
+                sortDirection={sortDirection}
+                sortParam={ESortParam.supply}
+                onClickSort={SortTable}
+              />
+              <TPTableHead
+                title="Demand"
+                isActive={sortParam === ESortParam.demand}
+                sortDirection={sortDirection}
+                sortParam={ESortParam.demand}
+                onClickSort={SortTable}
+              />
               {/* <th className="border border-gray-700 px-4 py-2">Sold</th>
             <th className="border border-gray-700 px-4 py-2">Offers</th>
             <th className="border border-gray-700 px-4 py-2">Bought</th>

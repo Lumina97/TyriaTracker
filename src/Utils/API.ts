@@ -9,6 +9,7 @@ import {
   TWizardVaultAPIData,
   TWorldBossesAPIData,
 } from "./types";
+import { ESortDirection, ESortParam } from "../routes/TradingPost";
 
 const validateUser = async (user: TUser, GetUser: () => TUser) => {
   if (!user.email) {
@@ -195,16 +196,21 @@ export const getAllTradingPostItems = async () => {
 
 export const getTradableItemsInRange = async (
   start: number,
-  amount: number
+  amount: number,
+  sortParam: ESortParam,
+  sortDirection: ESortDirection
 ) => {
   try {
     const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
+    const param = sortParam ? sortParam.toString() : "demand";
     const config: AxiosRequestConfig = {
       method: "post",
       url,
       data: {
         start,
         amount,
+        orderCriteria: param,
+        orderDirection: sortDirection,
       },
     };
     const response = await axios(config);
