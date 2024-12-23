@@ -95,6 +95,7 @@ export type TTPItem = {
   rarity: string;
   vendorValue: string;
   LatestPrice: TTPItemPriceHistory;
+  PriceHistory?: TTPItemPriceHistory[];
 };
 
 export type TTPItemPriceHistory = {
@@ -103,4 +104,6 @@ export type TTPItemPriceHistory = {
   demand?: number;
   supply?: number;
   itemID: number;
+  profit: number;
+  ROI: number;
 };

@@ -9,6 +9,7 @@ import {
   TWizardVaultAPIData,
   TWorldBossesAPIData,
 } from "./types";
+import { ESortDirection, ESortParam } from "../routes/TradingPost.index";
 
 const validateUser = async (user: TUser, GetUser: () => TUser) => {
   if (!user.email) {
@@ -178,7 +179,6 @@ export const getUserWizardVault = async (user: TUser) => {
 export const getAllTradingPostItems = async () => {
   try {
     const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
-    console.log(`url: ${url}`);
     const config: AxiosRequestConfig = {
       method: "post",
       url,
@@ -186,6 +186,54 @@ export const getAllTradingPostItems = async () => {
     const response = await axios(config);
     if (response.status === 200) {
       return response.data.data as TTPItem[];
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getTradableItemsInRange = async (
+  start: number,
+  amount: number,
+  sortParam: ESortParam,
+  sortDirection: ESortDirection
+) => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
+    const param = sortParam ? sortParam.toString() : "demand";
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+      data: {
+        start,
+        amount,
+        orderCriteria: param,
+        orderDirection: sortDirection,
+      },
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as TTPItem[];
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getAllTradingPostItemIds = async () => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getTradableItemIDs`;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as number[];
     }
     return null;
   } catch (error) {
