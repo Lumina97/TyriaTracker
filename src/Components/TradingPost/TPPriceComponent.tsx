@@ -1,10 +1,12 @@
 const formatPrice = (price: string) => {
-  const paddedPrice = price.padStart(6, "0");
+  price = price.toString();
+  if (!price) price = "0";
+  const paddedPrice = price.padStart(9, "0");
 
   // Extract the gold, silver, and copper values
-  const gold = parseInt(paddedPrice.slice(0, 2), 10) || 0; // First 2 digits (or more)
-  const silver = parseInt(paddedPrice.slice(2, 4), 10) || 0; // Next 2 digits
-  const copper = parseInt(paddedPrice.slice(4, 6), 10) || 0; // Last 2 digits
+  const gold = parseInt(paddedPrice.slice(0, -4), 10) || 0; // First 2 digits (or more)
+  const silver = parseInt(paddedPrice.slice(-4, -2), 10) || 0; // Next 2 digits
+  const copper = parseInt(paddedPrice.slice(-2), 10) || 0; // Last 2 digits
 
   return { gold, silver, copper };
 };

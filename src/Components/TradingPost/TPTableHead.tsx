@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
-import { ESortDirection, ESortParam } from "../../routes/TradingPost";
+import { ESortDirection, ESortParam } from "../../routes/TradingPost.index";
 
 const TPTableHead = ({
   title,
@@ -16,7 +16,7 @@ const TPTableHead = ({
   onClickSort: (direction: ESortDirection, sortParam: ESortParam) => void;
 }) => {
   return (
-    <th className="border border-gray-700 border-l-0  py-2 ">
+    <th className="border min-w-[125px] border-gray-700 border-l-0  py-2 ">
       <div className="flex justify-evenly gap-12>">
         {title}
         {sortParam !== ESortParam.none && (

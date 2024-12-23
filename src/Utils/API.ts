@@ -9,7 +9,7 @@ import {
   TWizardVaultAPIData,
   TWorldBossesAPIData,
 } from "./types";
-import { ESortDirection, ESortParam } from "../routes/TradingPost";
+import { ESortDirection, ESortParam } from "../routes/TradingPost.index";
 
 const validateUser = async (user: TUser, GetUser: () => TUser) => {
   if (!user.email) {
