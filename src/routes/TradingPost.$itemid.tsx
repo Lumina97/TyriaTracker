@@ -193,7 +193,7 @@ function TradingPostItemComponent() {
   }
 
   return (
-    <div className="container mx-auto p-4 bg-sunset h-screen">
+    <div className="mx-auto p-4 bg-sunset h-screen">
       <div className="bg-gray-800 text-white p-4 rounded-md flex gap-6 flex-row">
         <div className="mt-8">
           <Link
