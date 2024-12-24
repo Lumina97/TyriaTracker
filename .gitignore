@@ -15,10 +15,6 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
-# Database
-dev.db
-*.sqlite
-
 # Dist
 dist/
 build/
@@ -35,10 +31,6 @@ build/
 
 # TypeScript
 *.tsbuildinfo
-
-# Prisma
-prisma/migrations/
-prisma/dev.db
 
 # Local
 .DS_Store
