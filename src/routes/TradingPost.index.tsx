@@ -93,27 +93,30 @@ function TradingPostComponent() {
     }
     setTpItems(newItems);
   };
+
   return (
     <div className=" bg-sunset pt-8  pb-12">
-      <div className="flex gap-4 pb-6 flex-row m-auto w-[90%]">
-        <button
-          className=" text-black w-[5rem] border-2 border-black"
-          onClick={() => {
-            getNewItems(changePage(false), sortParam, sortDirection);
-          }}
-        >
-          Previous
-        </button>
-        <button
-          className="w-[5rem]  text-black border-2 border-black"
-          onClick={() => {
-            getNewItems(changePage(true), sortParam, sortDirection);
-          }}
-        >
-          Next
-        </button>
-        <div className="text-black">
-          Page: {currentPage} / {maxPage}
+      <div className="flex flex-col justify-start m-auto w-[90%]">
+        <div className="flex flex-row gap-4">
+          <button
+            className="px-4 py-2 mb-4 bg-gray-300 text-black rounded-md inline-block active"
+            onClick={() => {
+              getNewItems(changePage(false), sortParam, sortDirection);
+            }}
+          >
+            Previous
+          </button>
+          <button
+            className="px-4 py-2 mb-4 bg-gray-300 text-black rounded-md inline-block active"
+            onClick={() => {
+              getNewItems(changePage(true), sortParam, sortDirection);
+            }}
+          >
+            Next
+          </button>
+        </div>
+        <div className="px-4 py-2 mb-4 bg-gray-300 text-black rounded-md flex-grow-0 w-[11rem]">
+          Page: {currentPage + 1} / {maxPage + 1}
         </div>
       </div>
       <div className="overflow-x-auto ">
@@ -170,16 +173,16 @@ function TradingPostComponent() {
                 sortParam={ESortParam.demand}
                 onClickSort={SortTable}
               />
-              {/* <th className="border border-gray-700 px-4 py-2">Sold</th>
-            <th className="border border-gray-700 px-4 py-2">Offers</th>
-            <th className="border border-gray-700 px-4 py-2">Bought</th>
-            <th className="border border-gray-700 px-4 py-2">Bids</th> */}
             </tr>
           </thead>
           <tbody>
             {tpItems &&
               tpItems.map((item, index) => (
-                <TPItemListingComponent item={item} index={index} />
+                <TPItemListingComponent
+                  key={item.name + index}
+                  item={item}
+                  index={index}
+                />
               ))}
           </tbody>
         </table>

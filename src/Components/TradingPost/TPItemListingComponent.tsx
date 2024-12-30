@@ -108,18 +108,6 @@ const TPItemListingComponent = ({
       <td className="border border-gray-700 px-4 py-2 text-gray-300">
         {item.LatestPrice ? item.LatestPrice.demand : 0}
       </td>
-      {/* <td className="border border-gray-700 px-4 py-2 text-gray-300">
-  {item.sold}
-</td>
-<td className="border border-gray-700 px-4 py-2 text-gray-300">
-  {item.offers}
-</td>
-<td className="border border-gray-700 px-4 py-2 text-gray-300">
-  {item.bought}
-</td>
-<td className="border border-gray-700 px-4 py-2 text-gray-300">
-  {item.bids}
-</td> */}
     </tr>
   );
 };

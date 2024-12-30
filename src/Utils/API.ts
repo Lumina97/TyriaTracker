@@ -11,16 +11,6 @@ import {
 } from "./types";
 import { ESortDirection, ESortParam } from "../routes/TradingPost.index";
 
-const validateUser = async (user: TUser, GetUser: () => TUser) => {
-  if (!user.email) {
-    user = GetUser();
-    if (!user.email) {
-      return false;
-    }
-  }
-  return user;
-};
-
 export const forgotPassword = () => {
   console.log("Send password reset email");
 };

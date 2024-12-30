@@ -1,5 +1,4 @@
-const formatPrice = (price: string) => {
-  price = price.toString();
+export const formatPrice = (price: string) => {
   if (!price) price = "0";
   const paddedPrice = price.padStart(9, "0");
 
@@ -12,12 +11,16 @@ const formatPrice = (price: string) => {
 };
 
 const TPPriceComponent = ({ price }: { price: string }) => {
+  price = price.toString();
+  const isNegative = price.startsWith("-");
+  isNegative && (price = price.slice(1));
   const { gold, silver, copper } = formatPrice(price);
 
   return (
     <div className="flex items-center gap-1 justify-end">
+      {isNegative && <p className="text-red-500">-</p>}
       {gold > 0 && (
-        <p className="flex items-center">
+        <p className={`flex items-center ${isNegative ? "text-red-500" : ""}`}>
           {gold}
           <i className="bg-goldCoin w-4 h-4 bg-cover bg-center inline-block">
             {" "}
@@ -26,14 +29,14 @@ const TPPriceComponent = ({ price }: { price: string }) => {
       )}
 
       {price.length >= 3 && (
-        <p className="flex items-center">
+        <p className={`flex items-center ${isNegative ? "text-red-500" : ""}`}>
           {silver > 0 ? silver : "00"}
           <i className="bg-silverCoin w-4 h-4 bg-cover bg-center inline-block"></i>
         </p>
       )}
 
       {price.length >= 1 && (
-        <p className="flex items-center">
+        <p className={`flex items-center ${isNegative ? "text-red-500" : ""}`}>
           {copper < 10 ? "0" + copper : copper}
           <i className="bg-copperCoin w-4 h-4 bg-cover bg-center inline-block"></i>
         </p>

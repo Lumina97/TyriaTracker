@@ -1,7 +1,3 @@
-/*
-  This file was entirely AI generated and I have no clue what is going on in terms of the chart code;
-*/
-
 import { createFileRoute, Link, useLoaderData } from "@tanstack/react-router";
 import axios, { AxiosRequestConfig } from "axios";
 import {
@@ -21,8 +17,8 @@ import { Line } from "react-chartjs-2";
 import { APIBaseURL } from "../Utils/settings";
 import { TTPItem } from "../Utils/types";
 import "chartjs-adapter-date-fns";
-import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
 import { getItemColor } from "../Components/TradingPost/TPItemListingComponent";
+import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
 
 ChartJS.register(
   CategoryScale,
@@ -142,9 +138,12 @@ function TradingPostItemComponent() {
           false
         );
 
-      if (priceChartElements.length > 0) {
-        const index = priceChartElements[0].index;
+      const index =
+        priceChartElements.length > 0
+          ? priceChartElements[0].index
+          : supplyDemandChartElements[0].index;
 
+      if (index) {
         priceChart.tooltip &&
           priceChart.tooltip.setActiveElements(
             priceChart.data.datasets.map((_, datasetIndex) => ({
@@ -163,27 +162,6 @@ function TradingPostItemComponent() {
           );
         priceChart.update();
         supplyDemandChart.update();
-      } else if (supplyDemandChartElements.length > 0) {
-        const index = supplyDemandChartElements[0].index;
-
-        priceChart.tooltip &&
-          priceChart.tooltip.setActiveElements(
-            priceChart.data.datasets.map((_, datasetIndex) => ({
-              datasetIndex,
-              index,
-            })),
-            { x, y: 0 }
-          );
-        supplyDemandChart.tooltip &&
-          supplyDemandChart.tooltip.setActiveElements(
-            supplyDemandChart.data.datasets.map((_, datasetIndex) => ({
-              datasetIndex,
-              index,
-            })),
-            { x, y: 0 }
-          );
-        priceChart.update("none");
-        supplyDemandChart.update("none");
       }
     }
   };
@@ -195,29 +173,51 @@ function TradingPostItemComponent() {
   return (
     <div className="mx-auto p-4 bg-sunset h-screen">
       <div className="bg-gray-800 text-white p-4 rounded-md flex gap-6 flex-row">
-        <div className="mt-8">
-          <Link
-            to="/TradingPost" // Navigate back to trading post
-            className="px-4 py-2 mb-4 bg-gray-300 text-black rounded-md inline-block"
-          >
-            Back
-          </Link>
-        </div>
         <div>
           <h1 className={`text-2xl font-bold ${getItemColor(item)} `}>
             {item.name}
           </h1>
-          <div className="flex items-center gap-4">
-            <img src={item.icon} alt={item.name} className="w-16 h-16" />
-            <div>
+          <div className="flex items-center gap-8">
+            <img
+              src={item.icon}
+              alt={item.name}
+              className="w-20 h-20 rounded-md"
+            />
+            <div className="flex flex-col justify-center">
               <p className={`${getItemColor(item)}`}>Rarity: {item.rarity}</p>
               <p>Level: {item.level}</p>
-              <TPPriceComponent price={item.vendorValue} />
+            </div>
+            <div className="flex flex-row gap-6">
+              <div>
+                <p>Vendor value: </p>
+                <p>Sell price: </p>
+                <p>Buy price: </p>
+                <p>Supply: </p>
+                <p>Demand: </p>
+              </div>
+              <div className=" gap-4">
+                <TPPriceComponent price={item.vendorValue} />
+                <TPPriceComponent
+                  price={item.LatestPrice.sellPrice.toString()}
+                />
+                <TPPriceComponent
+                  price={item.LatestPrice.buyPrice.toString()}
+                />
+                <p>{item.LatestPrice.supply} </p>
+                <p>{item.LatestPrice.demand} </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-
+      <div className="mt-8">
+        <Link
+          to="/TradingPost" // Navigate back to trading post
+          className="px-4 py-2 mb-4 bg-gray-300 text-black rounded-md inline-block"
+        >
+          Back
+        </Link>
+      </div>
       <div className="mt-8">
         <div className="flex justify-center gap-4 mb-4">
           <button
@@ -262,27 +262,20 @@ function TradingPostItemComponent() {
                     },
                     plugins: {
                       tooltip: {
-                        mode: "nearest",
+                        mode: "index",
                         intersect: false,
                         callbacks: {
                           label: function (context) {
                             const label = context.dataset.label || "";
                             const value = context.raw;
-                            return `${label}: ${value}`;
+                            return `${label} : ${value}`;
                           },
                         },
                       },
                     },
-                    events: [
-                      "mousemove",
-                      "mouseout",
-                      "click",
-                      "touchstart",
-                      "touchmove",
-                    ],
                     onHover: handleHover,
                     hover: {
-                      mode: "nearest",
+                      mode: "index",
                       intersect: false,
                     },
                   }}
@@ -322,7 +315,7 @@ function TradingPostItemComponent() {
                     },
                     plugins: {
                       tooltip: {
-                        mode: "nearest",
+                        mode: "index",
                         intersect: false,
                         callbacks: {
                           label: function (context) {
@@ -333,14 +326,11 @@ function TradingPostItemComponent() {
                         },
                       },
                     },
-                    events: [
-                      "mousemove",
-                      "mouseout",
-                      "click",
-                      "touchstart",
-                      "touchmove",
-                    ],
                     onHover: handleHover,
+                    hover: {
+                      mode: "index",
+                      intersect: false,
+                    },
                   }}
                 />
               </div>

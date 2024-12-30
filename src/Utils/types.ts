@@ -106,4 +106,5 @@ export type TTPItemPriceHistory = {
   itemID: number;
   profit: number;
   ROI: number;
+  timestamp: string;
 };
