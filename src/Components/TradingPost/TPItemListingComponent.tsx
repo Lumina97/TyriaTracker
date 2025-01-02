@@ -103,10 +103,14 @@ const TPItemListingComponent = ({
         {item.LatestPrice?.ROI}%
       </td>
       <td className="border border-gray-700 px-4 py-2 text-gray-300">
-        {item.LatestPrice ? item.LatestPrice.supply : 0}
+        {item.LatestPrice
+          ? item.LatestPrice.supply!.toLocaleString("en-US")
+          : 0}
       </td>
       <td className="border border-gray-700 px-4 py-2 text-gray-300">
-        {item.LatestPrice ? item.LatestPrice.demand : 0}
+        {item.LatestPrice
+          ? item.LatestPrice.demand!.toLocaleString("en-US")
+          : 0}
       </td>
     </tr>
   );

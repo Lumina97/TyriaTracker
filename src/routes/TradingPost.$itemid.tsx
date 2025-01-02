@@ -210,7 +210,7 @@ function TradingPostItemComponent() {
                     {item.LatestPrice.supply!.toLocaleString("en-US")}
                   </p>
                   <p className="text-right">
-                    {item.LatestPrice.demand!.toLocaleString("en-US")}{" "}
+                    {item.LatestPrice.demand!.toLocaleString("en-US")}
                   </p>
                 </div>
               </div>
