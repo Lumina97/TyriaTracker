@@ -19,6 +19,7 @@ import { TTPItem } from "../Utils/types";
 import "chartjs-adapter-date-fns";
 import { getItemColor } from "../Components/TradingPost/TPItemListingComponent";
 import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
+import Navbar from "../Components/NavBar/Navbar";
 
 ChartJS.register(
   CategoryScale,
@@ -171,61 +172,50 @@ function TradingPostItemComponent() {
   }
 
   return (
-    <div className="mx-auto p-4 bg-sunset h-screen">
-      <div className="bg-gray-800 text-white p-4 rounded-md flex gap-6 flex-row">
-        <div>
-          <h1 className={`text-2xl font-bold ${getItemColor(item)} `}>
-            {item.name}
-          </h1>
-          <div className="flex items-center gap-8">
-            <img
-              src={item.icon}
-              alt={item.name}
-              className="w-20 h-20 rounded-md"
-            />
-            <div className="flex flex-col justify-center">
-              <p className={`${getItemColor(item)}`}>Rarity: {item.rarity}</p>
-              <p>Level: {item.level}</p>
-            </div>
-            <div className="flex flex-row gap-6">
-              <div>
-                <p>Vendor value: </p>
-                <p>Sell price: </p>
-                <p>Buy price: </p>
-                <p>Supply: </p>
-                <p>Demand: </p>
+    <div className="min-h-screen bg-gray-900 text-white flex">
+      <Navbar />
+      <div className=" container m-auto flex flex-col gap-4 p-4 rounded-lg shadow-lg">
+        <div className="container rounded-md ">
+          <div className="bg-gray-800 p-4">
+            <h1 className={`text-2xl font-bold ${getItemColor(item)}`}>
+              {item.name}
+            </h1>
+            <div className="flex items-center gap-8">
+              <img
+                src={item.icon}
+                alt={item.name}
+                className="w-20 h-20 rounded-md"
+              />
+              <div className="flex flex-col justify-center">
+                <p className={`${getItemColor(item)}`}>Rarity: {item.rarity}</p>
+                <p>Level: {item.level}</p>
               </div>
-              <div className=" gap-4">
-                <TPPriceComponent price={item.vendorValue} />
-                <TPPriceComponent
-                  price={item.LatestPrice.sellPrice.toString()}
-                />
-                <TPPriceComponent
-                  price={item.LatestPrice.buyPrice.toString()}
-                />
-                <p>{item.LatestPrice.supply} </p>
-                <p>{item.LatestPrice.demand} </p>
+              <div className="flex flex-row gap-6">
+                <div>
+                  <p>Vendor value: </p>
+                  <p>Sell price: </p>
+                  <p>Buy price: </p>
+                  <p>Supply: </p>
+                  <p>Demand: </p>
+                </div>
+                <div className="gap-4">
+                  <TPPriceComponent price={item.vendorValue} />
+                  <TPPriceComponent
+                    price={item.LatestPrice.sellPrice.toString()}
+                  />
+                  <TPPriceComponent
+                    price={item.LatestPrice.buyPrice.toString()}
+                  />
+                  <p className="text-right">
+                    {item.LatestPrice.supply!.toLocaleString("en-US")}
+                  </p>
+                  <p className="text-right">
+                    {item.LatestPrice.demand!.toLocaleString("en-US")}{" "}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="mt-8">
-        <Link
-          to="/TradingPost" // Navigate back to trading post
-          className="px-4 py-2 mb-4 bg-gray-300 text-black rounded-md inline-block"
-        >
-          Back
-        </Link>
-      </div>
-      <div className="mt-8">
-        <div className="flex justify-center gap-4 mb-4">
-          <button
-            className={`px-4 py-2 rounded-md ${timeStep === "1day" ? "bg-blue-500 text-white" : "bg-gray-300 text-black"}`}
-            onClick={() => setTimeStep("1day")}
-          >
-            1 Day
-          </button>
         </div>
 
         {priceChartData && supplyDemandChartData && (
