@@ -10,7 +10,7 @@ const TaskComponent = ({ tasks: task }: { tasks: TTaskComponent }) => {
       <h4 className="text-lg font-semibold mb-2">
         {task.name.replaceAll("_", " ").toUpperCase()}
       </h4>
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
         {task.taskItems.map((task) => (
           <TaskItem key={task.name} item={task} />
         ))}

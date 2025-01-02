@@ -230,7 +230,7 @@ function HomeComponent() {
             <h3 className="text-2xl font-bold text-center mb-4 ">
               World Bosses
             </h3>
-            <div className=" grid grid-cols-2 gap-2">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-2">
               {isLoading ? (
                 <div className="space-y-4">
                   {[...Array(3)].map((_, index) => (
@@ -265,7 +265,7 @@ function HomeComponent() {
             <h3 className="text-2xl font-bold text-center mb-4">
               Daily Crafting
             </h3>
-            <div className=" grid grid-cols-2 gap-2">
+            <div className=" grid grid-cols-1 md:grid-cols-2 gap-2">
               {isLoading ? (
                 <div className="space-y-4">
                   {[...Array(3)].map((_, index) => (
