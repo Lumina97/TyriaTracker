@@ -113,26 +113,26 @@ function TradingPostComponent() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex">
+    <div className="min-h-screen flex bg-gray-900 text-white">
       <Navbar />
       <div className="container mx-auto p-4">
         <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
           <h3 className="text-2xl font-bold text-center mb-4">Trading Post</h3>
-          <div className="flex justify-between mb-4">
+          <div className="flex flex-col sm:flex-row justify-between mb-4">
             <button
-              className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition duration-300"
+              className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition duration-300 mb-2 sm:mb-0"
               onClick={() =>
                 getNewItems(changePage(false), sortParam, sortDirection)
               }
             >
               Previous
             </button>
-            <div className="flex items-center">
+            <div className="flex items-center mb-2 sm:mb-0">
               <input
                 type="number"
                 min="1"
                 max={maxPage + 1}
-                value={currentPage + 1}
+                value={inputPage}
                 onChange={handlePageInputChange}
                 className="px-4 py-2 bg-gray-700 text-white text-center w-20 rounded-l-md focus:outline-none focus:ring-0"
                 style={{ MozAppearance: "textfield", WebkitAppearance: "none" }}
