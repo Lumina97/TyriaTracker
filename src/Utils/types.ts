@@ -2,6 +2,23 @@
 //I kept them here to easily parse incoming data to
 //types
 
+export enum TAPIDataType {
+  Null = "null",
+  Raids = "raid",
+  Dungeons = "dungeons",
+  WorldBosses = "worldBosses",
+  DailyCrafting = "dailyCrafts",
+  WizardVault = "wizardVault",
+}
+
+export type TAPIData =
+  | { type: TAPIDataType.Null; data: null }
+  | { type: TAPIDataType.Raids; data: TRaidAPIData }
+  | { type: TAPIDataType.WizardVault; data: TWizardVaultAPIData }
+  | { type: TAPIDataType.WorldBosses; data: TWorldBossesAPIData }
+  | { type: TAPIDataType.DailyCrafting; data: TDailyCraftsAPIData }
+  | { type: TAPIDataType.Dungeons; data: TDungeonAPIData };
+
 //raids
 export type TRaidAPIData = {
   userData: string[];
@@ -47,7 +64,7 @@ export type TWizardVaultObjective = {
   claimed: boolean;
 };
 
-//worldbosses
+//worldBosses
 export type TWorldBossesAPIData = {
   userData: string[];
   worldData: TWorldBoss[];

@@ -1,6 +1,6 @@
 import { ReactNode, useNavigate } from "@tanstack/react-router";
-import { createContext, useContext, useEffect, useState } from "react";
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
+import { createContext, useContext, useState } from "react";
+import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import { APIBaseURL } from "../Utils/settings";
 
 type TAPIProvider = {
@@ -89,7 +89,9 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
         if (user) {
           setUser(user);
           localStorage.setItem("user", JSON.stringify(user));
-          navigate({ to: "/Home" });
+          navigate({
+            to: "/Tasks",
+          });
           return true;
         }
       }
@@ -106,9 +108,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   const isSignedIn = async () => {
     let loggedIn = false;
     let jwttoken = user.jwt;
-    //check if we have a token
     if (!user.jwt) {
-      //load from localstorage
       const user = loadUserFromLocalStorage();
       if (user !== false && user !== null && user) {
         setUser(user);
@@ -117,8 +117,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (jwttoken) {
-      //we have a token
-      // check if token is valid
       const url = `${APIBaseURL}auth/isLoggedIn`;
       const config: AxiosRequestConfig = {
         method: "post",
@@ -167,7 +165,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       .then((result) => {
         localStorage.setItem("user", JSON.stringify(result.data.newUser));
         setUser(result.data.newUser);
-        navigate({ to: "/Home" });
+        navigate({ to: "/Tasks" });
         return result.data;
       })
       .catch((error) => {
@@ -256,57 +254,6 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     }
     return false;
   };
-
-  useEffect(() => {
-    // const setup = async () => {
-    //   if (window.location.pathname === "/SignIn") return;
-    //   await GetUser();
-    //   await isSignedIn();
-    //   if (!user.email) {
-    //     const usr = GetUser();
-    //     if (!usr.email) {
-    //       console.error("User not available!");
-    //       return;
-    //     }
-    //   }
-    // getUserRaids(user, GetUser)
-    //   .then((result) => {
-    //     if (result) setUserRaids(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    // getUserDungeons(user, GetUser)
-    //   .then((result) => {
-    //     if (result) setUserDungeons(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    // getUserWorldBosses(user, GetUser)
-    //   .then((result) => {
-    //     if (result) setUserWorldBosses(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    // getUserDailyCrafting(user, GetUser)
-    //   .then((result) => {
-    //     if (result) setUserDailyCrafts(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    // getUserWizardVault(user, GetUser)
-    //   .then((result) => {
-    //     if (result) setUserWizardVault(result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
-    // };
-    // setup();
-  }, []);
 
   return (
     <APIContext.Provider

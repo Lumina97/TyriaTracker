@@ -25,6 +25,8 @@ const CreateAccountForm = () => {
 
   const onFormSubmit = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     setErrorResponseMessage("");
+    e.preventDefault();
+
     setWasSubmitted(true);
     if (
       isEmailValid(email) &&
@@ -33,7 +35,6 @@ const CreateAccountForm = () => {
     ) {
       if (password !== secondPassword) {
         console.log("passwords do not match!");
-        e.preventDefault();
         return;
       }
       createAccount(email, password, apiKey).then((result) => {
@@ -44,12 +45,9 @@ const CreateAccountForm = () => {
           setApiKey("");
           setErrorResponseMessage("");
           setWasSubmitted(false);
-        } else {
-          e.preventDefault();
-          setErrorResponseMessage(result.message);
-        }
+        } else setErrorResponseMessage(result.message);
       });
-    } else e.preventDefault();
+    }
   };
 
   return (

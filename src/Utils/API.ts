@@ -1,19 +1,8 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { TUser } from "../Providers/APIProvider";
 import { APIBaseURL } from "./settings";
-import {
-  TDailyCraftsAPIData,
-  TDungeonAPIData,
-  TRaidAPIData,
-  TTPItem,
-  TWizardVaultAPIData,
-  TWorldBossesAPIData,
-} from "./types";
+import { TAPIData, TAPIDataType, TTPItem } from "./types";
 import { ESortDirection, ESortParam } from "../routes/TradingPost.index";
-
-export const forgotPassword = () => {
-  console.log("Send password reset email");
-};
 
 export const getUserRaids = async (user: TUser) => {
   if (user.email === "") {
@@ -33,9 +22,12 @@ export const getUserRaids = async (user: TUser) => {
   try {
     const result = await axios(config);
     if (result.status === 200) {
-      const raidsData: TRaidAPIData = {
-        userData: result.data.userData,
-        worldData: result.data.worldData,
+      const raidsData: TAPIData = {
+        type: TAPIDataType.Raids,
+        data: {
+          userData: result.data.userData,
+          worldData: result.data.worldData,
+        },
       };
       return raidsData;
     }
@@ -63,9 +55,12 @@ export const getUserDungeons = async (user: TUser) => {
   try {
     const result = await axios(config);
     if (result.status === 200) {
-      const dungeonsData: TDungeonAPIData = {
-        userData: result.data.userData,
-        worldData: result.data.worldData,
+      const dungeonsData: TAPIData = {
+        type: TAPIDataType.Dungeons,
+        data: {
+          userData: result.data.userData,
+          worldData: result.data.worldData,
+        },
       };
       return dungeonsData;
     }
@@ -93,9 +88,12 @@ export const getUserWorldBosses = async (user: TUser) => {
   try {
     const result = await axios(config);
     if (result.status === 200) {
-      const worldBossesData: TWorldBossesAPIData = {
-        userData: result.data.userData,
-        worldData: result.data.worldData,
+      const worldBossesData: TAPIData = {
+        type: TAPIDataType.WorldBosses,
+        data: {
+          userData: result.data.userData,
+          worldData: result.data.worldData,
+        },
       };
       return worldBossesData;
     }
@@ -123,9 +121,12 @@ export const getUserDailyCrafting = async (user: TUser) => {
   try {
     const result = await axios(config);
     if (result.status === 200) {
-      const dailyCraftData: TDailyCraftsAPIData = {
-        userData: result.data.userData,
-        worldData: result.data.worldData,
+      const dailyCraftData: TAPIData = {
+        type: TAPIDataType.DailyCrafting,
+        data: {
+          userData: result.data.userData,
+          worldData: result.data.worldData,
+        },
       };
       return dailyCraftData;
     }
@@ -153,10 +154,13 @@ export const getUserWizardVault = async (user: TUser) => {
   try {
     const result = await axios(config);
     if (result.status === 200) {
-      const wizardVault: TWizardVaultAPIData = {
-        daily: result.data.userData?.daily,
-        weekly: result.data.userData?.weekly,
-        special: result.data.userData?.special,
+      const wizardVault: TAPIData = {
+        type: TAPIDataType.WizardVault,
+        data: {
+          daily: result.data.userData?.daily,
+          weekly: result.data.userData?.weekly,
+          special: result.data.userData?.special,
+        },
       };
       return wizardVault;
     }

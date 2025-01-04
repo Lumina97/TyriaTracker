@@ -7,7 +7,7 @@ const Navbar = () => {
     <aside className="bg-gray-800 text-white sm:min-h-screen sm:w-[200px] border-r-2 border-sun">
       <div className="p-4 flex flex-col items-center gap-4 sticky top-4">
         <div className="w-full max-w-[190px]">
-          <Link to="/Home">
+          <Link to="/Tasks">
             <img
               className="w-full"
               src="/assets/Gw2_taskmaster.png"
@@ -16,7 +16,7 @@ const Navbar = () => {
           </Link>
         </div>
         <nav className="flex flex-col gap-4 items-center w-full">
-          <Link to="/Home" className="hover:scale-110 font-semibold">
+          <Link to="/Tasks" className="hover:scale-110 font-semibold">
             Tasks
           </Link>
           <Link to="/Account" className="hover:scale-110 font-semibold">
