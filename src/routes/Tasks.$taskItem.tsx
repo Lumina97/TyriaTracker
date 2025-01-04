@@ -14,7 +14,6 @@ import DailyCraftingTaskComponent from "../Components/Tasks/DailyCraftingTaskCom
 import WizardVaultTaskComponent from "../Components/Tasks/WizardVaultTaskComponent";
 import WorldBossTaskComponent from "../Components/Tasks/WorldBossTaskComponent";
 import SkeletonLoader from "../Components/SkeletonLoading/SkeletonLoader";
-import { Suspense } from "react";
 
 const getUser = () => {
   let User: TUser;
@@ -60,6 +59,7 @@ export const Route = createFileRoute("/Tasks/$taskItem")({
 });
 
 const TaskComponents = (data: TAPIData) => {
+  if (!data) return <></>;
   switch (data.type) {
     case TAPIDataType.Raids:
       return <RaidTaskComponent raidsData={data.data} />;
@@ -80,7 +80,8 @@ const TaskComponents = (data: TAPIData) => {
 function TaskItemComponent() {
   const data = useLoaderData({ from: "/Tasks/$taskItem" });
 
-  if (data.type === TAPIDataType.Null) return <div>No data</div>;
+  if (data && data.type === TAPIDataType.Null)
+    return <SkeletonLoader amountOfRows={10} />;
 
   return TaskComponents(data);
 }
