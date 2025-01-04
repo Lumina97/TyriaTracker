@@ -13,6 +13,8 @@ import DungeonTaskComponent from "../Components/Tasks/DungeonTaskComponent";
 import DailyCraftingTaskComponent from "../Components/Tasks/DailyCraftingTaskComponent";
 import WizardVaultTaskComponent from "../Components/Tasks/WizardVaultTaskComponent";
 import WorldBossTaskComponent from "../Components/Tasks/WorldBossTaskComponent";
+import SkeletonLoader from "../Components/SkeletonLoading/SkeletonLoader";
+import { Suspense } from "react";
 
 const getUser = () => {
   let User: TUser;

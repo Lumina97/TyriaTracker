@@ -77,8 +77,16 @@ function TradingPostComponent() {
     if (page < 0) page = maxPage;
     if (page > maxPage) page = 0;
     setCurrentPage(page);
+    setInputPage(page + 1);
     return page;
   };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handlePageConfirm();
+    }
+  };
+
   const handlePageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const page = parseInt(e.target.value, 10);
     if (page >= 1 && page <= maxPage + 1) {
@@ -133,6 +141,7 @@ function TradingPostComponent() {
                 min="1"
                 max={maxPage + 1}
                 value={inputPage}
+                onKeyDown={handleKeyDown}
                 onChange={handlePageInputChange}
                 className="px-4 py-2 bg-gray-700 text-white text-center w-20 rounded-l-md focus:outline-none focus:ring-0"
                 style={{ MozAppearance: "textfield", WebkitAppearance: "none" }}
