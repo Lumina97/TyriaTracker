@@ -11,7 +11,7 @@ import { TAPIDataType } from "../Utils/types";
 import { Suspense, useState } from "react";
 import SkeletonLoader from "../Components/SkeletonLoading/SkeletonLoader";
 
-export const Route = createFileRoute("/Tasks")({
+export const Route = createFileRoute("/tasks")({
   // loader: () => {
   //   throw redirect({
   //     to: "/Tasks/$taskItem",
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/Tasks")({
 
 function TasksComponent() {
   const [isLoading, setIsLoading] = useState(true);
-  const loaderData = useLoaderData({ from: "/Tasks" });
+  const loaderData = useLoaderData({ from: "/tasks" });
   const [currentTab, setCurrentTab] = useState<TAPIDataType>(
     TAPIDataType.Raids
   );
@@ -37,7 +37,7 @@ function TasksComponent() {
           <div className="flex gap-4  items-start">
             <Link
               className={`${currentTab === TAPIDataType.Raids ? "bg-gray-800" : "bg-gray-900 "} text-white font-bold py-2 px-4 rounded-t`}
-              to="/Tasks/$taskItem"
+              to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.Raids }}
               onClick={() => {
                 setCurrentTab(TAPIDataType.Raids);
@@ -47,7 +47,7 @@ function TasksComponent() {
             </Link>
             <Link
               className={` ${currentTab === TAPIDataType.Dungeons ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
-              to="/Tasks/$taskItem"
+              to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.Dungeons }}
               onClick={() => {
                 setCurrentTab(TAPIDataType.Dungeons);
@@ -57,7 +57,7 @@ function TasksComponent() {
             </Link>
             <Link
               className={` ${currentTab === TAPIDataType.WorldBosses ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
-              to="/Tasks/$taskItem"
+              to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.WorldBosses }}
               onClick={() => {
                 setCurrentTab(TAPIDataType.WorldBosses);
@@ -67,7 +67,7 @@ function TasksComponent() {
             </Link>
             <Link
               className={` ${currentTab === TAPIDataType.DailyCrafting ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
-              to="/Tasks/$taskItem"
+              to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.DailyCrafting }}
               onClick={() => {
                 setCurrentTab(TAPIDataType.DailyCrafting);
@@ -77,7 +77,7 @@ function TasksComponent() {
             </Link>
             <Link
               className={` ${currentTab === TAPIDataType.WizardVault ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
-              to="/Tasks/$taskItem"
+              to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.WizardVault }}
               onClick={() => {
                 setCurrentTab(TAPIDataType.WizardVault);

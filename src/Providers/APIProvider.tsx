@@ -92,7 +92,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
           setUser(user);
           localStorage.setItem("user", JSON.stringify(user));
           navigate({
-            to: "/Tasks",
+            to: "/tasks",
           });
           return true;
         }
@@ -104,7 +104,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     clearUserFromLocalStorage();
     setUser({} as TUser);
-    navigate({ to: "/SignIn" });
+    navigate({ to: "/signIn" });
   };
 
   const isSignedIn = async () => {
@@ -140,7 +140,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (loggedIn === false) {
-      navigate({ to: "/SignIn" });
+      navigate({ to: "/signIn" });
       return false;
     }
 
@@ -167,7 +167,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
       .then((result) => {
         localStorage.setItem("user", JSON.stringify(result.data.newUser));
         setUser(result.data.newUser);
-        navigate({ to: "/Tasks" });
+        navigate({ to: "/tasks" });
         return result.data;
       })
       .catch((error) => {

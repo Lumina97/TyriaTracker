@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSortUp, faSortDown } from "@fortawesome/free-solid-svg-icons";
-import { ESortDirection, ESortParam } from "../../routes/TradingPost.index";
+import { ESortDirection, ESortParam } from "../../routes/tradingPost.index";
 
 const TPTableHead = ({
   title,

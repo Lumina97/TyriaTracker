@@ -1,4 +1,4 @@
-import { createFileRoute, Link, useLoaderData } from "@tanstack/react-router";
+import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import axios, { AxiosRequestConfig } from "axios";
 import {
   ChartEvent,
@@ -31,7 +31,7 @@ ChartJS.register(
   TimeScale
 );
 
-export const Route = createFileRoute("/TradingPost/$itemid")({
+export const Route = createFileRoute("/tradingPost/$itemid")({
   component: TradingPostItemComponent,
   loader: async ({ params }) => {
     const itemId = params.itemid;
@@ -51,7 +51,7 @@ export const Route = createFileRoute("/TradingPost/$itemid")({
 });
 
 function TradingPostItemComponent() {
-  const { item } = useLoaderData({ from: "/TradingPost/$itemid" });
+  const { item } = useLoaderData({ from: "/tradingPost/$itemid" });
   const [timeStep, setTimeStep] = useState<string>("1day");
   const [priceChartData, setPriceChartData] = useState<any>(null);
   const [supplyDemandChartData, setSupplyDemandChartData] = useState<any>(null);

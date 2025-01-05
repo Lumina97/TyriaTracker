@@ -25,7 +25,7 @@ export const enum ESortParam {
   demand = "demand",
 }
 
-export const Route = createFileRoute("/TradingPost/")({
+export const Route = createFileRoute("/tradingPost/")({
   loader: async () => {
     const ids = await getAllTradingPostItemIds();
     if (!ids) {
@@ -53,7 +53,7 @@ export const Route = createFileRoute("/TradingPost/")({
 });
 
 function TradingPostComponent() {
-  const { ids, items } = useLoaderData({ from: "/TradingPost/" });
+  const { ids, items } = useLoaderData({ from: "/tradingPost/" });
   const [tpItems, setTpItems] = useState<TTPItem[]>(items);
   const [sortParam, setSortParam] = useState<ESortParam>(ESortParam.demand);
   const [sortDirection, setSortDirection] = useState<ESortDirection>(

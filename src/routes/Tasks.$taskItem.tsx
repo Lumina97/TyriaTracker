@@ -31,7 +31,7 @@ const getUser = () => {
   }
 };
 
-export const Route = createFileRoute("/Tasks/$taskItem")({
+export const Route = createFileRoute("/tasks/$taskItem")({
   component: TaskItemComponent,
   loader: async ({ params }) => {
     const route = params.taskItem as TAPIDataType;
@@ -78,7 +78,7 @@ const TaskComponents = (data: TAPIData) => {
 };
 
 function TaskItemComponent() {
-  const data = useLoaderData({ from: "/Tasks/$taskItem" });
+  const data = useLoaderData({ from: "/tasks/$taskItem" });
 
   if (data && data.type === TAPIDataType.Null)
     return <SkeletonLoader amountOfRows={10} />;

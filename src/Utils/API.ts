@@ -1,7 +1,7 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { TUser } from "../Providers/APIProvider";
 import { TAPIData, TAPIDataType, TTPItem } from "./types";
-import { ESortDirection, ESortParam } from "../routes/TradingPost.index";
+import { ESortDirection, ESortParam } from "../routes/tradingPost.index";
 
 //@ts-ignore
 const APIBaseURL = import.meta.env.VITE_API_URL;

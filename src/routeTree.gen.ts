@@ -11,29 +11,29 @@
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
-import { Route as TasksImport } from './routes/Tasks'
-import { Route as SignInImport } from './routes/SignIn'
-import { Route as AccountImport } from './routes/Account'
+import { Route as TasksImport } from './routes/tasks'
+import { Route as SignInImport } from './routes/signIn'
+import { Route as AccountImport } from './routes/account'
 import { Route as IndexImport } from './routes/index'
-import { Route as TradingPostIndexImport } from './routes/TradingPost.index'
-import { Route as TasksIndexImport } from './routes/Tasks.index'
-import { Route as TradingPostItemidImport } from './routes/TradingPost.$itemid'
-import { Route as TasksTaskItemImport } from './routes/Tasks.$taskItem'
+import { Route as TradingPostIndexImport } from './routes/tradingPost.index'
+import { Route as TasksIndexImport } from './routes/tasks.index'
+import { Route as TradingPostItemidImport } from './routes/tradingPost.$itemid'
+import { Route as TasksTaskItemImport } from './routes/tasks.$taskItem'
 
 // Create/Update Routes
 
 const TasksRoute = TasksImport.update({
-  path: '/Tasks',
+  path: '/tasks',
   getParentRoute: () => rootRoute,
 } as any)
 
 const SignInRoute = SignInImport.update({
-  path: '/SignIn',
+  path: '/signIn',
   getParentRoute: () => rootRoute,
 } as any)
 
 const AccountRoute = AccountImport.update({
-  path: '/Account',
+  path: '/account',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -43,7 +43,7 @@ const IndexRoute = IndexImport.update({
 } as any)
 
 const TradingPostIndexRoute = TradingPostIndexImport.update({
-  path: '/TradingPost/',
+  path: '/tradingPost/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -53,7 +53,7 @@ const TasksIndexRoute = TasksIndexImport.update({
 } as any)
 
 const TradingPostItemidRoute = TradingPostItemidImport.update({
-  path: '/TradingPost/$itemid',
+  path: '/tradingPost/$itemid',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -73,52 +73,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
-    '/Account': {
-      id: '/Account'
-      path: '/Account'
-      fullPath: '/Account'
+    '/account': {
+      id: '/account'
+      path: '/account'
+      fullPath: '/account'
       preLoaderRoute: typeof AccountImport
       parentRoute: typeof rootRoute
     }
-    '/SignIn': {
-      id: '/SignIn'
-      path: '/SignIn'
-      fullPath: '/SignIn'
+    '/signIn': {
+      id: '/signIn'
+      path: '/signIn'
+      fullPath: '/signIn'
       preLoaderRoute: typeof SignInImport
       parentRoute: typeof rootRoute
     }
-    '/Tasks': {
-      id: '/Tasks'
-      path: '/Tasks'
-      fullPath: '/Tasks'
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
       preLoaderRoute: typeof TasksImport
       parentRoute: typeof rootRoute
     }
-    '/Tasks/$taskItem': {
-      id: '/Tasks/$taskItem'
+    '/tasks/$taskItem': {
+      id: '/tasks/$taskItem'
       path: '/$taskItem'
-      fullPath: '/Tasks/$taskItem'
+      fullPath: '/tasks/$taskItem'
       preLoaderRoute: typeof TasksTaskItemImport
       parentRoute: typeof TasksImport
     }
-    '/TradingPost/$itemid': {
-      id: '/TradingPost/$itemid'
-      path: '/TradingPost/$itemid'
-      fullPath: '/TradingPost/$itemid'
+    '/tradingPost/$itemid': {
+      id: '/tradingPost/$itemid'
+      path: '/tradingPost/$itemid'
+      fullPath: '/tradingPost/$itemid'
       preLoaderRoute: typeof TradingPostItemidImport
       parentRoute: typeof rootRoute
     }
-    '/Tasks/': {
-      id: '/Tasks/'
+    '/tasks/': {
+      id: '/tasks/'
       path: '/'
-      fullPath: '/Tasks/'
+      fullPath: '/tasks/'
       preLoaderRoute: typeof TasksIndexImport
       parentRoute: typeof TasksImport
     }
-    '/TradingPost/': {
-      id: '/TradingPost/'
-      path: '/TradingPost'
-      fullPath: '/TradingPost'
+    '/tradingPost/': {
+      id: '/tradingPost/'
+      path: '/tradingPost'
+      fullPath: '/tradingPost'
       preLoaderRoute: typeof TradingPostIndexImport
       parentRoute: typeof rootRoute
     }
@@ -141,67 +141,67 @@ const TasksRouteWithChildren = TasksRoute._addFileChildren(TasksRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/Account': typeof AccountRoute
-  '/SignIn': typeof SignInRoute
-  '/Tasks': typeof TasksRouteWithChildren
-  '/Tasks/$taskItem': typeof TasksTaskItemRoute
-  '/TradingPost/$itemid': typeof TradingPostItemidRoute
-  '/Tasks/': typeof TasksIndexRoute
-  '/TradingPost': typeof TradingPostIndexRoute
+  '/account': typeof AccountRoute
+  '/signIn': typeof SignInRoute
+  '/tasks': typeof TasksRouteWithChildren
+  '/tasks/$taskItem': typeof TasksTaskItemRoute
+  '/tradingPost/$itemid': typeof TradingPostItemidRoute
+  '/tasks/': typeof TasksIndexRoute
+  '/tradingPost': typeof TradingPostIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/Account': typeof AccountRoute
-  '/SignIn': typeof SignInRoute
-  '/Tasks/$taskItem': typeof TasksTaskItemRoute
-  '/TradingPost/$itemid': typeof TradingPostItemidRoute
-  '/Tasks': typeof TasksIndexRoute
-  '/TradingPost': typeof TradingPostIndexRoute
+  '/account': typeof AccountRoute
+  '/signIn': typeof SignInRoute
+  '/tasks/$taskItem': typeof TasksTaskItemRoute
+  '/tradingPost/$itemid': typeof TradingPostItemidRoute
+  '/tasks': typeof TasksIndexRoute
+  '/tradingPost': typeof TradingPostIndexRoute
 }
 
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/Account': typeof AccountRoute
-  '/SignIn': typeof SignInRoute
-  '/Tasks': typeof TasksRouteWithChildren
-  '/Tasks/$taskItem': typeof TasksTaskItemRoute
-  '/TradingPost/$itemid': typeof TradingPostItemidRoute
-  '/Tasks/': typeof TasksIndexRoute
-  '/TradingPost/': typeof TradingPostIndexRoute
+  '/account': typeof AccountRoute
+  '/signIn': typeof SignInRoute
+  '/tasks': typeof TasksRouteWithChildren
+  '/tasks/$taskItem': typeof TasksTaskItemRoute
+  '/tradingPost/$itemid': typeof TradingPostItemidRoute
+  '/tasks/': typeof TasksIndexRoute
+  '/tradingPost/': typeof TradingPostIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/Account'
-    | '/SignIn'
-    | '/Tasks'
-    | '/Tasks/$taskItem'
-    | '/TradingPost/$itemid'
-    | '/Tasks/'
-    | '/TradingPost'
+    | '/account'
+    | '/signIn'
+    | '/tasks'
+    | '/tasks/$taskItem'
+    | '/tradingPost/$itemid'
+    | '/tasks/'
+    | '/tradingPost'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/Account'
-    | '/SignIn'
-    | '/Tasks/$taskItem'
-    | '/TradingPost/$itemid'
-    | '/Tasks'
-    | '/TradingPost'
+    | '/account'
+    | '/signIn'
+    | '/tasks/$taskItem'
+    | '/tradingPost/$itemid'
+    | '/tasks'
+    | '/tradingPost'
   id:
     | '__root__'
     | '/'
-    | '/Account'
-    | '/SignIn'
-    | '/Tasks'
-    | '/Tasks/$taskItem'
-    | '/TradingPost/$itemid'
-    | '/Tasks/'
-    | '/TradingPost/'
+    | '/account'
+    | '/signIn'
+    | '/tasks'
+    | '/tasks/$taskItem'
+    | '/tradingPost/$itemid'
+    | '/tasks/'
+    | '/tradingPost/'
   fileRoutesById: FileRoutesById
 }
 
@@ -236,42 +236,42 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/Account",
-        "/SignIn",
-        "/Tasks",
-        "/TradingPost/$itemid",
-        "/TradingPost/"
+        "/account",
+        "/signIn",
+        "/tasks",
+        "/tradingPost/$itemid",
+        "/tradingPost/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
     },
-    "/Account": {
-      "filePath": "Account.tsx"
+    "/account": {
+      "filePath": "account.tsx"
     },
-    "/SignIn": {
-      "filePath": "SignIn.tsx"
+    "/signIn": {
+      "filePath": "signIn.tsx"
     },
-    "/Tasks": {
-      "filePath": "Tasks.tsx",
+    "/tasks": {
+      "filePath": "tasks.tsx",
       "children": [
-        "/Tasks/$taskItem",
-        "/Tasks/"
+        "/tasks/$taskItem",
+        "/tasks/"
       ]
     },
-    "/Tasks/$taskItem": {
-      "filePath": "Tasks.$taskItem.tsx",
-      "parent": "/Tasks"
+    "/tasks/$taskItem": {
+      "filePath": "tasks.$taskItem.tsx",
+      "parent": "/tasks"
     },
-    "/TradingPost/$itemid": {
-      "filePath": "TradingPost.$itemid.tsx"
+    "/tradingPost/$itemid": {
+      "filePath": "tradingPost.$itemid.tsx"
     },
-    "/Tasks/": {
-      "filePath": "Tasks.index.tsx",
-      "parent": "/Tasks"
+    "/tasks/": {
+      "filePath": "tasks.index.tsx",
+      "parent": "/tasks"
     },
-    "/TradingPost/": {
-      "filePath": "TradingPost.index.tsx"
+    "/tradingPost/": {
+      "filePath": "tradingPost.index.tsx"
     }
   }
 }

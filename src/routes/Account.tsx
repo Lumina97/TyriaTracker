@@ -1,10 +1,10 @@
-import { createFileRoute } from "@tanstack/react-router";
-import Navbar from "../Components/NavBar/Navbar";
-import AccountDataComponent from "../Components/Account/AccountDataComponent";
+import { createFileRoute } from '@tanstack/react-router'
+import Navbar from '../Components/NavBar/Navbar'
+import AccountDataComponent from '../Components/Account/AccountDataComponent'
 
-export const Route = createFileRoute("/Account")({
+export const Route = createFileRoute('/account')({
   component: AccountComponent,
-});
+})
 
 function AccountComponent() {
   return (
@@ -16,5 +16,5 @@ function AccountComponent() {
         </div>
       </div>
     </div>
-  );
+  )
 }
