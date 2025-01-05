@@ -6,7 +6,7 @@ import SignInFormComponent from '../Components/Form/SignInFormComponent'
 import '../CSS/global.css'
 import PasswordResetForm from '../Components/Form/PasswordResetForm'
 
-export const Route = createFileRoute('/signIn')({
+export const Route = createFileRoute('/sign-in')({
   component: SignInComponent,
 })
 

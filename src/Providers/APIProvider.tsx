@@ -104,7 +104,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
   const logout = async () => {
     clearUserFromLocalStorage();
     setUser({} as TUser);
-    navigate({ to: "/signIn" });
+    navigate({ to: "/sign-in" });
   };
 
   const isSignedIn = async () => {
@@ -140,7 +140,7 @@ export const APIProvider = ({ children }: { children: ReactNode }) => {
     }
 
     if (loggedIn === false) {
-      navigate({ to: "/signIn" });
+      navigate({ to: "/sign-in" });
       return false;
     }
 
