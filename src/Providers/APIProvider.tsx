@@ -1,7 +1,6 @@
 import { ReactNode, useNavigate } from "@tanstack/react-router";
 import { createContext, useContext, useState } from "react";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { APIBaseURL } from "../Utils/settings";
 
 type TAPIProvider = {
   login: (email: string, password: string) => Promise<boolean>;
@@ -51,6 +50,9 @@ const clearUserFromLocalStorage = () => {
 const APIContext = createContext<TAPIProvider>({} as TAPIProvider);
 
 export const APIProvider = ({ children }: { children: ReactNode }) => {
+  //@ts-ignore
+  const APIBaseURL = import.meta.env.VITE_API_URL;
+
   const navigate = useNavigate();
   const [user, setUser] = useState<TUser>({} as TUser);
   const GetUser = () => {

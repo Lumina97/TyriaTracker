@@ -129,9 +129,9 @@ function TradingPostComponent() {
           <div className="flex flex-col sm:flex-row justify-between mb-4">
             <button
               className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition duration-300 mb-2 sm:mb-0"
-              onClick={() =>
-                getNewItems(changePage(false), sortParam, sortDirection)
-              }
+              // onClick={() =>
+              //   getNewItems(changePage(false), sortParam, sortDirection)
+              // }
             >
               Previous
             </button>

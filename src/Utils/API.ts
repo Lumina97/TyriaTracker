@@ -1,8 +1,10 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { TUser } from "../Providers/APIProvider";
-import { APIBaseURL } from "./settings";
 import { TAPIData, TAPIDataType, TTPItem } from "./types";
 import { ESortDirection, ESortParam } from "../routes/TradingPost.index";
+
+//@ts-ignore
+const APIBaseURL = import.meta.env.VITE_API_URL;
 
 export const getUserRaids = async (user: TUser) => {
   if (user.email === "") {

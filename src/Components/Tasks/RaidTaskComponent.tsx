@@ -20,7 +20,7 @@ const RaidTaskComponent = ({ raidsData }: { raidsData: TRaidAPIData }) => {
     });
     return (
       <TaskComponent
-        key={raid.events[0].name}
+        key={raid.name}
         tasks={{ name: raid.name, taskItems: taskItems }}
       />
     );

@@ -23,6 +23,15 @@ const CreateAccountForm = () => {
   const [apiKey, setApiKey] = useState<string>("");
   const [errorResponseMessage, setErrorResponseMessage] = useState<string>("");
 
+  const resetFormData = () => {
+    setPassword("");
+    setSecondPassword("");
+    setEmail("");
+    setApiKey("");
+    setErrorResponseMessage("");
+    setWasSubmitted(false);
+  };
+
   const onFormSubmit = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     setErrorResponseMessage("");
     e.preventDefault();
@@ -38,14 +47,8 @@ const CreateAccountForm = () => {
         return;
       }
       createAccount(email, password, apiKey).then((result) => {
-        if (result.status === true) {
-          setPassword("");
-          setSecondPassword("");
-          setEmail("");
-          setApiKey("");
-          setErrorResponseMessage("");
-          setWasSubmitted(false);
-        } else setErrorResponseMessage(result.message);
+        if (result.status === true) resetFormData();
+        else setErrorResponseMessage(result.message);
       });
     }
   };
@@ -62,7 +65,7 @@ const CreateAccountForm = () => {
             type: "email",
             value: email,
           }}
-        ></InputFieldComponent>
+        />
         {wasSubmitted && !isEmailValid(email) && (
           <div className="text-[red]">{emailSignUpError}</div>
         )}
@@ -74,7 +77,7 @@ const CreateAccountForm = () => {
             type: "password",
             value: password,
           }}
-        ></InputFieldComponent>
+        />
         {wasSubmitted && !isPasswordValid(password) && (
           <div className="text-[red]">{passwordSignUpError}</div>
         )}
@@ -87,7 +90,7 @@ const CreateAccountForm = () => {
             type: "password",
             value: secondPassword,
           }}
-        ></InputFieldComponent>
+        />
         {wasSubmitted && !isPasswordValid(secondPassword) && (
           <div className="text-[red]">{passwordSignUpError}</div>
         )}
@@ -99,7 +102,7 @@ const CreateAccountForm = () => {
             type: "text",
             value: apiKey,
           }}
-        ></InputFieldComponent>
+        />
         {wasSubmitted && !isAPIKeyValid(apiKey) && (
           <div className="text-[red]">{apiKeySignUpError}</div>
         )}

@@ -14,7 +14,6 @@ import {
 } from "chart.js";
 import { useEffect, useRef, useState } from "react";
 import { Line } from "react-chartjs-2";
-import { APIBaseURL } from "../Utils/settings";
 import { TTPItem } from "../Utils/types";
 import "chartjs-adapter-date-fns";
 import { getItemColor } from "../Components/TradingPost/TPItemListingComponent";
@@ -36,6 +35,9 @@ export const Route = createFileRoute("/TradingPost/$itemid")({
   component: TradingPostItemComponent,
   loader: async ({ params }) => {
     const itemId = params.itemid;
+    //@ts-ignore
+    const APIBaseURL = import.meta.env.VITE_API_URL;
+
     const config: AxiosRequestConfig = {
       method: "post",
       url: `${APIBaseURL}api/tradingPost/item/`,
