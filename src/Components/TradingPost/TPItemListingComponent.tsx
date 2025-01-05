@@ -73,7 +73,7 @@ const TPItemListingComponent = ({
           price={
             item?.LatestPrice?.sellPrice
               ? item.LatestPrice.sellPrice.toString()
-              : "0"
+              : "No data"
           }
         />
       </td>
@@ -82,14 +82,16 @@ const TPItemListingComponent = ({
           price={
             item?.LatestPrice?.buyPrice
               ? item.LatestPrice.buyPrice.toString()
-              : "0"
+              : "No data"
           }
         />
       </td>
       <td className="border border-gray-700 px-4 py-2 text-gray-300">
         <TPPriceComponent
           price={
-            item.LatestPrice?.profit ? item.LatestPrice.profit.toFixed(0) : "0"
+            item.LatestPrice?.profit
+              ? item.LatestPrice.profit.toFixed(0)
+              : "No data"
           }
         />
       </td>
@@ -105,12 +107,12 @@ const TPItemListingComponent = ({
       <td className="border border-gray-700 px-4 py-2 text-gray-300">
         {item.LatestPrice
           ? item.LatestPrice.supply!.toLocaleString("en-US")
-          : 0}
+          : Infinity}
       </td>
       <td className="border border-gray-700 px-4 py-2 text-gray-300">
         {item.LatestPrice
           ? item.LatestPrice.demand!.toLocaleString("en-US")
-          : 0}
+          : Infinity}
       </td>
     </tr>
   );
