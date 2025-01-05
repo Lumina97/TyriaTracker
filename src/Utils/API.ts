@@ -9,7 +9,7 @@ const APIBaseURL = import.meta.env.VITE_API_URL;
 export const getUserRaids = async (user: TUser) => {
   if (user.email === "") {
     console.log("user email was empty");
-    return undefined;
+    return null;
   }
 
   const url = `${APIBaseURL}api/raids`;
@@ -36,13 +36,13 @@ export const getUserRaids = async (user: TUser) => {
   } catch (error) {
     console.log(error);
   }
-  return undefined;
+  return null;
 };
 
 export const getUserDungeons = async (user: TUser) => {
   if (user.email === "") {
     console.log("user email was empty");
-    return undefined;
+    return null;
   }
 
   const url = `${APIBaseURL}api/dungeons`;
@@ -69,13 +69,13 @@ export const getUserDungeons = async (user: TUser) => {
   } catch (error) {
     console.log(error);
   }
-  return undefined;
+  return null;
 };
 
 export const getUserWorldBosses = async (user: TUser) => {
   if (user.email === "") {
     console.log("user email was empty");
-    return undefined;
+    return null;
   }
 
   const url = `${APIBaseURL}api/worldBosses`;
@@ -102,13 +102,13 @@ export const getUserWorldBosses = async (user: TUser) => {
   } catch (error) {
     console.log(error);
   }
-  return undefined;
+  return null;
 };
 
 export const getUserDailyCrafting = async (user: TUser) => {
   if (user.email === "") {
     console.log("user email was empty");
-    return undefined;
+    return null;
   }
 
   const url = `${APIBaseURL}api/dailyCrafting`;
@@ -135,13 +135,13 @@ export const getUserDailyCrafting = async (user: TUser) => {
   } catch (error) {
     console.log(error);
   }
-  return undefined;
+  return null;
 };
 
 export const getUserWizardVault = async (user: TUser) => {
   if (user.email === "") {
     console.log("user email was empty");
-    return undefined;
+    return null;
   }
 
   const url = `${APIBaseURL}api/wizardVault`;
@@ -169,7 +169,7 @@ export const getUserWizardVault = async (user: TUser) => {
   } catch (error) {
     console.log(error);
   }
-  return undefined;
+  return null;
 };
 
 export const getAllTradingPostItems = async () => {

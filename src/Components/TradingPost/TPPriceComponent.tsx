@@ -18,25 +18,23 @@ const TPPriceComponent = ({ price }: { price: string }) => {
 
   return (
     <div className="flex items-center gap-1 justify-end">
-      {isNegative && <p className="text-red-500">-</p>}
+      {isNegative && <p className="text-[red]">-</p>}
       {gold > 0 && (
-        <p className={`flex items-center ${isNegative ? "text-red-500" : ""}`}>
+        <p className={`flex items-center ${isNegative ? "text-[red]" : ""}`}>
           {gold}
-          <i className="bg-goldCoin w-4 h-4 bg-cover bg-center inline-block">
-            {" "}
-          </i>
+          <i className="bg-goldCoin w-4 h-4 bg-cover bg-center inline-block" />
         </p>
       )}
 
       {price.length >= 3 && (
-        <p className={`flex items-center ${isNegative ? "text-red-500" : ""}`}>
+        <p className={`flex items-center ${isNegative ? "text-[red]" : ""}`}>
           {silver > 0 ? silver : "00"}
           <i className="bg-silverCoin w-4 h-4 bg-cover bg-center inline-block"></i>
         </p>
       )}
 
       {price.length >= 1 && (
-        <p className={`flex items-center ${isNegative ? "text-red-500" : ""}`}>
+        <p className={`flex items-center ${isNegative ? "text-[red]" : ""}`}>
           {copper < 10 ? "0" + copper : copper}
           <i className="bg-copperCoin w-4 h-4 bg-cover bg-center inline-block"></i>
         </p>

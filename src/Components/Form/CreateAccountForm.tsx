@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import InputFieldComponent from "./InputFieldComponent";
 import {
   isEmailValid,
@@ -32,7 +32,7 @@ const CreateAccountForm = () => {
     setWasSubmitted(false);
   };
 
-  const onFormSubmit = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setErrorResponseMessage("");
     e.preventDefault();
 
@@ -116,8 +116,8 @@ const CreateAccountForm = () => {
             h-[2.5rem] relative  grow hover:shadow-3xl border-solid text-xl
             pb-[0.05rem] origin-left border-black border-2 rounded-md bg-transparent 
             indent-[1rem] w-[98%] m-auto  top-[2.25rem] left-[1%]"
-          to="/SignIn"
-          onClick={(e) => onFormSubmit(e)}
+          to="/sign-in"
+          onClick={(e: FormEvent<HTMLFormElement>) => onFormSubmit(e)}
         >
           Create Account
         </Link>

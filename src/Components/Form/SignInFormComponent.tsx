@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import InputFieldComponent from "./InputFieldComponent";
 import { isEmailValid, isPasswordValid } from "../../Utils/InputValidation";
 import { useAPI } from "../../Providers/APIProvider";
@@ -14,7 +14,7 @@ const SignInFormComponent = () => {
   const [password, setPassword] = useState<string>("");
   const [showLogInError, setShowLogInError] = useState<boolean>(false);
 
-  const onFormSubmit = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+  const onFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     setWasSubmitted(true);
     if (isEmailValid(email) && isPasswordValid(password)) {
       login(email, password).then((result) => {
@@ -60,8 +60,8 @@ const SignInFormComponent = () => {
             h-[2.5rem] relative  grow hover:shadow-3xl border-solid text-xl
             pb-[0.05rem] origin-left border-black border-2 rounded-md bg-transparent 
             indent-[1rem] w-[98%] m-auto  top-[2.25rem] left-[1%]"
-            to="/SignIn"
-            onClick={(e) => onFormSubmit(e)}
+            to="/sign-in"
+            onClick={(e: FormEvent<HTMLFormElement>) => onFormSubmit(e)}
             disabled={wasSubmitted && showLogInError === false}
           >
             SIGN IN

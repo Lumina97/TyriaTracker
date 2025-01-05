@@ -1,33 +1,17 @@
-import {
-  createFileRoute,
-  Link,
-  Outlet,
-  redirect,
-  useLoaderData,
-} from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import Navbar from "../Components/NavBar/Navbar";
-import { useAPI } from "../Providers/APIProvider";
 import { TAPIDataType } from "../Utils/types";
 import { Suspense, useState } from "react";
 import SkeletonLoader from "../Components/SkeletonLoading/SkeletonLoader";
 
 export const Route = createFileRoute("/tasks")({
-  // loader: () => {
-  //   throw redirect({
-  //     to: "/Tasks/$taskItem",
-  //     params: { taskItem: "raid" },
-  //   });
-  // },
   component: TasksComponent,
 });
 
 function TasksComponent() {
-  const [isLoading, setIsLoading] = useState(true);
-  const loaderData = useLoaderData({ from: "/tasks" });
   const [currentTab, setCurrentTab] = useState<TAPIDataType>(
     TAPIDataType.Raids
   );
-  const user = useAPI().GetUser();
 
   return (
     <div className="min-h-screen flex flex-row bg-gray-900 text-white">
@@ -89,6 +73,7 @@ function TasksComponent() {
           <div
             className={`bg-gray-800 p-4 rounded-lg ${currentTab === TAPIDataType.Raids ? "rounded-tl-none" : ""}  shadow-lg w-full flex-grow`}
           >
+            {/*this only works on the first load and not when switching tabs */}
             <Suspense fallback={<SkeletonLoader amountOfRows={10} />}>
               <Outlet />
             </Suspense>
@@ -97,7 +82,4 @@ function TasksComponent() {
       </div>
     </div>
   );
-}
-function useLoader() {
-  throw new Error("Function not implemented.");
 }

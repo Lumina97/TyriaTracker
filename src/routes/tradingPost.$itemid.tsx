@@ -19,6 +19,7 @@ import "chartjs-adapter-date-fns";
 import { getItemColor } from "../Components/TradingPost/TPItemListingComponent";
 import TPPriceComponent from "../Components/TradingPost/TPPriceComponent";
 import Navbar from "../Components/NavBar/Navbar";
+import SkeletonLoader from "../Components/SkeletonLoading/SkeletonLoader";
 
 ChartJS.register(
   CategoryScale,
@@ -92,7 +93,7 @@ function TradingPostItemComponent() {
             borderColor: "rgb(54, 162, 235)",
             backgroundColor: "rgba(54, 162, 235, 0.2)",
             pointRadius: 0,
-            pointHoverRadius: 0,
+            pointHoverRadius: 2,
           },
           {
             label: "Demand",
@@ -100,7 +101,7 @@ function TradingPostItemComponent() {
             borderColor: "rgb(255, 206, 86)",
             backgroundColor: "rgba(255, 206, 86, 0.2)",
             pointRadius: 0,
-            pointHoverRadius: 0,
+            pointHoverRadius: 2,
           },
         ],
       });
@@ -170,7 +171,7 @@ function TradingPostItemComponent() {
   };
 
   if (!item) {
-    return <div>Loading...</div>;
+    return <SkeletonLoader amountOfRows={10} />;
   }
 
   return (
