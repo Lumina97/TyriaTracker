@@ -12,8 +12,6 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as TasksImport } from './routes/tasks'
-import { Route as SignInImport } from './routes/sign-in'
-import { Route as AccountImport } from './routes/account'
 import { Route as IndexImport } from './routes/index'
 import { Route as TradingPostIndexImport } from './routes/tradingPost.index'
 import { Route as TasksIndexImport } from './routes/tasks.index'
@@ -24,16 +22,6 @@ import { Route as TasksTaskItemImport } from './routes/tasks.$taskItem'
 
 const TasksRoute = TasksImport.update({
   path: '/tasks',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const SignInRoute = SignInImport.update({
-  path: '/sign-in',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const AccountRoute = AccountImport.update({
-  path: '/account',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -71,20 +59,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexImport
-      parentRoute: typeof rootRoute
-    }
-    '/account': {
-      id: '/account'
-      path: '/account'
-      fullPath: '/account'
-      preLoaderRoute: typeof AccountImport
-      parentRoute: typeof rootRoute
-    }
-    '/sign-in': {
-      id: '/sign-in'
-      path: '/sign-in'
-      fullPath: '/sign-in'
-      preLoaderRoute: typeof SignInImport
       parentRoute: typeof rootRoute
     }
     '/tasks': {
@@ -141,8 +115,6 @@ const TasksRouteWithChildren = TasksRoute._addFileChildren(TasksRouteChildren)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/account': typeof AccountRoute
-  '/sign-in': typeof SignInRoute
   '/tasks': typeof TasksRouteWithChildren
   '/tasks/$taskItem': typeof TasksTaskItemRoute
   '/tradingPost/$itemid': typeof TradingPostItemidRoute
@@ -152,8 +124,6 @@ export interface FileRoutesByFullPath {
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/account': typeof AccountRoute
-  '/sign-in': typeof SignInRoute
   '/tasks/$taskItem': typeof TasksTaskItemRoute
   '/tradingPost/$itemid': typeof TradingPostItemidRoute
   '/tasks': typeof TasksIndexRoute
@@ -163,8 +133,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRoute
   '/': typeof IndexRoute
-  '/account': typeof AccountRoute
-  '/sign-in': typeof SignInRoute
   '/tasks': typeof TasksRouteWithChildren
   '/tasks/$taskItem': typeof TasksTaskItemRoute
   '/tradingPost/$itemid': typeof TradingPostItemidRoute
@@ -176,8 +144,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/account'
-    | '/sign-in'
     | '/tasks'
     | '/tasks/$taskItem'
     | '/tradingPost/$itemid'
@@ -186,8 +152,6 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/account'
-    | '/sign-in'
     | '/tasks/$taskItem'
     | '/tradingPost/$itemid'
     | '/tasks'
@@ -195,8 +159,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/account'
-    | '/sign-in'
     | '/tasks'
     | '/tasks/$taskItem'
     | '/tradingPost/$itemid'
@@ -207,8 +169,6 @@ export interface FileRouteTypes {
 
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AccountRoute: typeof AccountRoute
-  SignInRoute: typeof SignInRoute
   TasksRoute: typeof TasksRouteWithChildren
   TradingPostItemidRoute: typeof TradingPostItemidRoute
   TradingPostIndexRoute: typeof TradingPostIndexRoute
@@ -216,8 +176,6 @@ export interface RootRouteChildren {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AccountRoute: AccountRoute,
-  SignInRoute: SignInRoute,
   TasksRoute: TasksRouteWithChildren,
   TradingPostItemidRoute: TradingPostItemidRoute,
   TradingPostIndexRoute: TradingPostIndexRoute,
@@ -236,8 +194,6 @@ export const routeTree = rootRoute
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/account",
-        "/sign-in",
         "/tasks",
         "/tradingPost/$itemid",
         "/tradingPost/"
@@ -245,12 +201,6 @@ export const routeTree = rootRoute
     },
     "/": {
       "filePath": "index.tsx"
-    },
-    "/account": {
-      "filePath": "account.tsx"
-    },
-    "/sign-in": {
-      "filePath": "sign-in.tsx"
     },
     "/tasks": {
       "filePath": "tasks.tsx",

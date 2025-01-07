@@ -3,7 +3,6 @@ import Navbar from "../Components/NavBar/Navbar";
 import { TAPIDataType } from "../Utils/types";
 import { Suspense, useState } from "react";
 import SkeletonLoader from "../Components/SkeletonLoading/SkeletonLoader";
-import { TaskProvider } from "../Providers/TaskProvider";
 
 export const Route = createFileRoute("/tasks")({
   component: TasksComponent,
@@ -76,9 +75,7 @@ function TasksComponent() {
           >
             {/*this only works on the first load and not when switching tabs */}
             <Suspense fallback={<SkeletonLoader amountOfRows={10} />}>
-              <TaskProvider>
-                <Outlet />
-              </TaskProvider>
+              <Outlet />
             </Suspense>
           </div>
         </div>
