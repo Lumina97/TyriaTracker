@@ -29,7 +29,7 @@ export const Route = createFileRoute("/tradingPost/")({
   loader: async () => {
     const ids = await getAllTradingPostItemIds();
     if (!ids) {
-      console.log("no items");
+      console.error("no items");
       return;
     }
 
@@ -40,7 +40,7 @@ export const Route = createFileRoute("/tradingPost/")({
       ESortDirection.up
     );
     if (items === null) {
-      console.log("items was null");
+      console.error("items was null");
       return;
     }
 
@@ -114,7 +114,7 @@ function TradingPostComponent() {
       sDirection
     );
     if (newItems === null) {
-      console.log("new items was null");
+      console.error("new items was null");
       return;
     }
     setTpItems(newItems);

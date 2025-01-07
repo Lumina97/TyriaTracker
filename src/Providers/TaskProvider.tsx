@@ -57,7 +57,6 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log("Fetching data");
         const raidResponse = await getUserRaids();
         setRaidData(raidResponse);
 
@@ -72,7 +71,6 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
 
         const wizardVaultResponse = await getUserWizardVault();
         setWizardVaultData(wizardVaultResponse);
-        console.log("Done Fetching data");
       } catch (error) {
         console.error("Failed to fetch data", error);
       }

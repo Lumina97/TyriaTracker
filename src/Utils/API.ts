@@ -32,7 +32,7 @@ export const getUserRaids = async () => {
       return raidsData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
@@ -60,7 +60,7 @@ export const getUserDungeons = async () => {
       return dungeonsData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
@@ -88,7 +88,7 @@ export const getUserWorldBosses = async () => {
       return worldBossesData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
@@ -116,7 +116,7 @@ export const getUserDailyCrafting = async () => {
       return dailyCraftData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
@@ -145,7 +145,7 @@ export const getUserWizardVault = async () => {
       return wizardVault;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
