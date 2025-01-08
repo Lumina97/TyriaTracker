@@ -2,6 +2,8 @@ import { createFileRoute, useLoaderData } from "@tanstack/react-router";
 import {
   getAllTradingPostItemIds,
   getTradableItemsInRange,
+  getTradingPostItemByName,
+  getTradingPostItemNames,
 } from "../Utils/API";
 import { TTPItem } from "../Utils/types";
 import { ChangeEvent, useState } from "react";
@@ -9,6 +11,7 @@ import TPTableHead from "../Components/TradingPost/TPTableHead";
 import TPItemListingComponent from "../Components/TradingPost/TPItemListingComponent";
 import Navbar from "../Components/NavBar/Navbar";
 import "../CSS/global.css";
+import SearchBar from "../Components/TradingPost/SearchBar";
 
 export const enum ESortDirection {
   up = "desc",
@@ -62,10 +65,12 @@ function TradingPostComponent() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [inputPage, setInputPage] = useState<number>(1);
   const [showGoButton, setShowGoButton] = useState<boolean>(false);
+
   const itemsPerPage = 50;
   const maxPage = Math.floor(ids.length / itemsPerPage);
 
   const SortTable = async (direction: ESortDirection, sort: ESortParam) => {
+    console.log("sorting");
     setSortDirection(direction);
     setSortParam(sort);
     setCurrentPage(0);
@@ -102,6 +107,13 @@ function TradingPostComponent() {
     setShowGoButton(false);
   };
 
+  const getNewItemByName = async (name: string) => {
+    const item = await getTradingPostItemByName(name);
+    if (item) {
+      setTpItems([item]);
+    }
+  };
+
   const getNewItems = async (
     page: number,
     sParam: ESortParam,
@@ -124,8 +136,9 @@ function TradingPostComponent() {
     <div className="min-h-screen flex bg-gray-900 text-white">
       <Navbar />
       <div className="container mx-auto p-4">
-        <div className="bg-gray-800 p-4 rounded-lg shadow-lg">
+        <div className="bg-gray-800 p-4 rounded-lg shadow-lg ">
           <h3 className="text-2xl font-bold text-center mb-4">Trading Post</h3>
+          <SearchBar setTpItems={setTpItems} />
           <div className="flex flex-col sm:flex-row justify-between mb-4">
             <button
               className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition duration-300 mb-2 sm:mb-0"

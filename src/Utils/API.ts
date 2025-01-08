@@ -215,3 +215,45 @@ export const getAllTradingPostItemIds = async () => {
     return null;
   }
 };
+
+export const getTradingPostItemNames = async (name: string) => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getItemNames`;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+      data: {
+        name,
+      },
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as TTPItem[];
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getTradingPostItemByName = async (name: string) => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getItemByName`;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+      data: {
+        name,
+      },
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as TTPItem;
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
