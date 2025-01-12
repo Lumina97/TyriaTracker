@@ -20,7 +20,7 @@ How to install:
  - Clone repository to local machine
  - Run `npm i`
  - Run `npm run dev`
- - Create a `.env` file and add : `VITE_API_URL="http://localhost:3030/"` (this will require you to also run the backend at the same time
+ - Create a `.env` file and add : `VITE_API_URL="http://localhost:3030/"` (this will require you to also run the backend at the same time)
  - This will start up a local host of Tyria Tracker
 
 
