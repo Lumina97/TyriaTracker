@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getTradingPostItemNames } from "../../Utils/API";
 import { TTPItem } from "../../Utils/types";
 import { getItemColor } from "./TPItemListingComponent";
+import { Link } from "@tanstack/react-router";
 
 function useDebounceValue(value: string, time = 250) {
   const [debounceValue, setDebounceValue] = useState(value);
@@ -40,7 +41,9 @@ const SearchBar = ({
       }
     })();
 
-    return () => controller.abort("Cancel request");
+    return () => {
+      controller.abort("Cancel request");
+    };
   }, [debounceQuery]);
 
   return (
@@ -80,15 +83,11 @@ const SearchBar = ({
         {searchResults.length > 0 && (
           <div className="absolute z-10 w-full mt-1 bg-gray-700 rounded-md shadow-lg max-h-60 overflow-auto">
             <div className="py-1">
-              {searchResults.map((result) => (
-                <button
+              {searchResults.slice(0, 5).map((result) => (
+                <Link
                   key={result.id}
-                  className={`block w-full text-left px-4 py-2 ${getItemColor(result)} hover:bg-gray-600 focus:outline-none flex items-center`}
-                  onClick={() => {
-                    setTpItems([result]);
-                    setQuery("");
-                    setSearchResults([]);
-                  }}
+                  to={`/TradingPost/${result.id}`}
+                  className=" h-full flex flex-row align-middle start gap-4"
                 >
                   <img
                     src={result.icon}
@@ -96,7 +95,7 @@ const SearchBar = ({
                     className="w-6 h-6 mr-2"
                   />
                   {result.name}
-                </button>
+                </Link>
               ))}
             </div>
           </div>
