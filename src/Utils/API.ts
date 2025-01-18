@@ -216,7 +216,10 @@ export const getAllTradingPostItemIds = async () => {
   }
 };
 
-export const getTradingPostItemNames = async (name: string) => {
+export const getTradingPostItemNames = async (
+  name: string,
+  signal: AbortSignal,
+) => {
   try {
     const url = `${APIBaseURL}api/tradingPost/getItemNames`;
     const config: AxiosRequestConfig = {
@@ -225,6 +228,7 @@ export const getTradingPostItemNames = async (name: string) => {
       data: {
         name,
       },
+      signal,
     };
     const response = await axios(config);
     if (response.status === 200) {
@@ -239,8 +243,6 @@ export const getTradingPostItemNames = async (name: string) => {
 
 export const getTradingPostItemByName = async (name: string) => {
   try {
-    const controller = new AbortController();
-
     const url = `${APIBaseURL}api/tradingPost/getItemByName`;
     const config: AxiosRequestConfig = {
       method: "post",
@@ -248,7 +250,6 @@ export const getTradingPostItemByName = async (name: string) => {
       data: {
         name,
       },
-      signal: controller.signal,
     };
     const response = await axios(config);
     if (response.status === 200) {

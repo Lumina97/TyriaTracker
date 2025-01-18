@@ -27,16 +27,20 @@ const SearchBar = ({
   const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<TTPItem[]>([]);
   const debounceQuery = useDebounceValue(query);
+  const controller = new AbortController();
 
   useEffect(() => {
+    const signal = controller.signal;
     (async () => {
       setSearchResults([]);
       if (debounceQuery.length > 0) {
         console.log(debounceQuery);
-        const data = await getTradingPostItemNames(debounceQuery);
+        const data = await getTradingPostItemNames(debounceQuery, signal);
         if (data) setSearchResults(data);
       }
     })();
+
+    return () => controller.abort("Cancel request");
   }, [debounceQuery]);
 
   return (
