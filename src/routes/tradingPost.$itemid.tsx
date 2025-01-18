@@ -178,12 +178,6 @@ function TradingPostItemComponent() {
     <div className="min-h-screen bg-gray-900 text-white flex">
       <Navbar />
       <div className=" container m-auto flex flex-col gap-4 p-4 rounded-lg shadow-lg">
-        <button
-          onClick={() => window.history.back()}
-          className="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition duration-300 w-fit"
-        >
-          Back
-        </button>
         <div className="container rounded-md ">
           <div className="bg-gray-800 p-4">
             <h1 className={`text-2xl font-bold ${getItemColor(item)}`}>

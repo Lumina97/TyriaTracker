@@ -1,26 +1,43 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getTradingPostItemNames } from "../../Utils/API";
 import { TTPItem } from "../../Utils/types";
 import { getItemColor } from "./TPItemListingComponent";
+
+function useDebounceValue(value: string, time = 250) {
+  const [debounceValue, setDebounceValue] = useState(value);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDebounceValue(value);
+    }, time);
+
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [value, time]);
+
+  return debounceValue;
+}
 
 const SearchBar = ({
   setTpItems,
 }: {
   setTpItems: React.Dispatch<React.SetStateAction<TTPItem[]>>;
 }) => {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [query, setQuery] = useState("");
   const [searchResults, setSearchResults] = useState<TTPItem[]>([]);
+  const debounceQuery = useDebounceValue(query);
 
-  const handleSearch = async (query: string) => {
-    if (query.length > 0) {
-      const results = await getTradingPostItemNames(query);
-      if (results) {
-        setSearchResults(results);
-      }
-    } else {
+  useEffect(() => {
+    (async () => {
       setSearchResults([]);
-    }
-  };
+      if (debounceQuery.length > 0) {
+        console.log(debounceQuery);
+        const data = await getTradingPostItemNames(debounceQuery);
+        if (data) setSearchResults(data);
+      }
+    })();
+  }, [debounceQuery]);
 
   return (
     <div className="mb-4 w-1/3">
@@ -28,10 +45,16 @@ const SearchBar = ({
         <input
           type="text"
           placeholder="Search items..."
-          value={searchQuery}
+          value={query}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              setTpItems(searchResults);
+              setQuery("");
+              setSearchResults([]);
+            }
+          }}
           onChange={(e) => {
-            setSearchQuery(e.target.value);
-            handleSearch(e.target.value);
+            setQuery(e.target.value);
           }}
           className="w-full px-4 py-2 bg-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
@@ -59,7 +82,7 @@ const SearchBar = ({
                   className={`block w-full text-left px-4 py-2 ${getItemColor(result)} hover:bg-gray-600 focus:outline-none flex items-center`}
                   onClick={() => {
                     setTpItems([result]);
-                    setSearchQuery("");
+                    setQuery("");
                     setSearchResults([]);
                   }}
                 >

@@ -172,7 +172,7 @@ export const getTradableItemsInRange = async (
   start: number,
   amount: number,
   sortParam: ESortParam,
-  sortDirection: ESortDirection
+  sortDirection: ESortDirection,
 ) => {
   try {
     const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
@@ -239,6 +239,8 @@ export const getTradingPostItemNames = async (name: string) => {
 
 export const getTradingPostItemByName = async (name: string) => {
   try {
+    const controller = new AbortController();
+
     const url = `${APIBaseURL}api/tradingPost/getItemByName`;
     const config: AxiosRequestConfig = {
       method: "post",
@@ -246,6 +248,7 @@ export const getTradingPostItemByName = async (name: string) => {
       data: {
         name,
       },
+      signal: controller.signal,
     };
     const response = await axios(config);
     if (response.status === 200) {
