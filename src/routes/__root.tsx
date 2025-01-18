@@ -1,5 +1,5 @@
 import { Outlet, createRootRoute } from "@tanstack/react-router";
-import { APIProvider } from "../Providers/APIProvider";
+import { TaskProvider } from "../Providers/TaskProvider";
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -8,9 +8,9 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <>
-      <APIProvider>
+      <TaskProvider>
         <Outlet />
-      </APIProvider>
+      </TaskProvider>
     </>
   );
 }

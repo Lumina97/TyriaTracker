@@ -1,7 +1,3 @@
-export const minUsernameLength = 4;
-export const minPasswordLength = 4;
-export const APIKeyLength = 17;
-
 export const wikiBaseURL = "https://wiki.guildwars2.com/wiki/";
 export const copperCoinURL =
   "https://render.guildwars2.com/file/6CF8F96A3299CFC75D5CC90617C3C70331A1EF0E/156902.png";

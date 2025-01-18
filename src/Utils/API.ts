@@ -1,23 +1,21 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { TUser } from "../Providers/APIProvider";
 import { TAPIData, TAPIDataType, TTPItem } from "./types";
 import { ESortDirection, ESortParam } from "../routes/tradingPost.index";
 
 //@ts-ignore
 const APIBaseURL = import.meta.env.VITE_API_URL;
+//@ts-ignore
+const token = import.meta.env.VITE_JWT;
+//@ts-ignore
+const email = import.meta.env.VITE_EMAIL;
 
-export const getUserRaids = async (user: TUser) => {
-  if (user.email === "") {
-    console.log("user email was empty");
-    return { type: TAPIDataType.Null, data: null } as TAPIData;
-  }
-
+export const getUserRaids = async () => {
   const url = `${APIBaseURL}api/raids`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: user.email,
-      jwt: user.jwt,
+      email: email,
+      jwt: token,
     },
     url,
   };
@@ -34,23 +32,18 @@ export const getUserRaids = async (user: TUser) => {
       return raidsData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
 
-export const getUserDungeons = async (user: TUser) => {
-  if (user.email === "") {
-    console.log("user email was empty");
-    return { type: TAPIDataType.Null, data: null } as TAPIData;
-  }
-
+export const getUserDungeons = async () => {
   const url = `${APIBaseURL}api/dungeons`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: user.email,
-      jwt: user.jwt,
+      email: email,
+      jwt: token,
     },
     url,
   };
@@ -67,23 +60,18 @@ export const getUserDungeons = async (user: TUser) => {
       return dungeonsData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
 
-export const getUserWorldBosses = async (user: TUser) => {
-  if (user.email === "") {
-    console.log("user email was empty");
-    return { type: TAPIDataType.Null, data: null } as TAPIData;
-  }
-
+export const getUserWorldBosses = async () => {
   const url = `${APIBaseURL}api/worldBosses`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: user.email,
-      jwt: user.jwt,
+      email: email,
+      jwt: token,
     },
     url,
   };
@@ -100,23 +88,18 @@ export const getUserWorldBosses = async (user: TUser) => {
       return worldBossesData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
 
-export const getUserDailyCrafting = async (user: TUser) => {
-  if (user.email === "") {
-    console.log("user email was empty");
-    return { type: TAPIDataType.Null, data: null } as TAPIData;
-  }
-
+export const getUserDailyCrafting = async () => {
   const url = `${APIBaseURL}api/dailyCrafting`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: user.email,
-      jwt: user.jwt,
+      email: email,
+      jwt: token,
     },
     url,
   };
@@ -133,23 +116,18 @@ export const getUserDailyCrafting = async (user: TUser) => {
       return dailyCraftData;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
 
-export const getUserWizardVault = async (user: TUser) => {
-  if (user.email === "") {
-    console.log("user email was empty");
-    return { type: TAPIDataType.Null, data: null } as TAPIData;
-  }
-
+export const getUserWizardVault = async () => {
   const url = `${APIBaseURL}api/wizardVault`;
   const config: AxiosRequestConfig = {
     method: "post",
     data: {
-      email: user.email,
-      jwt: user.jwt,
+      email: email,
+      jwt: token,
     },
     url,
   };
@@ -167,7 +145,7 @@ export const getUserWizardVault = async (user: TUser) => {
       return wizardVault;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return { type: TAPIDataType.Null, data: null } as TAPIData;
 };
@@ -194,7 +172,7 @@ export const getTradableItemsInRange = async (
   start: number,
   amount: number,
   sortParam: ESortParam,
-  sortDirection: ESortDirection
+  sortDirection: ESortDirection,
 ) => {
   try {
     const url = `${APIBaseURL}api/tradingPost/getTradableItems`;
@@ -230,6 +208,51 @@ export const getAllTradingPostItemIds = async () => {
     const response = await axios(config);
     if (response.status === 200) {
       return response.data.data as number[];
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getTradingPostItemNames = async (name: string) => {
+  try {
+    const url = `${APIBaseURL}api/tradingPost/getItemNames`;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+      data: {
+        name,
+      },
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as TTPItem[];
+    }
+    return null;
+  } catch (error) {
+    console.error(error);
+    return null;
+  }
+};
+
+export const getTradingPostItemByName = async (name: string) => {
+  try {
+    const controller = new AbortController();
+
+    const url = `${APIBaseURL}api/tradingPost/getItemByName`;
+    const config: AxiosRequestConfig = {
+      method: "post",
+      url,
+      data: {
+        name,
+      },
+      signal: controller.signal,
+    };
+    const response = await axios(config);
+    if (response.status === 200) {
+      return response.data.data as TTPItem;
     }
     return null;
   } catch (error) {

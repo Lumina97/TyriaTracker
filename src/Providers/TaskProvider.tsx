@@ -8,26 +8,9 @@ import {
   getUserWizardVault,
   getUserWorldBosses,
 } from "../Utils/API";
-import { TUser } from "./APIProvider";
 
 type TTaskProvider = {
   getApiData: (type: TAPIDataType) => TAPIData;
-};
-
-const getUser = () => {
-  let User: TUser;
-  const userStr = localStorage.getItem("user");
-  if (userStr) {
-    User = JSON.parse(userStr);
-    if (!User) {
-      console.log("Failed to get user!");
-      return;
-    }
-    return User;
-  } else {
-    console.log("unable to get user");
-    return;
-  }
 };
 
 const taskContext = createContext<TTaskProvider>({} as TTaskProvider);
@@ -73,26 +56,21 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const user = getUser() as TUser;
-      if (user === null) return;
-
       try {
-        console.log("Fetching data");
-        const raidResponse = await getUserRaids(user);
+        const raidResponse = await getUserRaids();
         setRaidData(raidResponse);
 
-        const dungeonResponse = await getUserDungeons(user);
+        const dungeonResponse = await getUserDungeons();
         setDungeonData(dungeonResponse);
 
-        const dailyCraftResponse = await getUserDailyCrafting(user);
+        const dailyCraftResponse = await getUserDailyCrafting();
         setDailyCraftData(dailyCraftResponse);
 
-        const worldBossResponse = await getUserWorldBosses(user);
+        const worldBossResponse = await getUserWorldBosses();
         setWorldBossData(worldBossResponse);
 
-        const wizardVaultResponse = await getUserWizardVault(user);
+        const wizardVaultResponse = await getUserWizardVault();
         setWizardVaultData(wizardVaultResponse);
-        console.log("Done Fetching data");
       } catch (error) {
         console.error("Failed to fetch data", error);
       }

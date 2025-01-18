@@ -1,8 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { useAPI } from "../../Providers/APIProvider";
 
 const Navbar = () => {
-  const { logout } = useAPI();
   return (
     <aside className="bg-gray-800 text-white sm:min-h-screen sm:w-[200px] border-r-2 border-sun">
       <div className="p-4 flex flex-col items-center gap-4 sticky top-4">
@@ -19,18 +17,9 @@ const Navbar = () => {
           <Link to="/tasks" className="hover:scale-110 font-semibold">
             Tasks
           </Link>
-          <Link to="/account" className="hover:scale-110 font-semibold">
-            Account
-          </Link>
           <Link to="/tradingPost" className="hover:scale-110 font-semibold">
             TradingPost
           </Link>
-          <a
-            className="hover:scale-110 font-semibold cursor-pointer"
-            onClick={logout}
-          >
-            Log Out
-          </a>
         </nav>
       </div>
     </aside>
