@@ -10,7 +10,7 @@ export const Route = createFileRoute("/tasks")({
 
 function TasksComponent() {
   const [currentTab, setCurrentTab] = useState<TAPIDataType>(
-    TAPIDataType.Raids
+    TAPIDataType.Raids,
   );
 
   return (
@@ -20,6 +20,7 @@ function TasksComponent() {
         <div className="flex flex-col items-start flex-grow">
           <div className="flex gap-4  items-start">
             <Link
+              data-testid="raidLink"
               className={`${currentTab === TAPIDataType.Raids ? "bg-gray-800" : "bg-gray-900 "} text-white font-bold py-2 px-4 rounded-t`}
               to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.Raids }}
@@ -30,6 +31,7 @@ function TasksComponent() {
               Raids
             </Link>
             <Link
+              data-testid="dungeonLink"
               className={` ${currentTab === TAPIDataType.Dungeons ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
               to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.Dungeons }}
@@ -40,6 +42,7 @@ function TasksComponent() {
               Dungeons
             </Link>
             <Link
+              data-testid="bossLink"
               className={` ${currentTab === TAPIDataType.WorldBosses ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
               to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.WorldBosses }}
@@ -50,6 +53,7 @@ function TasksComponent() {
               World Bosses
             </Link>
             <Link
+              data-testid="craftLink"
               className={` ${currentTab === TAPIDataType.DailyCrafting ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
               to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.DailyCrafting }}
@@ -60,6 +64,7 @@ function TasksComponent() {
               Daily Crafting
             </Link>
             <Link
+              data-testid="vaultLink"
               className={` ${currentTab === TAPIDataType.WizardVault ? "bg-gray-800" : "bg-gray-900"} text-white font-bold py-2 px-4 rounded-t`}
               to="/tasks/$taskItem"
               params={{ taskItem: TAPIDataType.WizardVault }}
@@ -71,6 +76,8 @@ function TasksComponent() {
             </Link>
           </div>
           <div
+            data-testid="taskTable"
+            id="table"
             className={`bg-gray-800 p-4 rounded-lg ${currentTab === TAPIDataType.Raids ? "rounded-tl-none" : ""}  shadow-lg w-full flex-grow`}
           >
             {/*this only works on the first load and not when switching tabs */}
