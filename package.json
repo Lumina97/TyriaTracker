@@ -11,6 +11,7 @@
     "start": "vite"
   },
   "devDependencies": {
+    "@playwright/test": "^1.49.1",
     "@tanstack/router-plugin": "^1.62.0",
     "@types/node": "^22.10.5",
     "@types/react": "^18.3.12",
