@@ -87,7 +87,7 @@ const SearchBar = ({
                 <Link
                   key={result.id}
                   to={`/TradingPost/${result.id}`}
-                  className=" h-full flex flex-row align-middle start gap-4"
+                  className={` h-full flex flex-row align-middle start gap-4 ${getItemColor(result)} `}
                 >
                   <img
                     src={result.icon}

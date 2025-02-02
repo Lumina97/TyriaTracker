@@ -63,7 +63,7 @@ function TradingPostComponent() {
     ESortDirection.up
   );
   const [currentPage, setCurrentPage] = useState<number>(0);
-  const [inputPage, setInputPage] = useState<number>(1);
+  const [inputPage, setInputPage] = useState<string>("1");
   const [showGoButton, setShowGoButton] = useState<boolean>(false);
 
   const itemsPerPage = 50;
@@ -82,7 +82,7 @@ function TradingPostComponent() {
     if (page < 0) page = maxPage;
     if (page > maxPage) page = 0;
     setCurrentPage(page);
-    setInputPage(page + 1);
+    setInputPage((page + 1).toString());
     return page;
   };
 
@@ -93,9 +93,14 @@ function TradingPostComponent() {
   };
 
   const handlePageInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const page = parseInt(e.target.value, 10);
+    const newVal = e.target.value;
+    if (newVal === "") {
+      setInputPage(newVal);
+      return;
+    }
+    const page = parseInt(newVal, 10);
     if (page >= 1 && page <= maxPage + 1) {
-      setInputPage(page);
+      setInputPage(newVal);
       setCurrentPage(page - 1);
       setShowGoButton(page !== currentPage + 1);
     }
@@ -105,13 +110,6 @@ function TradingPostComponent() {
     setCurrentPage(currentPage);
     getNewItems(currentPage, sortParam, sortDirection);
     setShowGoButton(false);
-  };
-
-  const getNewItemByName = async (name: string) => {
-    const item = await getTradingPostItemByName(name);
-    if (item) {
-      setTpItems([item]);
-    }
   };
 
   const getNewItems = async (
